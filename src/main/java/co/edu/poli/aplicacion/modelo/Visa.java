@@ -13,6 +13,7 @@ public class Visa {
     private Pais pais;
     private int mulEntry;
     private Pasaporte pasaporte;
+    private int hora;
 
     public Visa(String num, Pais pais, int mulEntry, Pasaporte pasaporte) {
         this.num = num;
