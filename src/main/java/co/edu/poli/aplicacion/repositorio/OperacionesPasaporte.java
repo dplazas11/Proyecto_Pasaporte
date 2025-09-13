@@ -19,7 +19,7 @@ public class OperacionesPasaporte implements Filtro<Pasaporte> {
         String sqlPasaporte = "INSERT INTO bdpasaporte (pasaporteid, fechaexp, titular, pais) VALUES (?, ?, ?, ?)";
 
         try (Connection conn = ConexionSupabase.getInstance().getConnection()) {
-           
+
             conn.setAutoCommit(false);
 
             if (pasaporte instanceof PasaporteOrdinario) {
@@ -38,11 +38,11 @@ public class OperacionesPasaporte implements Filtro<Pasaporte> {
                     pstmt2.setString(2, ordinario.getMotivoDeViaje());
                     pstmt2.executeUpdate();
 
-                    conn.commit(); 
+                    conn.commit();
                     return "Pasaporte ordinario insertado correctamente.";
 
                 } catch (SQLException e) {
-                    conn.rollback(); 
+                    conn.rollback();
                     return "Error al insertar ordinario (rollback): " + e.getMessage();
                 }
             } else if (pasaporte instanceof PasaporteDiplomatico) {
@@ -61,11 +61,11 @@ public class OperacionesPasaporte implements Filtro<Pasaporte> {
                     pstmt2.setString(2, diplom.getMision());
                     pstmt2.executeUpdate();
 
-                    conn.commit(); 
+                    conn.commit();
                     return "Pasaporte diplomático insertado correctamente.";
 
                 } catch (SQLException e) {
-                    conn.rollback(); 
+                    conn.rollback();
                     return "Error al insertar diplomático (rollback): " + e.getMessage();
                 }
             }
@@ -101,79 +101,121 @@ public class OperacionesPasaporte implements Filtro<Pasaporte> {
 
     @Override
     public Pasaporte selectId(String pasaporteId) {
-    Pasaporte pasaporteBuscado = null;
+        Pasaporte pasaporteBuscado = null;
 
-    String sqlBase = "SELECT * FROM bdpasaporte WHERE pasaporteid = ?";
-    String sqlOrdinario = "SELECT * FROM pasaporteordinario WHERE idpasaporte = ?";
-    String sqlDiplomatico = "SELECT * FROM pasaportediplomatico WHERE idpasaporte = ?";
+        String sqlBase = "SELECT * FROM bdpasaporte WHERE pasaporteid = ?";
+        String sqlOrdinario = "SELECT * FROM pasaporteordinario WHERE idpasaporte = ?";
+        String sqlDiplomatico = "SELECT * FROM pasaportediplomatico WHERE idpasaporte = ?";
 
-    try (Connection conn = ConexionSupabase.getInstance().getConnection()) {
-        // Primero buscamos en la tabla base
-        try (PreparedStatement pstmt = conn.prepareStatement(sqlBase)) {
-            pstmt.setString(1, pasaporteId);
-            ResultSet rs = pstmt.executeQuery();
+        try (Connection conn = ConexionSupabase.getInstance().getConnection()) {
+            // Primero buscamos en la tabla base
+            try (PreparedStatement pstmt = conn.prepareStatement(sqlBase)) {
+                pstmt.setString(1, pasaporteId);
+                ResultSet rs = pstmt.executeQuery();
 
-            if (rs.next()) {
-                String id = rs.getString("pasaporteid");
-                String fechaExp = rs.getString("fechaexp");
-                String titular = rs.getString("titular");
-                String pais = rs.getString("pais");
+                if (rs.next()) {
+                    String id = rs.getString("pasaporteid");
+                    String fechaExp = rs.getString("fechaexp");
+                    String titular = rs.getString("titular");
+                    String pais = rs.getString("pais");
 
-                // Ahora miramos si existe en Ordinario
-                try (PreparedStatement pstmtO = conn.prepareStatement(sqlOrdinario)) {
-                    pstmtO.setString(1, id);
-                    ResultSet rsO = pstmtO.executeQuery();
-                    if (rsO.next()) {
-                        String motivo = rsO.getString("motivoviaje");
-                        pasaporteBuscado = new PasaporteOrdinario(id, fechaExp, null, null, motivo);
-                        return pasaporteBuscado; // devolvemos directamente
+                    // Ahora miramos si existe en Ordinario
+                    try (PreparedStatement pstmtO = conn.prepareStatement(sqlOrdinario)) {
+                        pstmtO.setString(1, id);
+                        ResultSet rsO = pstmtO.executeQuery();
+                        if (rsO.next()) {
+                            String motivo = rsO.getString("motivoviaje");
+                            pasaporteBuscado = new PasaporteOrdinario(id, fechaExp, null, null, motivo);
+                            return pasaporteBuscado; // devolvemos directamente
+                        }
                     }
-                }
 
-                // Si no era ordinario, miramos si existe en Diplomático
-                try (PreparedStatement pstmtD = conn.prepareStatement(sqlDiplomatico)) {
-                    pstmtD.setString(1, id);
-                    ResultSet rsD = pstmtD.executeQuery();
-                    if (rsD.next()) {
-                        String mision = rsD.getString("mision");
-                        pasaporteBuscado = new PasaporteDiplomatico(id, fechaExp, null, null, mision);
-                        return pasaporteBuscado;
+                    // Si no era ordinario, miramos si existe en Diplomático
+                    try (PreparedStatement pstmtD = conn.prepareStatement(sqlDiplomatico)) {
+                        pstmtD.setString(1, id);
+                        ResultSet rsD = pstmtD.executeQuery();
+                        if (rsD.next()) {
+                            String mision = rsD.getString("mision");
+                            pasaporteBuscado = new PasaporteDiplomatico(id, fechaExp, null, null, mision);
+                            return pasaporteBuscado;
+                        }
                     }
-                }
 
-                // Si no estaba en ninguna tabla hija, devolvemos el genérico
-                pasaporteBuscado = new Pasaporte(id, fechaExp, null, null) {};
+                    // Si no estaba en ninguna tabla hija, devolvemos el genérico
+                    pasaporteBuscado = new Pasaporte(id, fechaExp, null, null) {
+                    };
+                }
             }
+        } catch (SQLException e) {
+            System.out.println("Error al leer: " + e.getMessage());
         }
-    } catch (SQLException e) {
-        System.out.println("Error al leer: " + e.getMessage());
+
+        return pasaporteBuscado;
     }
 
-    return pasaporteBuscado;
-}
-
     @Override
-    public String actualizar(Pasaporte entidad) {
+    public String actualizar(Pasaporte pasaporte) {
 
-        String sql = "UPDATE BdPasaporte SET FechaExp=?, Titular=?, Pais=? WHERE PasaporteId=?";
+        String sqlPasaporte = "UPDATE bdpasaporte SET fechaexp=?, titular=?, pais=? WHERE pasaporteid=?";
 
-        try (Connection conn = ConexionSupabase.getInstance().getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, entidad.getFechaExp());
-            pstmt.setString(2, entidad.getTitular().getNombre());
-            pstmt.setString(3, entidad.getPais().getNombre());
-            pstmt.setString(4, entidad.getId());
+        try (Connection conn = ConexionSupabase.getInstance().getConnection()) {
 
-            int filasAfectadas = pstmt.executeUpdate();
+            conn.setAutoCommit(false);
 
-            if (filasAfectadas > 0) {
-                return ("Registro con ID " + entidad.getId() + " actualizado correctamente.");
-            } else {
-                return ("No se encontró ningún registro con el ID " + entidad.getId());
+            if (pasaporte instanceof PasaporteOrdinario) {
+                String sqlOrdinario = "UPDATE pasaporteordinario SET motivoviaje=? WHERE idpasaporte=?";
+
+                try (PreparedStatement pstmt1 = conn.prepareStatement(sqlPasaporte); PreparedStatement pstmt2 = conn.prepareStatement(sqlOrdinario)) {
+
+                    pstmt1.setString(1, pasaporte.getFechaExp());
+                    pstmt1.setString(2, pasaporte.getTitular() != null ? pasaporte.getTitular().getNombre() : null);
+                    pstmt1.setString(3, pasaporte.getPais() != null ? pasaporte.getPais().getNombre() : null);
+                    pstmt1.setString(4, pasaporte.getId());
+                    
+                    pstmt1.executeUpdate();
+
+                    PasaporteOrdinario ordinario = (PasaporteOrdinario) pasaporte;
+                    pstmt2.setString(1, ordinario.getMotivoDeViaje());
+                    pstmt2.setString(2, pasaporte.getId());
+                    pstmt2.executeUpdate();
+
+                    conn.commit();
+                    return "Pasaporte ordinario actualizado correctamente.";
+
+                } catch (SQLException e) {
+                    conn.rollback();
+                    return "Error al actualizar ordinario (rollback): " + e.getMessage();
+                }
+            } else if (pasaporte instanceof PasaporteDiplomatico) {
+                String sqlDiplomatico = "UPDATE pasaportediplomatico SET mision=? WHERE idpasaporte=?";
+
+                try (PreparedStatement pstmt1 = conn.prepareStatement(sqlPasaporte); PreparedStatement pstmt2 = conn.prepareStatement(sqlDiplomatico)) {
+
+                    pstmt1.setString(1, pasaporte.getFechaExp());
+                    pstmt1.setString(2, pasaporte.getTitular() != null ? pasaporte.getTitular().getNombre() : null);
+                    pstmt1.setString(3, pasaporte.getPais() != null ? pasaporte.getPais().getNombre() : null);
+                    pstmt1.setString(4, pasaporte.getId());
+                    pstmt1.executeUpdate();
+
+                    PasaporteDiplomatico diplom = (PasaporteDiplomatico) pasaporte;
+                    pstmt2.setString(1, diplom.getMision());
+                    pstmt2.setString(2, pasaporte.getId());
+                    pstmt2.executeUpdate();
+
+                    conn.commit();
+                    return "Pasaporte diplomático actualizado correctamente.";
+
+                } catch (SQLException e) {
+                    conn.rollback();
+                    return "Error al actualizar diplomático (rollback): " + e.getMessage();
+                }
             }
 
         } catch (SQLException e) {
-            return ("Error al actualizar: " + e.getMessage());
+            return "Error de conexión: " + e.getMessage();
         }
+
+        return null;
     }
 
     @Override

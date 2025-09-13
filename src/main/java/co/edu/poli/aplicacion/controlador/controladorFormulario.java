@@ -13,6 +13,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 public class controladorFormulario {
@@ -119,13 +120,13 @@ public class controladorFormulario {
                 titular.setText("pendiente");
                 fechExp.setText(coincidencia.getFechaExp());
                 pais.setText("pendiente");
-                tipoPas.setValue(tipoPas.getItems().get(2));
+                tipoPas.setValue("Diplomatico");
                 descr.setText(((PasaporteDiplomatico) coincidencia).getMision());
             } else if (coincidencia instanceof PasaporteOrdinario) {
                 titular.setText("pendiente");
                 fechExp.setText(coincidencia.getFechaExp());
                 pais.setText("pendiente");
-                tipoPas.setValue(tipoPas.getItems().get(1));
+                tipoPas.setValue("Ordinario");
                 descr.setText(((PasaporteOrdinario) coincidencia).getMotivoDeViaje());
             }
         } else {
@@ -137,6 +138,51 @@ public class controladorFormulario {
     @FXML
     void clickActualizar(ActionEvent event) {
 
+        String id = idPasaporte.getText();
+        String nom = titular.getText();
+        String fechaExp = fechExp.getText();
+        String pais = this.pais.getText();
+        String seleccionado = tipoPas.getValue();
+        String descripcion = descr.getText();
+
+        CreadorPasaporte creador;
+        Pasaporte pasaporte;
+        OperacionesPasaporte repo = new OperacionesPasaporte();
+
+        if ("Ordinario".equalsIgnoreCase(seleccionado)) {
+            creador = new FactoriaPOrdinaria();
+            pasaporte = creador.CrearPasaporte();
+            // llenar atributos desde el controlador
+            pasaporte.setId(id);
+            pasaporte.setTitular(null);
+            pasaporte.setFechaExp(fechaExp);
+            pasaporte.setPais(null);
+            ((PasaporteOrdinario) pasaporte).setMotivoDeViaje(descripcion);
+
+            String respuesta = repo.actualizar(pasaporte);
+            crearAlerta(respuesta);
+
+        } else if ("Diplomatico".equalsIgnoreCase(seleccionado)) {
+            creador = new FactoriaPDiplomatica();
+            pasaporte = creador.CrearPasaporte();
+            // llenar atributos desde el controlador
+            pasaporte.setId(id);
+            pasaporte.setTitular(null);
+            pasaporte.setFechaExp(fechaExp);
+            pasaporte.setPais(null);
+            ((PasaporteDiplomatico) pasaporte).setMision(descripcion);
+
+            String respuesta = repo.actualizar(pasaporte);
+            crearAlerta(respuesta);
+
+            //JOptionPane.showMessageDialog(vista, respuesta);
+        } else {
+            crearAlerta("Seleccione un tipo de pasaporte válido");
+
+        }
+
+        limpiarDatos(1);
+
     }
 
     @FXML
@@ -146,6 +192,12 @@ public class controladorFormulario {
 
     @FXML
     void clickEliminar(ActionEvent event) {
+        String id = idPasaporte.getText();
+
+        OperacionesPasaporte repo = new OperacionesPasaporte();
+        String respuesta = repo.eliminar(id);
+        crearAlerta(respuesta);
+        limpiarDatos(1);
 
     }
 
@@ -174,8 +226,20 @@ public class controladorFormulario {
     void crearAlerta(String respuesta) {
         Alert alerta = new Alert(AlertType.INFORMATION);
         alerta.setHeaderText("Estado");
-        alerta.setContentText(respuesta);
+        // Área de texto expandible
+        TextArea textArea = new TextArea(respuesta);
+        textArea.setWrapText(true);
+        textArea.setEditable(false);
+
+        // Expandir automáticamente
+        alerta.getDialogPane().setExpandableContent(textArea);
+        alerta.getDialogPane().setExpanded(true);
+
+        // Ajustar ancho de la ventana
+        alerta.getDialogPane().setMinWidth(500);
         alerta.show();
+
+        
 
     }
 
