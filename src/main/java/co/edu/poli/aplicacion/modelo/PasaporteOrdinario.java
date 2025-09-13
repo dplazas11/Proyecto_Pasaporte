@@ -6,23 +6,33 @@ package co.edu.poli.aplicacion.modelo;
 
 public class PasaporteOrdinario extends Pasaporte {
 
-    private String MotivoDeViaje;
+    private String tipoPasaporte;
+    private String descripcion;
 
     public PasaporteOrdinario() {
         super();
     }
 
-    public PasaporteOrdinario(String id, String fechaExp, Titular titular, Pais pais, String MotivoDeViaje) {
+    public PasaporteOrdinario(String id, String fechaExp, Titular titular, Pais pais, String tipoPasaporte, String descripcion) {
         super(id, fechaExp, titular, pais);
-        this.MotivoDeViaje = MotivoDeViaje;
+        this.tipoPasaporte= tipoPasaporte;
+        this.descripcion = descripcion;
     }
 
-    public String getMotivoDeViaje() {
-        return MotivoDeViaje;
+    public String getTipoPasaporte() {
+        return tipoPasaporte;
     }
 
-    public void setMotivoDeViaje(String MotivoDeViaje) {
-        this.MotivoDeViaje = MotivoDeViaje;
+    public void setTipoPasaporte(String tipoPasaporte) {
+        this.tipoPasaporte = tipoPasaporte;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
     @Override
@@ -32,7 +42,8 @@ public class PasaporteOrdinario extends Pasaporte {
                 + ", fechaExp=" + getFechaExp()
                 + ", titular=" + (getTitular() != null ? getTitular() : "null")
                 + ", pais=" + (getPais() != null ? getPais() : "null")
-                + ", motivoDeViaje=" + MotivoDeViaje
+                + ", tipoPasaporte=" + tipoPasaporte
+                + ", motivoDeViaje=" + descripcion
                 + '}';
     }
 

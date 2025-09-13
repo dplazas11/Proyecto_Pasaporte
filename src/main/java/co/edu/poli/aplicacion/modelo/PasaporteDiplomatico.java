@@ -6,15 +6,17 @@ package co.edu.poli.aplicacion.modelo;
 
 public class PasaporteDiplomatico extends Pasaporte {
 
-    private String Mision;
+    private String tipoPasaporte;
+    private String descripcion;
 
     public PasaporteDiplomatico() {
         super();
     }
 
-    public PasaporteDiplomatico( String id, String fechaExp, Titular titular, Pais pais,String Mision) {
+    public PasaporteDiplomatico( String id, String fechaExp, Titular titular, Pais pais,String tipoPasaporte, String Mision) {
         super(id, fechaExp, titular, pais);
-        this.Mision = Mision;
+        this.tipoPasaporte = tipoPasaporte;
+        this.descripcion = Mision;
     }
 
     @Override
@@ -24,18 +26,27 @@ public class PasaporteDiplomatico extends Pasaporte {
                 + ", fechaExp=" + getFechaExp()
                 + ", titular=" + (getTitular() != null ? getTitular() : "null")
                 + ", pais=" + (getPais() != null ? getPais() : "null")
-                + ", mision=" + Mision
+                + ", tipoPasaporte=" + tipoPasaporte
+                + ", mision=" + descripcion
                 + '}';
+    }
+
+    public String getTipoPasaporte() {
+        return tipoPasaporte;
+    }
+
+    public void setTipoPasaporte(String tipoPasaporte) {
+        this.tipoPasaporte = tipoPasaporte;
     }
 
     
 
-    public String getMision() {
-        return Mision;
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public void setMision(String Mision) {
-        this.Mision = Mision;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
 }

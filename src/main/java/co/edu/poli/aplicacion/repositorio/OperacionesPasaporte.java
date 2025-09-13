@@ -23,7 +23,7 @@ public class OperacionesPasaporte implements Filtro<Pasaporte> {
             conn.setAutoCommit(false);
 
             if (pasaporte instanceof PasaporteOrdinario) {
-                String sqlOrdinario = "INSERT INTO pasaporteordinario (idpasaporte, motivoviaje) VALUES (?, ?)";
+                String sqlOrdinario = "INSERT INTO pasaporteordinario (idpasaporte, tipopasaporte, descripcion) VALUES (?, ?, ?)";
 
                 try (PreparedStatement pstmt1 = conn.prepareStatement(sqlPasaporte); PreparedStatement pstmt2 = conn.prepareStatement(sqlOrdinario)) {
 
@@ -35,7 +35,8 @@ public class OperacionesPasaporte implements Filtro<Pasaporte> {
 
                     PasaporteOrdinario ordinario = (PasaporteOrdinario) pasaporte;
                     pstmt2.setString(1, ordinario.getId());
-                    pstmt2.setString(2, ordinario.getMotivoDeViaje());
+                    pstmt2.setString(2, ordinario.getTipoPasaporte());
+                    pstmt2.setString(3, ordinario.getDescripcion());
                     pstmt2.executeUpdate();
 
                     conn.commit();
@@ -46,7 +47,7 @@ public class OperacionesPasaporte implements Filtro<Pasaporte> {
                     return "Error al insertar ordinario (rollback): " + e.getMessage();
                 }
             } else if (pasaporte instanceof PasaporteDiplomatico) {
-                String sqlDiplomatico = "INSERT INTO pasaportediplomatico (idpasaporte, mision) VALUES (?, ?)";
+                String sqlDiplomatico = "INSERT INTO pasaportediplomatico (idpasaporte, tipopasaporte, descripcion) VALUES (?,?,?)";
 
                 try (PreparedStatement pstmt1 = conn.prepareStatement(sqlPasaporte); PreparedStatement pstmt2 = conn.prepareStatement(sqlDiplomatico)) {
 
@@ -58,7 +59,8 @@ public class OperacionesPasaporte implements Filtro<Pasaporte> {
 
                     PasaporteDiplomatico diplom = (PasaporteDiplomatico) pasaporte;
                     pstmt2.setString(1, diplom.getId());
-                    pstmt2.setString(2, diplom.getMision());
+                    pstmt2.setString(2, diplom.getTipoPasaporte());
+                    pstmt2.setString(3, diplom.getDescripcion());
                     pstmt2.executeUpdate();
 
                     conn.commit();
@@ -80,18 +82,18 @@ public class OperacionesPasaporte implements Filtro<Pasaporte> {
     @Override
     public String eliminar(String pasaporteId) {
 
-        String sql = "DELETE FROM BdPasaporte WHERE \"pasaporteid\" = ?";
+        String sql = "DELETE FROM pasaportediplomatico WHERE idpasaporte = ?;\n"
+                + "DELETE FROM pasaporteordinario WHERE idpasaporte = ?;\n"
+                + "DELETE FROM bdpasaporte WHERE pasaporteid = ?;";
 
         try (Connection conn = ConexionSupabase.getInstance().getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, pasaporteId);
+            stmt.setString(2, pasaporteId);
+            stmt.setString(3, pasaporteId);
 
-            int filasEliminadas = stmt.executeUpdate();
+            stmt.executeUpdate();
 
-            if (filasEliminadas > 0) {
-                return " Registro eliminado correctamente.";
-            } else {
-                return "️ No se encontró un registro con PasaporteId = " + pasaporteId;
-            }
+            return " Registro eliminado correctamente.";
 
         } catch (SQLException e) {
             return (" Error al eliminar: " + e.getMessage());
@@ -124,8 +126,9 @@ public class OperacionesPasaporte implements Filtro<Pasaporte> {
                         pstmtO.setString(1, id);
                         ResultSet rsO = pstmtO.executeQuery();
                         if (rsO.next()) {
-                            String motivo = rsO.getString("motivoviaje");
-                            pasaporteBuscado = new PasaporteOrdinario(id, fechaExp, null, null, motivo);
+                            String tipoPasaporte = rsO.getString("tipopasaporte");
+                            String motivo = rsO.getString("descripcion");
+                            pasaporteBuscado = new PasaporteOrdinario(id, fechaExp, null, null, tipoPasaporte, motivo);
                             return pasaporteBuscado; // devolvemos directamente
                         }
                     }
@@ -135,8 +138,9 @@ public class OperacionesPasaporte implements Filtro<Pasaporte> {
                         pstmtD.setString(1, id);
                         ResultSet rsD = pstmtD.executeQuery();
                         if (rsD.next()) {
-                            String mision = rsD.getString("mision");
-                            pasaporteBuscado = new PasaporteDiplomatico(id, fechaExp, null, null, mision);
+                            String tipoPasaporte = rsD.getString("tipopasaporte");
+                            String mision = rsD.getString("descripcion");
+                            pasaporteBuscado = new PasaporteDiplomatico(id, fechaExp, null, null, tipoPasaporte, mision);
                             return pasaporteBuscado;
                         }
                     }
@@ -158,84 +162,81 @@ public class OperacionesPasaporte implements Filtro<Pasaporte> {
 
         String sqlPasaporte = "UPDATE bdpasaporte SET fechaexp=?, titular=?, pais=? WHERE pasaporteid=?";
 
-        try (Connection conn = ConexionSupabase.getInstance().getConnection()) {
+        // Sentencias específicas según tipo
+        String sqlOrdinario = "UPDATE pasaporteordinario SET tipopasaporte=?, descripcion=? WHERE idpasaporte=?";
+        String sqlDiplomatico = "UPDATE pasaportediplomatico SET tipopasaporte=?, descripcion=? WHERE idpasaporte=?";
 
+        try (Connection conn = ConexionSupabase.getInstance().getConnection()) {
             conn.setAutoCommit(false);
 
-            if (pasaporte instanceof PasaporteOrdinario) {
-                String sqlOrdinario = "UPDATE pasaporteordinario SET motivoviaje=? WHERE idpasaporte=?";
+            try (
+                    PreparedStatement pstmt1 = conn.prepareStatement(sqlPasaporte); PreparedStatement pstmt2 = pasaporte instanceof PasaporteOrdinario
+                    ? conn.prepareStatement(sqlOrdinario)
+                    : conn.prepareStatement(sqlDiplomatico)) {
+                // Actualizar tabla bdpasaporte
+                pstmt1.setString(1, pasaporte.getFechaExp());
+                pstmt1.setString(2, pasaporte.getTitular() != null ? pasaporte.getTitular().getNombre() : null);
+                pstmt1.setString(3, pasaporte.getPais() != null ? pasaporte.getPais().getNombre() : null);
+                pstmt1.setString(4, pasaporte.getId());
+                pstmt1.executeUpdate();
 
-                try (PreparedStatement pstmt1 = conn.prepareStatement(sqlPasaporte); PreparedStatement pstmt2 = conn.prepareStatement(sqlOrdinario)) {
-
-                    pstmt1.setString(1, pasaporte.getFechaExp());
-                    pstmt1.setString(2, pasaporte.getTitular() != null ? pasaporte.getTitular().getNombre() : null);
-                    pstmt1.setString(3, pasaporte.getPais() != null ? pasaporte.getPais().getNombre() : null);
-                    pstmt1.setString(4, pasaporte.getId());
-                    
-                    pstmt1.executeUpdate();
-
+                // Actualizar tabla específica según tipo
+                if (pasaporte instanceof PasaporteOrdinario) {
                     PasaporteOrdinario ordinario = (PasaporteOrdinario) pasaporte;
-                    pstmt2.setString(1, ordinario.getMotivoDeViaje());
-                    pstmt2.setString(2, pasaporte.getId());
-                    pstmt2.executeUpdate();
-
-                    conn.commit();
-                    return "Pasaporte ordinario actualizado correctamente.";
-
-                } catch (SQLException e) {
-                    conn.rollback();
-                    return "Error al actualizar ordinario (rollback): " + e.getMessage();
-                }
-            } else if (pasaporte instanceof PasaporteDiplomatico) {
-                String sqlDiplomatico = "UPDATE pasaportediplomatico SET mision=? WHERE idpasaporte=?";
-
-                try (PreparedStatement pstmt1 = conn.prepareStatement(sqlPasaporte); PreparedStatement pstmt2 = conn.prepareStatement(sqlDiplomatico)) {
-
-                    pstmt1.setString(1, pasaporte.getFechaExp());
-                    pstmt1.setString(2, pasaporte.getTitular() != null ? pasaporte.getTitular().getNombre() : null);
-                    pstmt1.setString(3, pasaporte.getPais() != null ? pasaporte.getPais().getNombre() : null);
-                    pstmt1.setString(4, pasaporte.getId());
-                    pstmt1.executeUpdate();
-
+                    pstmt2.setString(1, ordinario.getTipoPasaporte());
+                    pstmt2.setString(2, ordinario.getDescripcion());
+                    pstmt2.setString(3, pasaporte.getId());
+                } else if (pasaporte instanceof PasaporteDiplomatico) {
                     PasaporteDiplomatico diplom = (PasaporteDiplomatico) pasaporte;
-                    pstmt2.setString(1, diplom.getMision());
-                    pstmt2.setString(2, pasaporte.getId());
-                    pstmt2.executeUpdate();
-
-                    conn.commit();
-                    return "Pasaporte diplomático actualizado correctamente.";
-
-                } catch (SQLException e) {
-                    conn.rollback();
-                    return "Error al actualizar diplomático (rollback): " + e.getMessage();
+                    pstmt2.setString(1, diplom.getTipoPasaporte());
+                    pstmt2.setString(2, diplom.getDescripcion());
+                    pstmt2.setString(3, pasaporte.getId());
                 }
+
+                pstmt2.executeUpdate();
+
+                conn.commit();
+                return pasaporte instanceof PasaporteOrdinario
+                        ? "Pasaporte ordinario actualizado correctamente."
+                        : "Pasaporte diplomático actualizado correctamente.";
+
+            } catch (SQLException e) {
+                conn.rollback();
+                return "Error al actualizar (rollback): " + e.getMessage();
             }
 
         } catch (SQLException e) {
             return "Error de conexión: " + e.getMessage();
         }
-
-        return null;
     }
 
     @Override
     public ArrayList<Pasaporte> selectAll() {
-        String sql = "SELECT * FROM bdpasaporte";
+        String sql = "SELECT p.*, d.tipopasaporte,o.tipopasaporte, d.descripcion, o.descripcion\n"
+                + "FROM bdpasaporte p\n"
+                + "LEFT JOIN pasaportediplomatico d ON p.pasaporteid = d.idpasaporte\n"
+                + "LEFT JOIN pasaporteordinario o ON p.pasaporteid = o.idpasaporte;";
         ArrayList<Pasaporte> lista = new ArrayList<>();
 
         try (Connection conn = ConexionSupabase.getInstance().getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql); ResultSet rs = pstmt.executeQuery()) {
 
             while (rs.next()) {
-                //Titular titular = new Titular(null, rs.getString("titular"), null);
-                //Pais pais = new Pais(null, rs.getString("pais"), null);
+                String id = rs.getString("pasaporteid");
+                String fechaExp = rs.getString("fechaexp");
+                String titular = rs.getString("titular");
+                String pais = rs.getString("pais");
 
-                Pasaporte pasaporte = new Pasaporte(
-                        rs.getString("pasaporteid"),
-                        rs.getString("fechaexp"),
-                        null,
-                        null
-                ) {
-                };
+                Pasaporte pasaporte;
+
+                if (rs.getString("tipopasaporte").equals("Diplomatico")) { // Diplomático
+                    String tipoPasaporte = rs.getString("tipopasaporte");
+                    String mision = rs.getString("descripcion");
+                    pasaporte = new PasaporteDiplomatico(id, fechaExp, null, null, tipoPasaporte, mision);
+                } else {
+                    String tipoPasaporte = rs.getString("tipopasaporte");
+                    String motivo = rs.getString("descripcion");
+                    pasaporte = new PasaporteOrdinario(id, fechaExp, null, null, tipoPasaporte, motivo);
+                }
 
                 lista.add(pasaporte);
             }

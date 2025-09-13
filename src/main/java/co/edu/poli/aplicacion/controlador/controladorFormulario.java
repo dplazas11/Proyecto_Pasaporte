@@ -7,14 +7,20 @@ import co.edu.poli.aplicacion.repositorio.OperacionesPasaporte;
 import co.edu.poli.aplicacion.services.CreadorPasaporte;
 import co.edu.poli.aplicacion.services.FactoriaPDiplomatica;
 import co.edu.poli.aplicacion.services.FactoriaPOrdinaria;
+import java.util.ArrayList;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 public class controladorFormulario {
 
@@ -31,6 +37,9 @@ public class controladorFormulario {
     private Button bguardar;
 
     @FXML
+    private Button bmostrartodo;
+
+    @FXML
     private TextField descr;
 
     @FXML
@@ -41,6 +50,27 @@ public class controladorFormulario {
 
     @FXML
     private TextField pais;
+
+    @FXML
+    private TableView<Pasaporte> tablaDatos;
+
+    @FXML
+    private TableColumn<Pasaporte, String> tablaDescr;
+
+    @FXML
+    private TableColumn<Pasaporte, String> tablaFechExp;
+
+    @FXML
+    private TableColumn<Pasaporte, String> tablaId;
+
+    @FXML
+    private TableColumn<Pasaporte, String> tablaPais;
+
+    @FXML
+    private TableColumn<Pasaporte, String> tablaTitular;
+
+    @FXML
+    private TableColumn<Pasaporte, String> tablatipopasp;
 
     @FXML
     private ComboBox<String> tipoPas;
@@ -55,6 +85,19 @@ public class controladorFormulario {
             if (!newVal) {
                 filtrarId(null);
             }
+            diseñoBoton(bactualizar);
+            diseñoBoton(bbuscar);
+            diseñoBoton(beliminar);
+            diseñoBoton(bguardar);
+            diseñoBoton(bmostrartodo);
+
+            tablaId.setCellValueFactory(new PropertyValueFactory<>("id"));
+            tablaTitular.setCellValueFactory(new PropertyValueFactory<>("titular"));
+            tablaPais.setCellValueFactory(new PropertyValueFactory<>("pais"));
+            tablaFechExp.setCellValueFactory(new PropertyValueFactory<>("fechaExp"));
+            tablaDescr.setCellValueFactory(new PropertyValueFactory<>("tipopasaporte"));
+            tablaDescr.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
+
         });
     }
 
@@ -80,7 +123,8 @@ public class controladorFormulario {
             pasaporte.setTitular(null);
             pasaporte.setFechaExp(fechaExp);
             pasaporte.setPais(null);
-            ((PasaporteOrdinario) pasaporte).setMotivoDeViaje(descripcion);
+            ((PasaporteOrdinario) pasaporte).setTipoPasaporte(seleccionado);
+            ((PasaporteOrdinario) pasaporte).setDescripcion(descripcion);
 
             String respuesta = repo.insertar(pasaporte);
             crearAlerta(respuesta);
@@ -93,7 +137,8 @@ public class controladorFormulario {
             pasaporte.setTitular(null);
             pasaporte.setFechaExp(fechaExp);
             pasaporte.setPais(null);
-            ((PasaporteDiplomatico) pasaporte).setMision(descripcion);
+            ((PasaporteDiplomatico) pasaporte).setTipoPasaporte(seleccionado);
+            ((PasaporteDiplomatico) pasaporte).setDescripcion(descripcion);
 
             String respuesta = repo.insertar(pasaporte);
             crearAlerta(respuesta);
@@ -121,13 +166,13 @@ public class controladorFormulario {
                 fechExp.setText(coincidencia.getFechaExp());
                 pais.setText("pendiente");
                 tipoPas.setValue("Diplomatico");
-                descr.setText(((PasaporteDiplomatico) coincidencia).getMision());
+                descr.setText(((PasaporteDiplomatico) coincidencia).getDescripcion());
             } else if (coincidencia instanceof PasaporteOrdinario) {
                 titular.setText("pendiente");
                 fechExp.setText(coincidencia.getFechaExp());
                 pais.setText("pendiente");
                 tipoPas.setValue("Ordinario");
-                descr.setText(((PasaporteOrdinario) coincidencia).getMotivoDeViaje());
+                descr.setText(((PasaporteOrdinario) coincidencia).getDescripcion());
             }
         } else {
             limpiarDatos(2);
@@ -137,56 +182,84 @@ public class controladorFormulario {
 
     @FXML
     void clickActualizar(ActionEvent event) {
-
+        // Obtener datos del formulario
         String id = idPasaporte.getText();
-        String nom = titular.getText();
-        String fechaExp = fechExp.getText();
-        String pais = this.pais.getText();
+        String titularTxt = titular.getText();
+        String fechaExpTxt = fechExp.getText();
+        String paisTxt = this.pais.getText();
         String seleccionado = tipoPas.getValue();
-        String descripcion = descr.getText();
+        String descripcionTxt = descr.getText();
 
-        CreadorPasaporte creador;
-        Pasaporte pasaporte;
-        OperacionesPasaporte repo = new OperacionesPasaporte();
-
-        if ("Ordinario".equalsIgnoreCase(seleccionado)) {
-            creador = new FactoriaPOrdinaria();
-            pasaporte = creador.CrearPasaporte();
-            // llenar atributos desde el controlador
-            pasaporte.setId(id);
-            pasaporte.setTitular(null);
-            pasaporte.setFechaExp(fechaExp);
-            pasaporte.setPais(null);
-            ((PasaporteOrdinario) pasaporte).setMotivoDeViaje(descripcion);
-
-            String respuesta = repo.actualizar(pasaporte);
-            crearAlerta(respuesta);
-
-        } else if ("Diplomatico".equalsIgnoreCase(seleccionado)) {
-            creador = new FactoriaPDiplomatica();
-            pasaporte = creador.CrearPasaporte();
-            // llenar atributos desde el controlador
-            pasaporte.setId(id);
-            pasaporte.setTitular(null);
-            pasaporte.setFechaExp(fechaExp);
-            pasaporte.setPais(null);
-            ((PasaporteDiplomatico) pasaporte).setMision(descripcion);
-
-            String respuesta = repo.actualizar(pasaporte);
-            crearAlerta(respuesta);
-
-            //JOptionPane.showMessageDialog(vista, respuesta);
-        } else {
+        if (seleccionado == null || seleccionado.isEmpty()) {
             crearAlerta("Seleccione un tipo de pasaporte válido");
-
+            return;
         }
 
+        OperacionesPasaporte repo = new OperacionesPasaporte();
+        Pasaporte pasaporteExistente = repo.selectId(id);
+
+        // Si el pasaporte ya existe
+        if (pasaporteExistente != null) {
+            // Verificar si cambió de tipo
+            boolean cambioTipo = false;
+            if (pasaporteExistente instanceof PasaporteDiplomatico && seleccionado.equalsIgnoreCase("Ordinario")) {
+                cambioTipo = true;
+            } else if (pasaporteExistente instanceof PasaporteOrdinario && seleccionado.equalsIgnoreCase("Diplomatico")) {
+                cambioTipo = true;
+            }
+
+            if (cambioTipo) {
+                // Borrar el registro existente antes de crear uno nuevo
+                repo.eliminar(id);
+                pasaporteExistente = null; // forzar creación nueva
+            }
+        }
+
+        // Crear el pasaporte según el tipo seleccionado
+        Pasaporte nuevoPasaporte;
+        if (seleccionado.equalsIgnoreCase("Diplomatico")) {
+            CreadorPasaporte creador = new FactoriaPDiplomatica();
+            nuevoPasaporte = creador.CrearPasaporte();
+            ((PasaporteDiplomatico) nuevoPasaporte).setTipoPasaporte(seleccionado);
+            ((PasaporteDiplomatico) nuevoPasaporte).setDescripcion(descripcionTxt);
+        } else if (seleccionado.equalsIgnoreCase("Ordinario")) {
+            CreadorPasaporte creador = new FactoriaPOrdinaria();
+            nuevoPasaporte = creador.CrearPasaporte();
+            ((PasaporteOrdinario) nuevoPasaporte).setTipoPasaporte(seleccionado);
+            ((PasaporteOrdinario) nuevoPasaporte).setDescripcion(descripcionTxt);
+        } else {
+            crearAlerta("Tipo de pasaporte no válido");
+            return;
+        }
+
+        // Asignar datos comunes
+        nuevoPasaporte.setId(id);
+        nuevoPasaporte.setTitular(null);
+        nuevoPasaporte.setFechaExp(fechaExpTxt);
+        nuevoPasaporte.setPais(null);
+
+        // Guardar o actualizar
+        String respuesta = repo.actualizar(nuevoPasaporte);
+        crearAlerta(respuesta);
+
+        // Limpiar formulario
         limpiarDatos(1);
 
     }
 
     @FXML
     void clickBuscar(ActionEvent event) {
+
+    }
+
+    @FXML
+    void clickMostrarTodo(ActionEvent event) {
+
+        OperacionesPasaporte repo = new OperacionesPasaporte();
+        ArrayList<Pasaporte> totalPasaportes = new ArrayList<>();
+        totalPasaportes = repo.selectAll();
+        ObservableList<Pasaporte> lista = FXCollections.observableArrayList(totalPasaportes);
+        tablaDatos.setItems(lista);
 
     }
 
@@ -201,6 +274,7 @@ public class controladorFormulario {
 
     }
 
+    //METODOS EXTRA 
     void limpiarDatos(int tipo) {
         switch (tipo) {
             case 1:
@@ -239,8 +313,11 @@ public class controladorFormulario {
         alerta.getDialogPane().setMinWidth(500);
         alerta.show();
 
-        
+    }
 
+    void diseñoBoton(Button boton) {
+        boton.setOnMousePressed(e -> boton.setScaleX(0.95)); // se hace más pequeño
+        boton.setOnMouseReleased(e -> boton.setScaleX(1));
     }
 
 }
