@@ -45,28 +45,19 @@ public class controladorFormulario {
     private ComboBox<String> tipoPas;
 
     @FXML
-    public void initialize() {
-        tipoPas.getItems().addAll("(Seleccione una opción)", "Ordinario", "Diplomatico");
-    }
-
-    @FXML
     private TextField titular;
 
     @FXML
-    void clickActualizar(ActionEvent event) {
-
+    public void initialize() {
+        tipoPas.getItems().addAll("(Seleccione una opción)", "Ordinario", "Diplomatico");
+        idPasaporte.focusedProperty().addListener((obs, oldVal, newVal) -> {
+            if (!newVal) {
+                filtrarId(null);
+            }
+        });
     }
 
-    @FXML
-    void clickBuscar(ActionEvent event) {
-
-    }
-
-    @FXML
-    void clickEliminar(ActionEvent event) {
-
-    }
-
+    //metodos de la ventana 
     @FXML
     void clickGuardar(ActionEvent event) {
         String id = idPasaporte.getText();
@@ -80,6 +71,7 @@ public class controladorFormulario {
         OperacionesPasaporte repo = new OperacionesPasaporte();
         String seleccionado = tipoPas.getValue();
 
+        
         if ("Ordinario".equalsIgnoreCase(seleccionado)) {
             creador = new FactoriaPOrdinaria();
             pasaporte = creador.CrearPasaporte();
@@ -92,7 +84,6 @@ public class controladorFormulario {
 
             String respuesta = repo.insertar(pasaporte);
             crearAlerta(respuesta);
-            
 
         } else if ("Diplomatico".equalsIgnoreCase(seleccionado)) {
             creador = new FactoriaPDiplomatica();
@@ -119,24 +110,58 @@ public class controladorFormulario {
 
     @FXML
     void filtrarId(ActionEvent event) {
+        String id = idPasaporte.getText();
+        OperacionesPasaporte repo = new OperacionesPasaporte();
+        Pasaporte coincidencia = repo.selectId(id);
+
+        if (coincidencia instanceof PasaporteDiplomatico) {
+            titular.setText(coincidencia.getTitular().toString());
+            fechExp.setText(coincidencia.getFechaExp());
+            pais.setText(coincidencia.getPais().toString());
+            tipoPas.setValue(tipoPas.getItems().get(2));
+            descr.setText(((PasaporteDiplomatico) coincidencia).getMision());
+        } else if (coincidencia instanceof PasaporteOrdinario) {
+            titular.setText(coincidencia.getTitular().toString());
+            fechExp.setText(coincidencia.getFechaExp());
+            pais.setText(coincidencia.getPais().toString());
+            tipoPas.setValue(tipoPas.getItems().get(1));
+            descr.setText(((PasaporteOrdinario) coincidencia).getMotivoDeViaje());
+        }
+        
 
     }
-    
-    void limpiarDatos(){
+
+    @FXML
+    void clickActualizar(ActionEvent event) {
+
+    }
+
+    @FXML
+    void clickBuscar(ActionEvent event) {
+
+    }
+
+    @FXML
+    void clickEliminar(ActionEvent event) {
+
+    }
+
+    void limpiarDatos() {
         idPasaporte.setText("");
         titular.setText("");
         fechExp.setText("");
         pais.setText("");
         tipoPas.setValue(tipoPas.getItems().get(0));
         descr.setText("");
-        
+
     }
-    void crearAlerta(String respuesta){
+
+    void crearAlerta(String respuesta) {
         Alert alerta = new Alert(AlertType.INFORMATION);
-            alerta.setHeaderText("Estado");
-            alerta.setContentText(respuesta);
-            alerta.show();
-        
+        alerta.setHeaderText("Estado");
+        alerta.setContentText(respuesta);
+        alerta.show();
+
     }
 
 }
