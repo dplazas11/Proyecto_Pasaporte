@@ -7,17 +7,17 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import javafx.scene.layout.BorderPane;
 
-/**
- * JavaFX App
- */
+
 public class App extends Application {
 
     private static Scene scene;
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("formulario"), 640, 480);
+        BorderPane root =(BorderPane) FXMLLoader.load(getClass().getResource("/co/edu/poli/aplicacion/vista/formulario.fxml"));
+        scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
     }
@@ -27,12 +27,12 @@ public class App extends Application {
     }
 
     private static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + "formulario.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/co/edu/poli/aplicacion/vista/"+ fxml + ".fxml"));
         return fxmlLoader.load();
     }
 
     public static void main(String[] args) {
-        launch();
+        launch(args);
     }
-
+    
 }

@@ -83,33 +83,6 @@ public class OperacionesPasaporte implements Filtro<Pasaporte> {
     }
     
 
-    
-
-    /*
-    public String insertar(Pasaporte entidad) {
-
-        String sql = "INSERT INTO bdpasaporte (pasaporteid, fechaexp, titular, pais) " + "VALUES (?, ?, ?, ?)";
-
-        try (Connection conn = ConexionSupabase.getInstance().getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-            pstmt.setString(1, entidad.getId());
-            pstmt.setString(2, entidad.getFechaExp());
-            pstmt.setString(3, entidad.getTitular().getNombre());
-            pstmt.setString(4, entidad.getPais().getNombre());
-
-            int filas = pstmt.executeUpdate();
-            if (filas > 0) {
-                return "Registro insertado en la tabla 'bdpasaporte'.";
-            } else {
-                return "No se pudo insertar el pasaporte.";
-            }
-
-        } catch (SQLException e) {
-            return ("Error al insertar: " + e.getMessage());
-        }
-
-    }
-     */
     @Override
     public String eliminar(String pasaporteId) {
 
