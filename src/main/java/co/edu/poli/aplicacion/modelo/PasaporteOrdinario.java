@@ -12,7 +12,7 @@ public class PasaporteOrdinario extends Pasaporte {
         super();
     }
 
-    public PasaporteOrdinario(String id, String fechaExp, Titular titular, Pais pais, String IdMotivoViaje, String MotivoDeViaje) {
+    public PasaporteOrdinario(String id, String fechaExp, Titular titular, Pais pais, String MotivoDeViaje) {
         super(id, fechaExp, titular, pais);
         this.MotivoDeViaje = MotivoDeViaje;
     }

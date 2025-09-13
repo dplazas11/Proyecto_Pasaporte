@@ -100,30 +100,57 @@ public class OperacionesPasaporte implements Filtro<Pasaporte> {
     }
 
     @Override
-    public Pasaporte selectId(String PasaporteId) {
-        String sql = "SELECT * FROM BdPasaporte WHERE PasaporteId = ?";
-        Pasaporte pasaporteBuscado = null;
+    public Pasaporte selectId(String pasaporteId) {
+    Pasaporte pasaporteBuscado = null;
 
-        try (Connection conn = ConexionSupabase.getInstance().getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+    String sqlBase = "SELECT * FROM bdpasaporte WHERE pasaporteid = ?";
+    String sqlOrdinario = "SELECT * FROM pasaporteordinario WHERE idpasaporte = ?";
+    String sqlDiplomatico = "SELECT * FROM pasaportediplomatico WHERE idpasaporte = ?";
 
-            pstmt.setString(1, PasaporteId);
+    try (Connection conn = ConexionSupabase.getInstance().getConnection()) {
+        // Primero buscamos en la tabla base
+        try (PreparedStatement pstmt = conn.prepareStatement(sqlBase)) {
+            pstmt.setString(1, pasaporteId);
             ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()) {
-                //Titular titularbuscado = new Titular(null, rs.getString("titular"), null);
-                //Pais paisbuscado = new Pais(null, rs.getString("pais"), null);
+                String id = rs.getString("pasaporteid");
+                String fechaExp = rs.getString("fechaexp");
+                String titular = rs.getString("titular");
+                String pais = rs.getString("pais");
 
-                pasaporteBuscado = new Pasaporte(
-                        rs.getString("pasaporteid"),
-                        rs.getString("fechaexp"), null, null) {
-                };
+                // Ahora miramos si existe en Ordinario
+                try (PreparedStatement pstmtO = conn.prepareStatement(sqlOrdinario)) {
+                    pstmtO.setString(1, id);
+                    ResultSet rsO = pstmtO.executeQuery();
+                    if (rsO.next()) {
+                        String motivo = rsO.getString("motivoviaje");
+                        pasaporteBuscado = new PasaporteOrdinario(id, fechaExp, null, null, motivo);
+                        return pasaporteBuscado; // devolvemos directamente
+                    }
+                }
+
+                // Si no era ordinario, miramos si existe en Diplomático
+                try (PreparedStatement pstmtD = conn.prepareStatement(sqlDiplomatico)) {
+                    pstmtD.setString(1, id);
+                    ResultSet rsD = pstmtD.executeQuery();
+                    if (rsD.next()) {
+                        String mision = rsD.getString("mision");
+                        pasaporteBuscado = new PasaporteDiplomatico(id, fechaExp, null, null, mision);
+                        return pasaporteBuscado;
+                    }
+                }
+
+                // Si no estaba en ninguna tabla hija, devolvemos el genérico
+                pasaporteBuscado = new Pasaporte(id, fechaExp, null, null) {};
             }
-
-        } catch (SQLException e) {
-            System.out.println(" Error al leer: " + e.getMessage());
         }
-        return pasaporteBuscado;
+    } catch (SQLException e) {
+        System.out.println("Error al leer: " + e.getMessage());
     }
+
+    return pasaporteBuscado;
+}
 
     @Override
     public String actualizar(Pasaporte entidad) {

@@ -71,7 +71,6 @@ public class controladorFormulario {
         OperacionesPasaporte repo = new OperacionesPasaporte();
         String seleccionado = tipoPas.getValue();
 
-        
         if ("Ordinario".equalsIgnoreCase(seleccionado)) {
             creador = new FactoriaPOrdinaria();
             pasaporte = creador.CrearPasaporte();
@@ -104,30 +103,34 @@ public class controladorFormulario {
 
         }
 
-        limpiarDatos();
+        limpiarDatos(1);
 
     }
 
     @FXML
     void filtrarId(ActionEvent event) {
+
         String id = idPasaporte.getText();
         OperacionesPasaporte repo = new OperacionesPasaporte();
         Pasaporte coincidencia = repo.selectId(id);
 
-        if (coincidencia instanceof PasaporteDiplomatico) {
-            titular.setText(coincidencia.getTitular().toString());
-            fechExp.setText(coincidencia.getFechaExp());
-            pais.setText(coincidencia.getPais().toString());
-            tipoPas.setValue(tipoPas.getItems().get(2));
-            descr.setText(((PasaporteDiplomatico) coincidencia).getMision());
-        } else if (coincidencia instanceof PasaporteOrdinario) {
-            titular.setText(coincidencia.getTitular().toString());
-            fechExp.setText(coincidencia.getFechaExp());
-            pais.setText(coincidencia.getPais().toString());
-            tipoPas.setValue(tipoPas.getItems().get(1));
-            descr.setText(((PasaporteOrdinario) coincidencia).getMotivoDeViaje());
+        if (coincidencia != null) {
+            if (coincidencia instanceof PasaporteDiplomatico) {
+                titular.setText("pendiente");
+                fechExp.setText(coincidencia.getFechaExp());
+                pais.setText("pendiente");
+                tipoPas.setValue(tipoPas.getItems().get(2));
+                descr.setText(((PasaporteDiplomatico) coincidencia).getMision());
+            } else if (coincidencia instanceof PasaporteOrdinario) {
+                titular.setText("pendiente");
+                fechExp.setText(coincidencia.getFechaExp());
+                pais.setText("pendiente");
+                tipoPas.setValue(tipoPas.getItems().get(1));
+                descr.setText(((PasaporteOrdinario) coincidencia).getMotivoDeViaje());
+            }
+        } else {
+            limpiarDatos(2);
         }
-        
 
     }
 
@@ -146,13 +149,25 @@ public class controladorFormulario {
 
     }
 
-    void limpiarDatos() {
-        idPasaporte.setText("");
-        titular.setText("");
-        fechExp.setText("");
-        pais.setText("");
-        tipoPas.setValue(tipoPas.getItems().get(0));
-        descr.setText("");
+    void limpiarDatos(int tipo) {
+        switch (tipo) {
+            case 1:
+                idPasaporte.setText("");
+                titular.setText("");
+                fechExp.setText("");
+                pais.setText("");
+                tipoPas.setValue(tipoPas.getItems().get(0));
+                descr.setText("");
+            case 2:
+                titular.setText("");
+                fechExp.setText("");
+                pais.setText("");
+                tipoPas.setValue(tipoPas.getItems().get(0));
+                descr.setText("");
+                break;
+            default:
+                throw new AssertionError();
+        }
 
     }
 
