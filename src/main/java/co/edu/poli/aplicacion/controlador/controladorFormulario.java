@@ -91,12 +91,12 @@ public class controladorFormulario {
             diseñoBoton(bguardar);
             diseñoBoton(bmostrartodo);
 
-            tablaId.setCellValueFactory(new PropertyValueFactory<>("id"));
-            tablaTitular.setCellValueFactory(new PropertyValueFactory<>("titular"));
-            tablaPais.setCellValueFactory(new PropertyValueFactory<>("pais"));
-            tablaFechExp.setCellValueFactory(new PropertyValueFactory<>("fechaExp"));
-            tablaDescr.setCellValueFactory(new PropertyValueFactory<>("tipopasaporte"));
-            tablaDescr.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
+            tablaId.setCellValueFactory(new PropertyValueFactory<Pasaporte, String>("id"));
+            tablaFechExp.setCellValueFactory(new PropertyValueFactory<Pasaporte, String>("fechaExp"));
+            tablaTitular.setCellValueFactory(new PropertyValueFactory<Pasaporte, String>("titular"));
+            tablaPais.setCellValueFactory(new PropertyValueFactory<Pasaporte, String>("pais"));
+            tablatipopasp.setCellValueFactory(new PropertyValueFactory<Pasaporte, String>("tipopasaporte"));
+            tablaDescr.setCellValueFactory(new PropertyValueFactory<Pasaporte, String>("descripcion"));
 
         });
     }

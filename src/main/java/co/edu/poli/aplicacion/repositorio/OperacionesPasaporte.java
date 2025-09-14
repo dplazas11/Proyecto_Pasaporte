@@ -212,7 +212,13 @@ public class OperacionesPasaporte implements Filtro<Pasaporte> {
 
     @Override
     public ArrayList<Pasaporte> selectAll() {
-        String sql = "SELECT p.*, d.tipopasaporte,o.tipopasaporte, d.descripcion, o.descripcion\n"
+        String sql = "SELECT \n"
+                + "    p.pasaporteid, \n"
+                + "    p.fechaexp, \n"
+                + "    p.titular, \n"
+                + "    p.pais,\n"
+                + "    COALESCE(d.tipopasaporte, o.tipopasaporte) AS tipoPasaporte,\n"
+                + "    COALESCE(d.descripcion, o.descripcion) AS descripcion\n"
                 + "FROM bdpasaporte p\n"
                 + "LEFT JOIN pasaportediplomatico d ON p.pasaporteid = d.idpasaporte\n"
                 + "LEFT JOIN pasaporteordinario o ON p.pasaporteid = o.idpasaporte;";
@@ -225,19 +231,19 @@ public class OperacionesPasaporte implements Filtro<Pasaporte> {
                 String fechaExp = rs.getString("fechaexp");
                 String titular = rs.getString("titular");
                 String pais = rs.getString("pais");
+                String tipoPasport = rs.getString("tipopasaporte");
+                String descrip = rs.getString("descripcion");
+
+                
 
                 Pasaporte pasaporte;
 
-                if (rs.getString("tipopasaporte").equals("Diplomatico")) { // Diplomático
-                    String tipoPasaporte = rs.getString("tipopasaporte");
-                    String mision = rs.getString("descripcion");
-                    pasaporte = new PasaporteDiplomatico(id, fechaExp, null, null, tipoPasaporte, mision);
+                if ("Diplomatico".equalsIgnoreCase(tipoPasport)) {
+                    pasaporte = new PasaporteDiplomatico(id, fechaExp, null, null, tipoPasport, descrip);
                 } else {
-                    String tipoPasaporte = rs.getString("tipopasaporte");
-                    String motivo = rs.getString("descripcion");
-                    pasaporte = new PasaporteOrdinario(id, fechaExp, null, null, tipoPasaporte, motivo);
-                }
+                    pasaporte = new PasaporteOrdinario(id, fechaExp, null, null, tipoPasport, descrip);
 
+                }
                 lista.add(pasaporte);
             }
 
