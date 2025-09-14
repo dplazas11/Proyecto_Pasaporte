@@ -198,25 +198,41 @@ public class controladorFormulario {
         OperacionesPasaporte repo = new OperacionesPasaporte();
         Pasaporte pasaporteExistente = repo.selectId(id);
 
-        // Si el pasaporte ya existe
+        // Si el pasaporte existe
         if (pasaporteExistente != null) {
-            // Verificar si cambió de tipo
-            boolean cambioTipo = false;
+            boolean tipoCambia = false;
+
             if (pasaporteExistente instanceof PasaporteDiplomatico && seleccionado.equalsIgnoreCase("Ordinario")) {
-                cambioTipo = true;
+                tipoCambia = true;
             } else if (pasaporteExistente instanceof PasaporteOrdinario && seleccionado.equalsIgnoreCase("Diplomatico")) {
-                cambioTipo = true;
+                tipoCambia = true;
             }
 
-            if (cambioTipo) {
-                // Borrar el registro existente antes de crear uno nuevo
+            if (!tipoCambia) {
+                // Tipo igual → solo actualizar
+                pasaporteExistente.setTitular(null);
+                pasaporteExistente.setPais(null);
+                pasaporteExistente.setFechaExp(fechaExpTxt);
+
+                if (pasaporteExistente instanceof PasaporteDiplomatico) {
+                    ((PasaporteDiplomatico) pasaporteExistente).setDescripcion(descripcionTxt);
+                } else if (pasaporteExistente instanceof PasaporteOrdinario) {
+                    ((PasaporteOrdinario) pasaporteExistente).setDescripcion(descripcionTxt);
+                }
+
+                String respuesta = repo.actualizar(pasaporteExistente);
+                crearAlerta(respuesta);
+                limpiarDatos(1);
+                return;
+            } else {
+                // Tipo cambia → eliminar registros antiguos
                 repo.eliminar(id);
-                pasaporteExistente = null; // forzar creación nueva
             }
         }
 
-        // Crear el pasaporte según el tipo seleccionado
+        // Crear nuevo pasaporte según el tipo seleccionado
         Pasaporte nuevoPasaporte;
+
         if (seleccionado.equalsIgnoreCase("Diplomatico")) {
             CreadorPasaporte creador = new FactoriaPDiplomatica();
             nuevoPasaporte = creador.CrearPasaporte();
@@ -235,16 +251,19 @@ public class controladorFormulario {
         // Asignar datos comunes
         nuevoPasaporte.setId(id);
         nuevoPasaporte.setTitular(null);
-        nuevoPasaporte.setFechaExp(fechaExpTxt);
         nuevoPasaporte.setPais(null);
+        nuevoPasaporte.setFechaExp(fechaExpTxt);
 
-        // Guardar o actualizar
-        String respuesta = repo.actualizar(nuevoPasaporte);
-        crearAlerta(respuesta);
+        // Insertar nuevo registro
+        String respuestaInsert;
+        if (nuevoPasaporte instanceof PasaporteDiplomatico) {
+            respuestaInsert = repo.insertar((PasaporteDiplomatico) nuevoPasaporte);
+        } else {
+            respuestaInsert = repo.insertar((PasaporteOrdinario) nuevoPasaporte);
+        }
 
-        // Limpiar formulario
+        crearAlerta(respuestaInsert);
         limpiarDatos(1);
-
     }
 
     @FXML
