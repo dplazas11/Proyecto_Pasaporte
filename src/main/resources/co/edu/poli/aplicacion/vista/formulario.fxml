@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="679.0" prefWidth="989.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.poli.aplicacion.controlador.controladorFormulario">
+   <left>
+      <VBox prefHeight="679.0" prefWidth="251.0" style="-fx-background-color: #E0E0E0;" BorderPane.alignment="CENTER">
+         <children>
+            <VBox alignment="CENTER" prefHeight="220.0" prefWidth="251.0" style="-fx-background-color: #0F385A;">
+               <children>
+                  <ImageView fitHeight="132.0" fitWidth="143.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@pasaporte.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </VBox>
+            <AnchorPane prefHeight="528.0" prefWidth="251.0" style="-fx-background-color: #0F385A;">
+               <children>
+                  <Button fx:id="bguardar" layoutX="37.0" layoutY="53.0" mnemonicParsing="false" onAction="#clickGuardar" prefHeight="54.0" prefWidth="178.0" style="-fx-background-color: #FFFFFF; -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.6), 15, 0, -2, 2); -fx-background-radius: 15;" text="GUARDAR" textFill="#0f385a">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="bactualizar" layoutX="37.0" layoutY="152.0" mnemonicParsing="false" onAction="#clickActualizar" prefHeight="54.0" prefWidth="178.0" style="-fx-background-color: #FFFFFF; -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.6), 15, 0, -2, 2); -fx-background-radius: 15;" text="ACTUALIZAR" textFill="#0f385a">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="bbuscar" layoutX="37.0" layoutY="253.0" mnemonicParsing="false" onAction="#clickBuscar" prefHeight="54.0" prefWidth="178.0" style="-fx-background-color: #FFFFFF; -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.6), 15, 0, -2, 2); -fx-background-radius: 15;" text="BUSCAR" textFill="#0f385a">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="beliminar" layoutX="37.0" layoutY="347.0" mnemonicParsing="false" onAction="#clickEliminar" prefHeight="54.0" prefWidth="178.0" style="-fx-background-color: #FFFFFF; -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.6), 15, 0, -2, 2); -fx-background-radius: 15;" text="ELIMINAR" textFill="#0f385a">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Button>
+               </children>
+            </AnchorPane>
+         </children>
+      </VBox>
+   </left>
+   <center>
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox alignment="CENTER" prefHeight="141.0" prefWidth="715.0" style="-fx-background-color: #FFFFFF;">
+               <children>
+                  <Label text="REGISTRO DE PASAPORTES " textFill="#0f385a">
+                     <font>
+                        <Font name="System Bold" size="46.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <AnchorPane prefHeight="546.0" prefWidth="715.0" style="-fx-background-color: #DDE7F0;">
+               <children>
+                  <TextField fx:id="idPasaporte" layoutX="14.0" layoutY="53.0" onAction="#filtrarId" prefHeight="36.0" prefWidth="119.0" />
+                  <TextField fx:id="pais" layoutX="143.0" layoutY="53.0" prefHeight="36.0" prefWidth="179.0" />
+                  <TextField fx:id="fechExp" layoutX="332.0" layoutY="53.0" prefHeight="36.0" prefWidth="204.0" />
+                  <TextField fx:id="titular" layoutX="547.0" layoutY="53.0" prefHeight="36.0" prefWidth="171.0" />
+                  <Label layoutX="22.0" layoutY="21.0" text="ID Pasaporte" textFill="#0f385a">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="208.0" layoutY="21.0" text="Titular" textFill="#0f385a">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="364.0" layoutY="21.0" text="Fecha De Expedición" textFill="#0f385a">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="622.0" layoutY="21.0" text="Pais" textFill="#0f385a">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="22.0" layoutY="111.0" text="Tipo De Pasaporte" textFill="#0f385a">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <ComboBox fx:id="tipoPas" layoutX="14.0" layoutY="142.0" prefHeight="33.0" prefWidth="192.0" promptText="(Seleccione una opción)" style="-fx-text-fill: #0f3805;" />
+                  <TextField fx:id="descr" layoutX="244.0" layoutY="142.0" prefHeight="34.0" prefWidth="477.0" />
+                  <Label layoutX="255.0" layoutY="111.0" text="Descripción" textFill="#0f385a">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <TableView fx:id="tablaDatos" layoutX="22.0" layoutY="249.0" prefHeight="282.0" prefWidth="688.0">
+                    <columns>
+                      <TableColumn fx:id="tablaId" prefWidth="75.19995498657227" text="ID" />
+                        <TableColumn fx:id="tablaFechExp" prefWidth="99.46664428710938" text="FECH EXP" />
+                      <TableColumn fx:id="tablaTitular" minWidth="3.0" prefWidth="109.06672668457031" text="TITULAR " />
+                        <TableColumn fx:id="tablaPais" prefWidth="88.7999267578125" text="PAIS " />
+                        <TableColumn fx:id="tablatipopasp" prefWidth="111.46673583984375" text="TIPO PASAPORTE" />
+                        <TableColumn fx:id="tablaDescr" prefWidth="208.53326416015625" text="DESCRIPCION" />
+                    </columns>
+                  </TableView>
+                  <Button fx:id="bmostrartodo" layoutX="530.0" layoutY="193.0" mnemonicParsing="false" onAction="#clickMostrarTodo" prefHeight="39.0" prefWidth="142.0" style="-fx-background-color: #FFFFFF; -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.6), 15, 0, -2, 2); -fx-background-radius: 15;" text="MOSTRAR TODO" textFill="#0f385a">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Button>
+               </children>
+            </AnchorPane>
+         </children>
+      </VBox>
+   </center>
+</BorderPane>
