@@ -95,7 +95,7 @@ public class controladorFormulario {
             tablaFechExp.setCellValueFactory(new PropertyValueFactory<Pasaporte, String>("fechaExp"));
             tablaTitular.setCellValueFactory(new PropertyValueFactory<Pasaporte, String>("titular"));
             tablaPais.setCellValueFactory(new PropertyValueFactory<Pasaporte, String>("pais"));
-            tablatipopasp.setCellValueFactory(new PropertyValueFactory<Pasaporte, String>("tipopasaporte"));
+            tablatipopasp.setCellValueFactory(new PropertyValueFactory<Pasaporte, String>("tipoPasaporte"));
             tablaDescr.setCellValueFactory(new PropertyValueFactory<Pasaporte, String>("descripcion"));
 
         });
