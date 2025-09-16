@@ -42,4 +42,5 @@ public class ElementoSeguridad {
         return "ElementoSeguridad{" + "id=" + id + ", tipo=" + tipo + ", descripcion=" + descripcion + '}';
     }
     
+    
 }
