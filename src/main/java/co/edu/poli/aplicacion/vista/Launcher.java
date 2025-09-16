@@ -4,7 +4,9 @@ public class Launcher {
     public static void main(String[] args) {
        //App.main(args); 
        
-        System.out.println("prueba reveert commit");
+        int a  = 8;
+        int b=9;
+        System.out.println(a+b);
        
         
     }
