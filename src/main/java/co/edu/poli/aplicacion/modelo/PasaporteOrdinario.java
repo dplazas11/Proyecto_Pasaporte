@@ -1,38 +1,24 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package co.edu.poli.aplicacion.modelo;
 
 public class PasaporteOrdinario extends Pasaporte {
 
-    private String tipoPasaporte;
-    private String descripcion;
+    private String motivoViaje;
 
     public PasaporteOrdinario() {
         super();
     }
 
-    public PasaporteOrdinario(String id, String fechaExp, Titular titular, Pais pais, String tipoPasaporte, String descripcion) {
+    public PasaporteOrdinario(String id, String fechaExp, Titular titular, Pais pais, String motivoViaje) {
         super(id, fechaExp, titular, pais);
-        this.tipoPasaporte= tipoPasaporte;
-        this.descripcion = descripcion;
+        this.motivoViaje = motivoViaje;
     }
 
-    public String getTipoPasaporte() {
-        return tipoPasaporte;
+    public String getMotivoViaje() {
+        return motivoViaje;
     }
 
-    public void setTipoPasaporte(String tipoPasaporte) {
-        this.tipoPasaporte = tipoPasaporte;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public void setMotivoViaje(String motivoViaje) {
+        this.motivoViaje = motivoViaje;
     }
 
     @Override
@@ -42,8 +28,7 @@ public class PasaporteOrdinario extends Pasaporte {
                 + ", fechaExp=" + getFechaExp()
                 + ", titular=" + (getTitular() != null ? getTitular() : "null")
                 + ", pais=" + (getPais() != null ? getPais() : "null")
-                + ", tipoPasaporte=" + tipoPasaporte
-                + ", motivoDeViaje=" + descripcion
+                + ", motivoDeViaje=" + motivoViaje
                 + '}';
     }
 

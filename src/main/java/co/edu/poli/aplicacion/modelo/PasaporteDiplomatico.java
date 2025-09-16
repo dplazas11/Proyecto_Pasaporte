@@ -1,22 +1,16 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package co.edu.poli.aplicacion.modelo;
 
 public class PasaporteDiplomatico extends Pasaporte {
 
-    private String tipoPasaporte;
-    private String descripcion;
+    private String mision;
 
     public PasaporteDiplomatico() {
         super();
     }
 
-    public PasaporteDiplomatico( String id, String fechaExp, Titular titular, Pais pais,String tipoPasaporte, String Mision) {
+    public PasaporteDiplomatico(String id, String fechaExp, Titular titular, Pais pais, String Mision) {
         super(id, fechaExp, titular, pais);
-        this.tipoPasaporte = tipoPasaporte;
-        this.descripcion = Mision;
+        this.mision = Mision;
     }
 
     @Override
@@ -26,27 +20,18 @@ public class PasaporteDiplomatico extends Pasaporte {
                 + ", fechaExp=" + getFechaExp()
                 + ", titular=" + (getTitular() != null ? getTitular() : "null")
                 + ", pais=" + (getPais() != null ? getPais() : "null")
-                + ", tipoPasaporte=" + tipoPasaporte
-                + ", mision=" + descripcion
+                + ", mision=" + mision
                 + '}';
-    }
-
-    public String getTipoPasaporte() {
-        return tipoPasaporte;
-    }
-
-    public void setTipoPasaporte(String tipoPasaporte) {
-        this.tipoPasaporte = tipoPasaporte;
     }
 
     
 
-    public String getDescripcion() {
-        return descripcion;
+    public String getMision() {
+        return mision;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public void setMision(String Mision) {
+        this.mision= Mision;
     }
 
 }

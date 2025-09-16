@@ -8,6 +8,7 @@ import co.edu.poli.aplicacion.services.CreadorPasaporte;
 import co.edu.poli.aplicacion.services.FactoriaPDiplomatica;
 import co.edu.poli.aplicacion.services.FactoriaPOrdinaria;
 import java.util.ArrayList;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -91,12 +92,7 @@ public class controladorFormulario {
             diseñoBoton(bguardar);
             diseñoBoton(bmostrartodo);
 
-            tablaId.setCellValueFactory(new PropertyValueFactory<Pasaporte, String>("id"));
-            tablaFechExp.setCellValueFactory(new PropertyValueFactory<Pasaporte, String>("fechaExp"));
-            tablaTitular.setCellValueFactory(new PropertyValueFactory<Pasaporte, String>("titular"));
-            tablaPais.setCellValueFactory(new PropertyValueFactory<Pasaporte, String>("pais"));
-            tablatipopasp.setCellValueFactory(new PropertyValueFactory<Pasaporte, String>("tipoPasaporte"));
-            tablaDescr.setCellValueFactory(new PropertyValueFactory<Pasaporte, String>("descripcion"));
+            llenarTabla();
 
         });
     }
@@ -123,8 +119,7 @@ public class controladorFormulario {
             pasaporte.setTitular(null);
             pasaporte.setFechaExp(fechaExp);
             pasaporte.setPais(null);
-            ((PasaporteOrdinario) pasaporte).setTipoPasaporte(seleccionado);
-            ((PasaporteOrdinario) pasaporte).setDescripcion(descripcion);
+            ((PasaporteOrdinario) pasaporte).setMotivoViaje(descripcion);
 
             String respuesta = repo.insertar(pasaporte);
             crearAlerta(respuesta);
@@ -137,8 +132,7 @@ public class controladorFormulario {
             pasaporte.setTitular(null);
             pasaporte.setFechaExp(fechaExp);
             pasaporte.setPais(null);
-            ((PasaporteDiplomatico) pasaporte).setTipoPasaporte(seleccionado);
-            ((PasaporteDiplomatico) pasaporte).setDescripcion(descripcion);
+            ((PasaporteDiplomatico) pasaporte).setMision(descripcion);
 
             String respuesta = repo.insertar(pasaporte);
             crearAlerta(respuesta);
@@ -166,13 +160,14 @@ public class controladorFormulario {
                 fechExp.setText(coincidencia.getFechaExp());
                 pais.setText("pendiente");
                 tipoPas.setValue("Diplomatico");
-                descr.setText(((PasaporteDiplomatico) coincidencia).getDescripcion());
+                descr.setText(((PasaporteDiplomatico) coincidencia).getMision()
+                );
             } else if (coincidencia instanceof PasaporteOrdinario) {
                 titular.setText("pendiente");
                 fechExp.setText(coincidencia.getFechaExp());
                 pais.setText("pendiente");
                 tipoPas.setValue("Ordinario");
-                descr.setText(((PasaporteOrdinario) coincidencia).getDescripcion());
+                descr.setText(((PasaporteOrdinario) coincidencia).getMotivoViaje());
             }
         } else {
             limpiarDatos(2);
@@ -215,9 +210,9 @@ public class controladorFormulario {
                 pasaporteExistente.setFechaExp(fechaExpTxt);
 
                 if (pasaporteExistente instanceof PasaporteDiplomatico) {
-                    ((PasaporteDiplomatico) pasaporteExistente).setDescripcion(descripcionTxt);
+                    ((PasaporteDiplomatico) pasaporteExistente).setMision(descripcionTxt);
                 } else if (pasaporteExistente instanceof PasaporteOrdinario) {
-                    ((PasaporteOrdinario) pasaporteExistente).setDescripcion(descripcionTxt);
+                    ((PasaporteOrdinario) pasaporteExistente).setMotivoViaje(descripcionTxt);
                 }
 
                 String respuesta = repo.actualizar(pasaporteExistente);
@@ -236,13 +231,11 @@ public class controladorFormulario {
         if (seleccionado.equalsIgnoreCase("Diplomatico")) {
             CreadorPasaporte creador = new FactoriaPDiplomatica();
             nuevoPasaporte = creador.CrearPasaporte();
-            ((PasaporteDiplomatico) nuevoPasaporte).setTipoPasaporte(seleccionado);
-            ((PasaporteDiplomatico) nuevoPasaporte).setDescripcion(descripcionTxt);
+            ((PasaporteDiplomatico) nuevoPasaporte).setMision(descripcionTxt);
         } else if (seleccionado.equalsIgnoreCase("Ordinario")) {
             CreadorPasaporte creador = new FactoriaPOrdinaria();
             nuevoPasaporte = creador.CrearPasaporte();
-            ((PasaporteOrdinario) nuevoPasaporte).setTipoPasaporte(seleccionado);
-            ((PasaporteOrdinario) nuevoPasaporte).setDescripcion(descripcionTxt);
+            ((PasaporteOrdinario) nuevoPasaporte).setMotivoViaje(descripcionTxt);
         } else {
             crearAlerta("Tipo de pasaporte no válido");
             return;
@@ -275,11 +268,9 @@ public class controladorFormulario {
     void clickMostrarTodo(ActionEvent event) {
 
         OperacionesPasaporte repo = new OperacionesPasaporte();
-        ArrayList<Pasaporte> totalPasaportes = new ArrayList<>();
-        totalPasaportes = repo.selectAll();
-        ObservableList<Pasaporte> lista = FXCollections.observableArrayList(totalPasaportes);
-        tablaDatos.setItems(lista);
-
+        ArrayList<Pasaporte> totalPasaportes = repo.selectAll();
+        ObservableList<Pasaporte> datosTabla = FXCollections.observableArrayList(totalPasaportes);
+        tablaDatos.setItems(datosTabla);
     }
 
     @FXML
@@ -337,6 +328,37 @@ public class controladorFormulario {
     void diseñoBoton(Button boton) {
         boton.setOnMousePressed(e -> boton.setScaleX(0.95)); // se hace más pequeño
         boton.setOnMouseReleased(e -> boton.setScaleX(1));
+    }
+
+    void llenarTabla() {
+        tablaId.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getId()));
+        tablaFechExp.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getFechaExp()));
+
+        // titular y país no están en BD, se usa valor fijo
+        tablaTitular.setCellValueFactory(data -> new SimpleStringProperty("pendiente"));
+        tablaPais.setCellValueFactory(data -> new SimpleStringProperty("pendiente"));
+
+        // tipo pasaporte depende del instanceof
+        tablatipopasp.setCellValueFactory(data -> {
+            if (data.getValue() instanceof PasaporteOrdinario) {
+                return new SimpleStringProperty("Ordinario");
+            } else  {
+                return new SimpleStringProperty("Diplomático");
+            }
+        });
+
+        // descripción depende de la subclase
+        tablaDescr.setCellValueFactory(data -> {
+            Pasaporte p = data.getValue();
+            if (p instanceof PasaporteOrdinario) {
+                PasaporteOrdinario o = (PasaporteOrdinario) p;
+                return new SimpleStringProperty(o.getMotivoViaje());
+            } else {
+                PasaporteDiplomatico d = (PasaporteDiplomatico) p;
+                return new SimpleStringProperty(d.getMision());
+            }
+            
+        });
     }
 
 }
