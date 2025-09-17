@@ -7,15 +7,17 @@ public abstract class Pasaporte {
     private String fechaExp;
     private Titular titular;
     private Pais pais;
+    private ElementoSeguridad elemSeguridad;
     
     
     public Pasaporte() {}
 
-    public Pasaporte(String id, String fechaExp, Titular titular, Pais pais) {
+    public Pasaporte(String id, String fechaExp, Titular titular, Pais pais, ElementoSeguridad elemSeguridad) {
         this.id = id;
         this.fechaExp = fechaExp;
         this.titular = titular;
         this.pais = pais;
+        this.elemSeguridad = elemSeguridad;
         
     }
 
@@ -49,6 +51,14 @@ public abstract class Pasaporte {
 
     public void setPais(Pais pais) {
         this.pais = pais;
+    }
+
+    public ElementoSeguridad getElemSeguridad() {
+        return elemSeguridad;
+    }
+
+    public void setElemSeguridad(ElementoSeguridad elemSeguridad) {
+        this.elemSeguridad = elemSeguridad;
     }
 
     

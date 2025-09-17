@@ -8,8 +8,8 @@ public class PasaporteOrdinario extends Pasaporte {
         super();
     }
 
-    public PasaporteOrdinario(String id, String fechaExp, Titular titular, Pais pais, String motivoViaje) {
-        super(id, fechaExp, titular, pais);
+    public PasaporteOrdinario(String id, String fechaExp, Titular titular, Pais pais, ElementoSeguridad elemseguridad, String motivoViaje) {
+        super(id, fechaExp, titular, pais, elemseguridad);
         this.motivoViaje = motivoViaje;
     }
 
@@ -28,6 +28,7 @@ public class PasaporteOrdinario extends Pasaporte {
                 + ", fechaExp=" + getFechaExp()
                 + ", titular=" + (getTitular() != null ? getTitular() : "null")
                 + ", pais=" + (getPais() != null ? getPais() : "null")
+                + ", elemento seguridad=" + (getElemSeguridad()!= null ? getElemSeguridad(): "null")                
                 + ", motivoDeViaje=" + motivoViaje
                 + '}';
     }

@@ -8,8 +8,8 @@ public class PasaporteDiplomatico extends Pasaporte {
         super();
     }
 
-    public PasaporteDiplomatico(String id, String fechaExp, Titular titular, Pais pais, String Mision) {
-        super(id, fechaExp, titular, pais);
+    public PasaporteDiplomatico(String id, String fechaExp, Titular titular, Pais pais, ElementoSeguridad elemseguridad, String Mision) {
+        super(id, fechaExp, titular, pais, elemseguridad);
         this.mision = Mision;
     }
 
@@ -20,6 +20,7 @@ public class PasaporteDiplomatico extends Pasaporte {
                 + ", fechaExp=" + getFechaExp()
                 + ", titular=" + (getTitular() != null ? getTitular() : "null")
                 + ", pais=" + (getPais() != null ? getPais() : "null")
+                + ", elemento seguridad=" + (getElemSeguridad()!= null ? getElemSeguridad(): "null")
                 + ", mision=" + mision
                 + '}';
     }

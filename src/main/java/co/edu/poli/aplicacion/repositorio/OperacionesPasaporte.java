@@ -16,7 +16,7 @@ public class OperacionesPasaporte implements Filtro<Pasaporte> {
 
     @Override
     public String insertar(Pasaporte pasaporte) {
-        String sqlPasaporte = "INSERT INTO bdpasaporte (pasaporteid, fechaexp, titular, pais) VALUES (?, ?, ?, ?)";
+        String sqlPasaporte = "INSERT INTO bdpasaporte (pasaporteid, fechaexp, titular, pais, elemseguridad) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection conn = ConexionSupabase.getInstance().getConnection()) {
 
@@ -31,6 +31,7 @@ public class OperacionesPasaporte implements Filtro<Pasaporte> {
                     pstmt1.setString(2, pasaporte.getFechaExp());
                     pstmt1.setString(3, pasaporte.getTitular() != null ? pasaporte.getTitular().getNombre() : null);
                     pstmt1.setString(4, pasaporte.getPais() != null ? pasaporte.getPais().getNombre() : null);
+                    pstmt1.setString(5, pasaporte.getElemSeguridad()!= null ? pasaporte.getElemSeguridad().getDescripcion(): null);                    
                     pstmt1.executeUpdate();
 
                     PasaporteOrdinario ordinario = (PasaporteOrdinario) pasaporte;
@@ -54,6 +55,8 @@ public class OperacionesPasaporte implements Filtro<Pasaporte> {
                     pstmt1.setString(2, pasaporte.getFechaExp());
                     pstmt1.setString(3, pasaporte.getTitular() != null ? pasaporte.getTitular().getNombre() : null);
                     pstmt1.setString(4, pasaporte.getPais() != null ? pasaporte.getPais().getNombre() : null);
+                    pstmt1.setString(5,pasaporte.getElemSeguridad()!= null ? pasaporte.getElemSeguridad().getDescripcion(): null);
+                    
                     pstmt1.executeUpdate();
 
                     PasaporteDiplomatico diplom = (PasaporteDiplomatico) pasaporte;
@@ -118,6 +121,7 @@ public class OperacionesPasaporte implements Filtro<Pasaporte> {
                     String fechaExp = rs.getString("fechaexp");
                     String titular = rs.getString("titular");
                     String pais = rs.getString("pais");
+                    String elemSeguridad = rs.getString("elemseguridad");
 
                     // Ahora miramos si existe en Ordinario
                     try (PreparedStatement pstmtO = conn.prepareStatement(sqlOrdinario)) {
@@ -125,7 +129,7 @@ public class OperacionesPasaporte implements Filtro<Pasaporte> {
                         ResultSet rsO = pstmtO.executeQuery();
                         if (rsO.next()) {
                             String motivoviaje = rsO.getString("motivoviaje");
-                            pasaporteBuscado = new PasaporteOrdinario(id, fechaExp, null, null, motivoviaje);
+                            pasaporteBuscado = new PasaporteOrdinario(id, fechaExp, null, null, null, motivoviaje);
                             return pasaporteBuscado; // devolvemos directamente
                         }
                     }
@@ -136,13 +140,13 @@ public class OperacionesPasaporte implements Filtro<Pasaporte> {
                         ResultSet rsD = pstmtD.executeQuery();
                         if (rsD.next()) {
                             String mision = rsD.getString("mision");
-                            pasaporteBuscado = new PasaporteDiplomatico(id, fechaExp, null, null, mision);
+                            pasaporteBuscado = new PasaporteDiplomatico(id, fechaExp, null, null,null, mision);
                             return pasaporteBuscado;
                         }
                     }
 
                     // Si no estaba en ninguna tabla hija, devolvemos el genérico
-                    pasaporteBuscado = new Pasaporte(id, fechaExp, null, null) {
+                    pasaporteBuscado = new Pasaporte(id, fechaExp, null, null, null) {
                     };
                 }
             }
@@ -233,9 +237,9 @@ public class OperacionesPasaporte implements Filtro<Pasaporte> {
                 Pasaporte pasaporte;
 
                 if (mision != null && !mision.isEmpty()) {
-                    pasaporte = new PasaporteDiplomatico(id, fechaExp, null, null, mision);
+                    pasaporte = new PasaporteDiplomatico(id, fechaExp, null, null,null, mision);
                 } else {
-                    pasaporte = new PasaporteOrdinario(id, fechaExp, null, null, motivoViaje);
+                    pasaporte = new PasaporteOrdinario(id, fechaExp, null, null,null, motivoViaje);
                 }
 
                 lista.add(pasaporte);
@@ -263,7 +267,7 @@ public class OperacionesPasaporte implements Filtro<Pasaporte> {
                 Pasaporte pasaporte = new Pasaporte(
                         rs.getString("pasaporteid"),
                         rs.getString("fechaexp"),
-                        null, null) {
+                        null, null, null) {
                 };
 
                 pasaportes_filtrados.add(pasaporte);
