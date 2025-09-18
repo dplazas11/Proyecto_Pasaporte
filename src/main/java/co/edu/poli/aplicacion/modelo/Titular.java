@@ -1,11 +1,6 @@
-
 package co.edu.poli.aplicacion.modelo;
 
-import java.io.*;
-import java.util.*;
-
-
-public class Titular {
+public class Titular implements Cloneable {
 
     private String id;
     private String nombre;
@@ -17,33 +12,27 @@ public class Titular {
         this.fechaNac = fechaNac;
     }
 
-    public String getId() {
-        return id;
-    }
+    public String getId() { return id; }
+    public void setId(String id) { this.id = id; }
 
-    public void setId(String id) {
-        this.id = id;
-    }
+    public String getNombre() { return nombre; }
+    public void setNombre(String nombre) { this.nombre = nombre; }
 
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getFechaNac() {
-        return fechaNac;
-    }
-
-    public void setFechaNac(String fechaNac) {
-        this.fechaNac = fechaNac;
-    }
+    public String getFechaNac() { return fechaNac; }
+    public void setFechaNac(String fechaNac) { this.fechaNac = fechaNac; }
 
     @Override
     public String toString() {
-        return "(id: " + id + ", Nombre: " + nombre + ", Fecha Nac: " + fechaNac + ')';
+        return "(id: " + id + ", Nombre: " + nombre + ", Fecha Nac: " + fechaNac + ")";
     }
 
+    // Método clone (Prototype)
+    @Override
+    public Titular clone() {
+        try {
+            return (Titular) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException("Error al clonar Titular", e);
+        }
+    }
 }

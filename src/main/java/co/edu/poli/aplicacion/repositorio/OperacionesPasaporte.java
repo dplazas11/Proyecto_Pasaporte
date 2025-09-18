@@ -129,7 +129,7 @@ public class OperacionesPasaporte implements Filtro<Pasaporte> {
                         ResultSet rsO = pstmtO.executeQuery();
                         if (rsO.next()) {
                             String motivoviaje = rsO.getString("motivoviaje");
-                            pasaporteBuscado = new PasaporteOrdinario(id, fechaExp, null, null, null, motivoviaje);
+                           // pasaporteBuscado = new PasaporteOrdinario(id, fechaExp, null, null, null, motivoviaje);
                             return pasaporteBuscado; // devolvemos directamente
                         }
                     }
@@ -239,10 +239,10 @@ public class OperacionesPasaporte implements Filtro<Pasaporte> {
                 if (mision != null && !mision.isEmpty()) {
                     pasaporte = new PasaporteDiplomatico(id, fechaExp, null, null,null, mision);
                 } else {
-                    pasaporte = new PasaporteOrdinario(id, fechaExp, null, null,null, motivoViaje);
+                    //pasaporte = new PasaporteOrdinario(id, fechaExp, null, null,null, motivoViaje);
                 }
 
-                lista.add(pasaporte);
+               // lista.add(pasaporte);
             }
 
         } catch (SQLException e) {
