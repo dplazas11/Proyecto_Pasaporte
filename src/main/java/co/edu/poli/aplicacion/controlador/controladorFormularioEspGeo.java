@@ -1,7 +1,8 @@
 package co.edu.poli.aplicacion.controlador;
 
 import co.edu.poli.aplicacion.services.AdaptadorCiudad;
-import co.edu.poli.aplicacion.services.RegionComposite;
+import co.edu.poli.aplicacion.services.CompEspacioGeografico;
+import co.edu.poli.aplicacion.services.CompositeRegion;
 import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -57,27 +58,30 @@ public class controladorFormularioEspGeo {
 
     @FXML
     void clickMostrarTodo(ActionEvent event) {
-           RegionComposite raiz = new RegionComposite();
-        
-        
-        
-        RegionComposite nivel1 = new RegionComposite("nivel 1");
-        nivel1.add(new AdaptadorCiudad("a"));
-        nivel1.add(new AdaptadorCiudad("b"));
-        nivel1.add(new AdaptadorCiudad("c"));
+        CompositeRegion raiz = new CompositeRegion("Mapa de espacios Geograficos");
 
-        // Nivel 2
-        
-        RegionComposite nivel2 = new RegionComposite("nivel 2");
-        nivel2.add(new AdaptadorCiudad("a"));
-        nivel2.add(new AdaptadorCiudad("b"));
-        nivel2.add(new AdaptadorCiudad("c"));
-        
-        raiz.add(nivel1);
-        raiz.add(nivel2);
+        CompositeRegion region1 = new CompositeRegion("Andina");
+        CompositeRegion region2 = new CompositeRegion("Pacifico");
 
-        String salida = raiz.getNombre();
-        TAContenedor.setText(salida);
+        CompositeRegion dept1 = new CompositeRegion("Cundinamarca");
+        dept1.add(new AdaptadorCiudad("Bogotá"));
+        dept1.add(new AdaptadorCiudad("Madrid"));
+        dept1.add(new AdaptadorCiudad("Chia"));
+
+        CompositeRegion dept2 = new CompositeRegion("Valle del Cauca");
+
+        dept2.add(new AdaptadorCiudad("Cali"));
+        dept2.add(new AdaptadorCiudad("Palmira"));
+        dept2.add(new AdaptadorCiudad("Cartago "));
+        
+        region1.add(dept1);
+        region2.add(dept2);
+
+        raiz.add(region1);
+        raiz.add(region2);
+        
+
+        TAContenedor.setText(raiz.getNombre());
         //Ciudad.appendText(salida);
     }
 
@@ -99,4 +103,5 @@ public class controladorFormularioEspGeo {
 
     }
 
+      
 }

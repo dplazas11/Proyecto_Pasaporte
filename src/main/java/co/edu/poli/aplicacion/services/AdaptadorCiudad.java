@@ -1,7 +1,7 @@
 package co.edu.poli.aplicacion.services;
 import co.edu.poli.aplicacion.modelo.Ciudad;
 
-public class AdaptadorCiudad implements EspacioGeografico {
+public class AdaptadorCiudad implements CompEspacioGeografico {
     private final Ciudad ciudad;
 
    
