@@ -13,7 +13,9 @@ import java.util.ArrayList;
 public class Launcher {
 
     public static void main(String[] args) throws CloneNotSupportedException {
-        //App.main(args); // Llama al main de tu clase App
+        App.main(args); // Llama al main de tu clase App
+        
+        /*
 
         ArrayList<Ciudad> ciudades = new ArrayList();
         Titular titular = new Titular("123", "Juan Perez", "25-03-2005");
@@ -41,6 +43,6 @@ public class Launcher {
         System.out.println("Original: " + originalPrototype);
         System.out.println("Copia: " + copia);
 
+    }*/
     }
-
 }

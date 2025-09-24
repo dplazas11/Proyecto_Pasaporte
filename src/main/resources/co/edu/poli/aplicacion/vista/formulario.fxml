@@ -29,24 +29,29 @@
             </VBox>
             <AnchorPane prefHeight="528.0" prefWidth="251.0" style="-fx-background-color: #0F385A;">
                <children>
-                  <Button fx:id="bguardar" layoutX="37.0" layoutY="53.0" mnemonicParsing="false" onAction="#clickGuardar" prefHeight="54.0" prefWidth="178.0" style="-fx-background-color: #FFFFFF; -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.6), 15, 0, -2, 2); -fx-background-radius: 15;" text="GUARDAR" textFill="#0f385a">
+                  <Button fx:id="bguardar" layoutX="38.0" layoutY="24.0" mnemonicParsing="false" onAction="#clickGuardar" prefHeight="54.0" prefWidth="178.0" style="-fx-background-color: #FFFFFF; -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.6), 15, 0, -2, 2); -fx-background-radius: 15;" text="GUARDAR" textFill="#0f385a">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>
                   </Button>
-                  <Button fx:id="bactualizar" layoutX="37.0" layoutY="152.0" mnemonicParsing="false" onAction="#clickActualizar" prefHeight="54.0" prefWidth="178.0" style="-fx-background-color: #FFFFFF; -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.6), 15, 0, -2, 2); -fx-background-radius: 15;" text="ACTUALIZAR" textFill="#0f385a">
+                  <Button fx:id="bactualizar" layoutX="38.0" layoutY="117.0" mnemonicParsing="false" onAction="#clickActualizar" prefHeight="54.0" prefWidth="178.0" style="-fx-background-color: #FFFFFF; -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.6), 15, 0, -2, 2); -fx-background-radius: 15;" text="ACTUALIZAR" textFill="#0f385a">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>
                   </Button>
-                  <Button fx:id="bbuscar" layoutX="37.0" layoutY="253.0" mnemonicParsing="false" onAction="#clickBuscar" prefHeight="54.0" prefWidth="178.0" style="-fx-background-color: #FFFFFF; -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.6), 15, 0, -2, 2); -fx-background-radius: 15;" text="BUSCAR" textFill="#0f385a">
+                  <Button fx:id="bbuscar" layoutX="38.0" layoutY="200.0" mnemonicParsing="false" onAction="#clickBuscar" prefHeight="54.0" prefWidth="178.0" style="-fx-background-color: #FFFFFF; -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.6), 15, 0, -2, 2); -fx-background-radius: 15;" text="BUSCAR" textFill="#0f385a">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>
                   </Button>
-                  <Button fx:id="beliminar" layoutX="37.0" layoutY="347.0" mnemonicParsing="false" onAction="#clickEliminar" prefHeight="54.0" prefWidth="178.0" style="-fx-background-color: #FFFFFF; -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.6), 15, 0, -2, 2); -fx-background-radius: 15;" text="ELIMINAR" textFill="#0f385a">
+                  <Button fx:id="beliminar" layoutX="39.0" layoutY="288.0" mnemonicParsing="false" onAction="#clickEliminar" prefHeight="54.0" prefWidth="178.0" style="-fx-background-color: #FFFFFF; -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.6), 15, 0, -2, 2); -fx-background-radius: 15;" text="ELIMINAR" textFill="#0f385a">
                      <font>
                         <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="barbolespgeo" layoutX="23.0" layoutY="383.0" mnemonicParsing="false" onAction="#clickcambiarventana" prefHeight="61.0" prefWidth="207.0" style="-fx-background-color: #FFFFFF; -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.6), 15, 0, -2, 2); -fx-background-radius: 15;" text="ARBOL ESP GEO " textFill="#0f385a">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
                      </font>
                   </Button>
                </children>

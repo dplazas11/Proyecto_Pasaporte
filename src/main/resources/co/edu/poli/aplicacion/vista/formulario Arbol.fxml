@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="679.0" prefWidth="989.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.poli.aplicacion.controlador.controladorFormularioEspGeo">
+   <left>
+      <VBox prefHeight="679.0" prefWidth="251.0" style="-fx-background-color: #E0E0E0;" BorderPane.alignment="CENTER">
+         <children>
+            <VBox alignment="CENTER" prefHeight="254.0" prefWidth="251.0" style="-fx-background-color: #0F385A;">
+               <children>
+                  <ImageView fitHeight="194.0" fitWidth="159.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@pais.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </VBox>
+            <AnchorPane prefHeight="498.0" prefWidth="251.0" style="-fx-background-color: #0F385A;">
+               <children>
+                  <Button fx:id="bguardar" layoutX="40.0" layoutY="11.0" mnemonicParsing="false" onAction="#clickGuardar" prefHeight="54.0" prefWidth="178.0" style="-fx-background-color: #FFFFFF; -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.6), 15, 0, -2, 2); -fx-background-radius: 15;" text="GUARDAR" textFill="#0f385a">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="bbuscar" layoutX="40.0" layoutY="196.0" mnemonicParsing="false" onAction="#clickBuscar" prefHeight="54.0" prefWidth="178.0" style="-fx-background-color: #FFFFFF; -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.6), 15, 0, -2, 2); -fx-background-radius: 15;" text="BUSCAR" textFill="#0f385a">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="beliminar" layoutX="38.0" layoutY="104.0" mnemonicParsing="false" onAction="#clickEliminar" prefHeight="54.0" prefWidth="178.0" style="-fx-background-color: #FFFFFF; -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.6), 15, 0, -2, 2); -fx-background-radius: 15;" text="ELIMINAR" textFill="#0f385a">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="bvolver" layoutX="22.0" layoutY="410.0" mnemonicParsing="false" onAction="#clickvolver" prefHeight="32.0" prefWidth="129.0" style="-fx-background-color: #FFFFFF; -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.6), 15, 0, -2, 2); -fx-background-radius: 15;" text="VOLVER" textFill="#0f385a">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Button>
+               </children>
+            </AnchorPane>
+         </children>
+      </VBox>
+   </left>
+   <center>
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox alignment="CENTER" prefHeight="141.0" prefWidth="715.0" style="-fx-background-color: #FFFFFF;">
+               <children>
+                  <Label text="Espacio Geográfico " textFill="#0f385a">
+                     <font>
+                        <Font name="System Bold" size="61.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <AnchorPane prefHeight="546.0" prefWidth="715.0" style="-fx-background-color: #DDE7F0;">
+               <children>
+                  <TextField fx:id="Region" layoutX="228.0" layoutY="26.0" onAction="#filtrarId" prefHeight="47.0" prefWidth="340.0" />
+                  <Label layoutX="77.0" layoutY="23.0" text="Región" textFill="#0f385a">
+                     <font>
+                        <Font name="System Bold" size="33.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="bmostrartodo" layoutX="495.0" layoutY="152.0" mnemonicParsing="false" onAction="#clickMostrarTodo" prefHeight="47.0" prefWidth="184.0" style="-fx-background-color: #FFFFFF; -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.6), 15, 0, -2, 2); -fx-background-radius: 15;" text="MOSTRAR TODO" textFill="#0f385a">
+                     <font>
+                        <Font name="System Bold" size="19.0" />
+                     </font>
+                  </Button>
+                  <TextArea layoutX="55.0" layoutY="213.0" prefHeight="300.0" prefWidth="644.0" />
+                  <Label layoutX="81.0" layoutY="83.0" text="Ciudad" textFill="#0f385a">
+                     <font>
+                        <Font name="System Bold" size="33.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="Ciudad" layoutX="227.0" layoutY="84.0" onAction="#filtrarId" prefHeight="50.0" prefWidth="341.0" />
+               </children>
+            </AnchorPane>
+         </children>
+      </VBox>
+   </center>
+</BorderPane>

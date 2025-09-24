@@ -7,12 +7,17 @@ import co.edu.poli.aplicacion.repositorio.OperacionesPasaporte;
 import co.edu.poli.aplicacion.services.CreadorPasaporte;
 import co.edu.poli.aplicacion.services.FactoriaPDiplomatica;
 import co.edu.poli.aplicacion.services.FactoriaPOrdinaria;
+import java.io.IOException;
 import java.util.ArrayList;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -22,6 +27,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 
 public class controladorFormulario {
 
@@ -78,6 +84,9 @@ public class controladorFormulario {
 
     @FXML
     private TextField titular;
+
+    @FXML
+    private Button barbolespgeo;
 
     @FXML
     public void initialize() {
@@ -284,6 +293,20 @@ public class controladorFormulario {
 
     }
 
+    @FXML
+    void clickcambiarventana(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/co/edu/poli/aplicacion/vista/formulario Arbol.fxml"));
+
+        Stage nuevaVentana = new Stage();
+        nuevaVentana.setScene(new Scene(root));
+        nuevaVentana.show();
+
+        // Cerrar la ventana actual
+        Stage actual = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        actual.close();
+
+    }
+
     //METODOS EXTRA 
     void limpiarDatos(int tipo) {
         switch (tipo) {
@@ -342,7 +365,7 @@ public class controladorFormulario {
         tablatipopasp.setCellValueFactory(data -> {
             if (data.getValue() instanceof PasaporteOrdinario) {
                 return new SimpleStringProperty("Ordinario");
-            } else  {
+            } else {
                 return new SimpleStringProperty("Diplomático");
             }
         });
@@ -357,7 +380,7 @@ public class controladorFormulario {
                 PasaporteDiplomatico d = (PasaporteDiplomatico) p;
                 return new SimpleStringProperty(d.getMision());
             }
-            
+
         });
     }
 
