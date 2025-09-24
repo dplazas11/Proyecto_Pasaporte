@@ -77,7 +77,7 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Button>
-                  <TextArea layoutX="54.0" layoutY="152.0" prefHeight="342.0" prefWidth="620.0" />
+                  <TextArea fx:id="TAContenedor" layoutX="54.0" layoutY="152.0" prefHeight="342.0" prefWidth="620.0" />
                   <Label layoutX="81.0" layoutY="83.0" text="Ciudad" textFill="#0f385a">
                      <font>
                         <Font name="System Bold" size="22.0" />
