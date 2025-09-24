@@ -1,5 +1,7 @@
 package co.edu.poli.aplicacion.controlador;
 
+import co.edu.poli.aplicacion.services.AdaptadorCiudad;
+import co.edu.poli.aplicacion.services.RegionComposite;
 import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -55,7 +57,28 @@ public class controladorFormularioEspGeo {
 
     @FXML
     void clickMostrarTodo(ActionEvent event) {
+           RegionComposite raiz = new RegionComposite();
+        
+        
+        
+        RegionComposite nivel1 = new RegionComposite("nivel 1");
+        nivel1.add(new AdaptadorCiudad("a"));
+        nivel1.add(new AdaptadorCiudad("b"));
+        nivel1.add(new AdaptadorCiudad("c"));
 
+        // Nivel 2
+        
+        RegionComposite nivel2 = new RegionComposite("nivel 2");
+        nivel2.add(new AdaptadorCiudad("a"));
+        nivel2.add(new AdaptadorCiudad("b"));
+        nivel2.add(new AdaptadorCiudad("c"));
+        
+        raiz.add(nivel1);
+        raiz.add(nivel2);
+
+        String salida = raiz.getNombre();
+        TAContenedor.setText(salida);
+        //Ciudad.appendText(salida);
     }
 
     @FXML
