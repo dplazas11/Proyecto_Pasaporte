@@ -59,31 +59,31 @@
                <children>
                   <Label text="Espacio Geográfico " textFill="#0f385a">
                      <font>
-                        <Font name="System Bold" size="61.0" />
+                        <Font name="System Bold" size="51.0" />
                      </font>
                   </Label>
                </children>
             </HBox>
             <AnchorPane prefHeight="546.0" prefWidth="715.0" style="-fx-background-color: #DDE7F0;">
                <children>
-                  <TextField fx:id="Region" layoutX="228.0" layoutY="26.0" onAction="#filtrarId" prefHeight="47.0" prefWidth="340.0" />
-                  <Label layoutX="77.0" layoutY="23.0" text="Región" textFill="#0f385a">
+                  <TextField fx:id="Region" layoutX="172.0" layoutY="23.0" onAction="#filtrarId" prefHeight="36.0" prefWidth="312.0" />
+                  <Label layoutX="77.0" layoutY="23.0" prefHeight="25.0" prefWidth="120.0" text="Región" textFill="#0f385a">
                      <font>
-                        <Font name="System Bold" size="33.0" />
+                        <Font name="System Bold" size="22.0" />
                      </font>
                   </Label>
-                  <Button fx:id="bmostrartodo" layoutX="495.0" layoutY="152.0" mnemonicParsing="false" onAction="#clickMostrarTodo" prefHeight="47.0" prefWidth="184.0" style="-fx-background-color: #FFFFFF; -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.6), 15, 0, -2, 2); -fx-background-radius: 15;" text="MOSTRAR TODO" textFill="#0f385a">
+                  <Button fx:id="bmostrartodo" layoutX="511.0" layoutY="53.0" mnemonicParsing="false" onAction="#clickMostrarTodo" prefHeight="33.0" prefWidth="158.0" style="-fx-background-color: #0F385A; -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.6), 15, 0, -2, 2); -fx-background-radius: 15;" text="MOSTRAR TODO" textFill="WHITE">
                      <font>
-                        <Font name="System Bold" size="19.0" />
+                        <Font name="System Bold" size="14.0" />
                      </font>
                   </Button>
-                  <TextArea layoutX="55.0" layoutY="213.0" prefHeight="300.0" prefWidth="644.0" />
+                  <TextArea layoutX="54.0" layoutY="152.0" prefHeight="342.0" prefWidth="620.0" />
                   <Label layoutX="81.0" layoutY="83.0" text="Ciudad" textFill="#0f385a">
                      <font>
-                        <Font name="System Bold" size="33.0" />
+                        <Font name="System Bold" size="22.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="Ciudad" layoutX="227.0" layoutY="84.0" onAction="#filtrarId" prefHeight="50.0" prefWidth="341.0" />
+                  <TextField fx:id="Ciudad" layoutX="172.0" layoutY="80.0" onAction="#filtrarId" prefHeight="38.0" prefWidth="311.0" />
                </children>
             </AnchorPane>
          </children>
