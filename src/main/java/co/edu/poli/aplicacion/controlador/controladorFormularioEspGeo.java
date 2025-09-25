@@ -22,6 +22,9 @@ public class controladorFormularioEspGeo {
 
     @FXML
     private TextField Region;
+    
+    @FXML
+    private TextField Dept;
 
     @FXML
     private Button bbuscar;
@@ -62,6 +65,7 @@ public class controladorFormularioEspGeo {
 
         CompositeRegion region1 = new CompositeRegion("Andina");
         CompositeRegion region2 = new CompositeRegion("Pacifico");
+        CompositeRegion region3 =new CompositeRegion("Orinoquia");
 
         CompositeRegion dept1 = new CompositeRegion("Cundinamarca");
         dept1.add(new AdaptadorCiudad("Bogotá"));
@@ -74,11 +78,19 @@ public class controladorFormularioEspGeo {
         dept2.add(new AdaptadorCiudad("Palmira"));
         dept2.add(new AdaptadorCiudad("Cartago "));
         
+        CompositeRegion dept3 = new CompositeRegion("Casanare");
+
+        dept3.add(new AdaptadorCiudad("Yopal"));
+        dept3.add(new AdaptadorCiudad("Aguazul"));
+        dept3.add(new AdaptadorCiudad("Mani"));
+        
         region1.add(dept1);
         region2.add(dept2);
+        region3.add(dept3);
 
         raiz.add(region1);
         raiz.add(region2);
+        raiz.add(region3);
         
 
         TAContenedor.setText(raiz.getNombre());

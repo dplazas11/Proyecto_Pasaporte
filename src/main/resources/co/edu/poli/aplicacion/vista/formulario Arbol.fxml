@@ -18,7 +18,7 @@
          <children>
             <VBox alignment="CENTER" prefHeight="254.0" prefWidth="251.0" style="-fx-background-color: #0F385A;">
                <children>
-                  <ImageView fitHeight="194.0" fitWidth="159.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="174.0" fitWidth="188.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@pais.png" />
                      </image>
@@ -55,7 +55,7 @@
    <center>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <HBox alignment="CENTER" prefHeight="141.0" prefWidth="715.0" style="-fx-background-color: #FFFFFF;">
+            <HBox alignment="CENTER" prefHeight="105.0" prefWidth="738.0" style="-fx-background-color: #FFFFFF;">
                <children>
                   <Label text="Espacio Geográfico " textFill="#0f385a">
                      <font>
@@ -64,26 +64,35 @@
                   </Label>
                </children>
             </HBox>
-            <AnchorPane prefHeight="546.0" prefWidth="715.0" style="-fx-background-color: #DDE7F0;">
+            <AnchorPane prefHeight="574.0" prefWidth="738.0" style="-fx-background-color: #DDE7F0;">
                <children>
-                  <TextField fx:id="Region" layoutX="172.0" layoutY="23.0" onAction="#filtrarId" prefHeight="36.0" prefWidth="312.0" />
-                  <Label layoutX="77.0" layoutY="23.0" prefHeight="25.0" prefWidth="120.0" text="Región" textFill="#0f385a">
+                  <TextField fx:id="Region" layoutX="236.0" layoutY="17.0" onAction="#filtrarId" prefHeight="36.0" prefWidth="268.0" />
+                  <Label layoutX="61.0" layoutY="16.0" prefHeight="25.0" prefWidth="120.0" text="Región" textFill="#0f385a">
                      <font>
                         <Font name="System Bold" size="22.0" />
                      </font>
                   </Label>
-                  <Button fx:id="bmostrartodo" layoutX="511.0" layoutY="53.0" mnemonicParsing="false" onAction="#clickMostrarTodo" prefHeight="33.0" prefWidth="158.0" style="-fx-background-color: #0F385A; -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.6), 15, 0, -2, 2); -fx-background-radius: 15;" text="MOSTRAR TODO" textFill="WHITE">
+                  <Button fx:id="bmostrartodo" layoutX="538.0" layoutY="99.0" mnemonicParsing="false" onAction="#clickMostrarTodo" prefHeight="33.0" prefWidth="158.0" style="-fx-background-color: #0F385A; -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.6), 15, 0, -2, 2); -fx-background-radius: 15;" text="MOSTRAR TODO" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Button>
-                  <TextArea fx:id="TAContenedor" layoutX="54.0" layoutY="152.0" prefHeight="342.0" prefWidth="620.0" />
-                  <Label layoutX="81.0" layoutY="83.0" text="Ciudad" textFill="#0f385a">
+                  <TextArea fx:id="TAContenedor" editable="false" layoutX="54.0" layoutY="208.0" prefHeight="342.0" prefWidth="620.0">
+                     <font>
+                        <Font size="18.0" />
+                     </font></TextArea>
+                  <Label layoutX="61.0" layoutY="83.0" text="Departamento" textFill="#0f385a">
                      <font>
                         <Font name="System Bold" size="22.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="Ciudad" layoutX="172.0" layoutY="80.0" onAction="#filtrarId" prefHeight="38.0" prefWidth="311.0" />
+                  <TextField fx:id="Dept" layoutX="237.0" layoutY="80.0" onAction="#filtrarId" prefHeight="38.0" prefWidth="268.0" />
+                  <Label layoutX="64.0" layoutY="144.0" text="Ciudad" textFill="#0f385a">
+                     <font>
+                        <Font name="System Bold" size="22.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="Ciudad" layoutX="237.0" layoutY="141.0" onAction="#filtrarId" prefHeight="38.0" prefWidth="268.0" />
                </children>
             </AnchorPane>
          </children>

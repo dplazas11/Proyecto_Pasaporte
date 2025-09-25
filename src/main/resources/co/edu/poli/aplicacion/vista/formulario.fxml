@@ -29,29 +29,29 @@
             </VBox>
             <AnchorPane prefHeight="528.0" prefWidth="251.0" style="-fx-background-color: #0F385A;">
                <children>
-                  <Button fx:id="bguardar" layoutX="38.0" layoutY="24.0" mnemonicParsing="false" onAction="#clickGuardar" prefHeight="54.0" prefWidth="178.0" style="-fx-background-color: #FFFFFF; -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.6), 15, 0, -2, 2); -fx-background-radius: 15;" text="GUARDAR" textFill="#0f385a">
+                  <Button fx:id="bguardar" layoutX="38.0" layoutY="39.0" mnemonicParsing="false" onAction="#clickGuardar" prefHeight="44.0" prefWidth="178.0" style="-fx-background-color: #FFFFFF; -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.6), 15, 0, -2, 2); -fx-background-radius: 15;" text="GUARDAR" textFill="#0f385a">
                      <font>
-                        <Font name="System Bold" size="13.0" />
+                        <Font name="System Bold" size="15.0" />
                      </font>
                   </Button>
-                  <Button fx:id="bactualizar" layoutX="38.0" layoutY="117.0" mnemonicParsing="false" onAction="#clickActualizar" prefHeight="54.0" prefWidth="178.0" style="-fx-background-color: #FFFFFF; -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.6), 15, 0, -2, 2); -fx-background-radius: 15;" text="ACTUALIZAR" textFill="#0f385a">
+                  <Button fx:id="bactualizar" layoutX="38.0" layoutY="121.0" mnemonicParsing="false" onAction="#clickActualizar" prefHeight="44.0" prefWidth="178.0" style="-fx-background-color: #FFFFFF; -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.6), 15, 0, -2, 2); -fx-background-radius: 15;" text="ACTUALIZAR" textFill="#0f385a">
                      <font>
-                        <Font name="System Bold" size="13.0" />
+                        <Font name="System Bold" size="15.0" />
                      </font>
                   </Button>
-                  <Button fx:id="bbuscar" layoutX="38.0" layoutY="200.0" mnemonicParsing="false" onAction="#clickBuscar" prefHeight="54.0" prefWidth="178.0" style="-fx-background-color: #FFFFFF; -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.6), 15, 0, -2, 2); -fx-background-radius: 15;" text="BUSCAR" textFill="#0f385a">
+                  <Button fx:id="bbuscar" layoutX="38.0" layoutY="202.0" mnemonicParsing="false" onAction="#clickBuscar" prefHeight="44.0" prefWidth="178.0" style="-fx-background-color: #FFFFFF; -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.6), 15, 0, -2, 2); -fx-background-radius: 15;" text="BUSCAR" textFill="#0f385a">
                      <font>
-                        <Font name="System Bold" size="13.0" />
+                        <Font name="System Bold" size="15.0" />
                      </font>
                   </Button>
-                  <Button fx:id="beliminar" layoutX="39.0" layoutY="288.0" mnemonicParsing="false" onAction="#clickEliminar" prefHeight="54.0" prefWidth="178.0" style="-fx-background-color: #FFFFFF; -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.6), 15, 0, -2, 2); -fx-background-radius: 15;" text="ELIMINAR" textFill="#0f385a">
+                  <Button fx:id="beliminar" layoutX="39.0" layoutY="282.0" mnemonicParsing="false" onAction="#clickEliminar" prefHeight="44.0" prefWidth="178.0" style="-fx-background-color: #FFFFFF; -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.6), 15, 0, -2, 2); -fx-background-radius: 15;" text="ELIMINAR" textFill="#0f385a">
                      <font>
-                        <Font name="System Bold" size="13.0" />
+                        <Font name="System Bold" size="15.0" />
                      </font>
                   </Button>
-                  <Button fx:id="barbolespgeo" layoutX="31.0" layoutY="383.0" mnemonicParsing="false" onAction="#clickcambiarventana" prefHeight="51.0" prefWidth="193.0" style="-fx-background-color: #2589DA; -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.6), 15, 0, -2, 2); -fx-background-radius: 15;" text="ARBOL ESP GEO " textFill="WHITE">
+                  <Button fx:id="barbolespgeo" layoutX="40.0" layoutY="363.0" mnemonicParsing="false" onAction="#clickcambiarventana" prefHeight="44.0" prefWidth="178.0" style="-fx-background-color: #2589DA; -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.6), 15, 0, -2, 2); -fx-background-radius: 15;" text="ESPACIO GEOGRAFICO " textFill="WHITE">
                      <font>
-                        <Font name="System Bold" size="21.0" />
+                        <Font name="System Bold" size="13.0" />
                      </font>
                   </Button>
                </children>
@@ -62,7 +62,7 @@
    <center>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <HBox alignment="CENTER" prefHeight="141.0" prefWidth="715.0" style="-fx-background-color: #FFFFFF;">
+            <HBox alignment="CENTER" prefHeight="105.0" prefWidth="738.0" style="-fx-background-color: #FFFFFF;">
                <children>
                   <Label text="REGISTRO DE PASAPORTES " textFill="#0f385a">
                      <font>
@@ -71,7 +71,7 @@
                   </Label>
                </children>
             </HBox>
-            <AnchorPane prefHeight="546.0" prefWidth="715.0" style="-fx-background-color: #DDE7F0;">
+            <AnchorPane prefHeight="574.0" prefWidth="738.0" style="-fx-background-color: #DDE7F0;">
                <children>
                   <TextField fx:id="idPasaporte" layoutX="14.0" layoutY="53.0" onAction="#filtrarId" prefHeight="36.0" prefWidth="119.0" />
                   <TextField fx:id="pais" layoutX="143.0" layoutY="53.0" prefHeight="36.0" prefWidth="179.0" />
@@ -109,7 +109,7 @@
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
-                  <TableView fx:id="tablaDatos" layoutX="22.0" layoutY="249.0" prefHeight="273.0" prefWidth="688.0">
+                  <TableView fx:id="tablaDatos" layoutX="22.0" layoutY="260.0" prefHeight="296.0" prefWidth="688.0">
                     <columns>
                       <TableColumn fx:id="tablaId" prefWidth="75.19995498657227" text="ID" />
                         <TableColumn fx:id="tablaFechExp" prefWidth="99.46664428710938" text="FECH EXP" />
