@@ -61,11 +61,11 @@ public class controladorFormularioEspGeo {
 
     @FXML
     void clickMostrarTodo(ActionEvent event) {
-        CompositeRegion raiz = new CompositeRegion("Mapa de espacios Geograficos");
+        CompositeRegion raiz = new CompositeRegion("R1");
 
-        CompositeRegion region1 = new CompositeRegion("Andina");
-        CompositeRegion region2 = new CompositeRegion("Pacifico");
-        CompositeRegion region3 =new CompositeRegion("Orinoquia");
+        CompositeRegion region1 = new CompositeRegion("R2");
+        CompositeRegion region2 = new CompositeRegion("R3");
+        CompositeRegion region3 =new CompositeRegion("R4");
 
         CompositeRegion dept1 = new CompositeRegion("Cundinamarca");
         dept1.add(new AdaptadorCiudad("Bogotá"));
@@ -84,13 +84,17 @@ public class controladorFormularioEspGeo {
         dept3.add(new AdaptadorCiudad("Aguazul"));
         dept3.add(new AdaptadorCiudad("Mani"));
         
-        region1.add(dept1);
-        region2.add(dept2);
-        region3.add(dept3);
-
+        CompositeRegion dept4 = new CompositeRegion("C1");
+        CompositeRegion dept5 = new CompositeRegion("C2");
+        
+        
+        region1.add(region2);
+        region2.add(region3);
+        region3.add(dept4);
+        region3.add(dept5);
+        
+        
         raiz.add(region1);
-        raiz.add(region2);
-        raiz.add(region3);
         
 
         TAContenedor.setText(raiz.getNombre());
