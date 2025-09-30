@@ -3,16 +3,32 @@ package co.edu.poli.aplicacion.services;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
 
 public class ConexionSupabase {
 
     // Instancia única del Singleton
     private static ConexionSupabase instance;
+    
+    private static String URL;
+    private static String USER;
+    private static String PASSWORD;
+    
+    static {
+        Properties props = new Properties();
+        try  {
+            props.load(ConexionSupabase.class.getClassLoader().getResourceAsStream("conexionbd.properties"));
+                       
+            URL = props.getProperty("db.url");
+            USER = System.getenv("usuarioSB");
+            PASSWORD = System.getenv("passwordSB");
 
-    // Credenciales de conexión
-    private static final String URL = "jdbc:postgresql://aws-1-us-east-2.pooler.supabase.com:5432/postgres";
-    private static final String USER = "postgres.xvmzjfegsbnyuxesymol";
-    private static final String PASSWORD = "Pw8SFO00OJx5dJ7k";
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     // Constructor privado (patrón Singleton)
     private ConexionSupabase() {
