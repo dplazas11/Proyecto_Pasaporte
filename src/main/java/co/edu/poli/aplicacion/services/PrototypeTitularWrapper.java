@@ -1,30 +1,16 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package co.edu.poli.aplicacion.services;
 
+import co.edu.poli.aplicacion.modelo.Ciudad;
 import co.edu.poli.aplicacion.modelo.Titular;
 
-/**
- *
- * @author User
- */
-public class PrototypeTitularWrapper implements Cloneable {
+
+public class PrototypeTitularWrapper implements Cloneable, InterfaceTitular {
     
-    private Titular titular;
+    private final Titular titular;
 
     public PrototypeTitularWrapper(Titular titular) {
         this.titular = titular;
-    }
-
-    public Titular getTitular() {
-        return titular;
-    }
-
-    @Override
-    public String toString() {
-        return "PrototypeTitularWrapper{" + "titular=" + titular + '}';
     }
 
     
@@ -38,6 +24,14 @@ public class PrototypeTitularWrapper implements Cloneable {
         );
         return copia;
     }
+
+    @Override
+    public String getDescripcion() {
+        return titular.getNombre();
+       
+    }
+
+    
     
     
     

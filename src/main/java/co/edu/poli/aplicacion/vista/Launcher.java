@@ -6,43 +6,31 @@ import co.edu.poli.aplicacion.modelo.Pais;
 import co.edu.poli.aplicacion.modelo.PasaporteOrdinario;
 import co.edu.poli.aplicacion.modelo.Titular;
 import co.edu.poli.aplicacion.services.BuilderPOWrapper;
+import co.edu.poli.aplicacion.services.DTitularAsistencia;
+import co.edu.poli.aplicacion.services.DTitularSeguro;
 import co.edu.poli.aplicacion.services.PrototypeTitularWrapper;
+import co.edu.poli.aplicacion.services.InterfaceTitular;
 
 import java.util.ArrayList;
 
 public class Launcher {
 
     public static void main(String[] args) throws CloneNotSupportedException {
-        App.main(args); // Llama al main de tu clase App
-        
-        /*
+        //App.main(args); // Llama al main de tu clase App   
 
-        ArrayList<Ciudad> ciudades = new ArrayList();
-        Titular titular = new Titular("123", "Juan Perez", "25-03-2005");
-        Ciudad ciudad = new Ciudad("01", "bogota");
-        ciudades.add(ciudad);
-        Pais pais = new Pais("CO", "Colombia", ciudades);
-        ElementoSeguridad elem = new ElementoSeguridad("A01", "ALFA", "Seguridad privada");
+        Titular titularCarlos = new Titular("123", "Carlos Perez", "25-03-2005");
+        Titular titularSara = new Titular("456", "Sara Perez", "15-08-2009");
 
-        PasaporteOrdinario pasaporte = new BuilderPOWrapper.Builder()
-                .setId("P001")
-                .setFechaExp("2025-09-15")
-                .setTitular(titular)
-                .setPais(pais)
-                .setElemSeguridad(elem)
-                .setMotivoViaje("Turismo")
-                .build();
+        InterfaceTitular adaptTitularCarlos = new PrototypeTitularWrapper(titularCarlos);
+        InterfaceTitular adaptTitularSara = new PrototypeTitularWrapper(titularSara);
 
-        System.out.println(pasaporte);
-        //Ejemplo de uso patron prototype 
-        PrototypeTitularWrapper originalPrototype = new PrototypeTitularWrapper(titular);
+        InterfaceTitular CarlosConAsis = new DTitularAsistencia(adaptTitularCarlos, "Medica");
+        InterfaceTitular CarlosConTodo = new DTitularSeguro(CarlosConAsis, "S9876");
 
-        // Clonamos con Prototype
-        Titular copia = originalPrototype.clone();
+        InterfaceTitular SaraConSeg = new DTitularSeguro(adaptTitularSara, "S1234");
 
-        System.out.println("Original: " + originalPrototype);
-        System.out.println("Copia: " + copia);
+        System.out.println("Carlos: " + CarlosConTodo.getDescripcion());
+        System.out.println("Sara: " + SaraConSeg.getDescripcion());
 
-    }*/
     }
 }
