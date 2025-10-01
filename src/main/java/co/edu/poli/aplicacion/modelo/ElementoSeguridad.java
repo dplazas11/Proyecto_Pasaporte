@@ -1,7 +1,7 @@
 
 package co.edu.poli.aplicacion.modelo;
 
-public class ElementoSeguridad {
+public abstract class ElementoSeguridad {
     
     private String id;
     private String tipo;
