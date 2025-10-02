@@ -31,7 +31,7 @@ public class Launcher {
 
         System.out.println("Carlos: " + CarlosConTodo.getDescripcion());
         System.out.println("Sara: " + SaraConSeg.getDescripcion());
-        System.out.println(SaraConSeg.historialViajes());
+        
 
     }
 }
