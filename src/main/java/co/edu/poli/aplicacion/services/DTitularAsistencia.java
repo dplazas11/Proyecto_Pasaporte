@@ -6,10 +6,7 @@ package co.edu.poli.aplicacion.services;
 
 import co.edu.poli.aplicacion.modelo.Titular;
 
-/**
- *
- * @author User
- */
+
 public class DTitularAsistencia extends DecoratorAbstractTitular{
     
     private String tipoAsistencia;

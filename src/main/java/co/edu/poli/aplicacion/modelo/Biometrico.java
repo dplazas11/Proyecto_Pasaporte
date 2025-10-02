@@ -10,20 +10,20 @@ package co.edu.poli.aplicacion.modelo;
  */
 public class Biometrico extends ElementoSeguridad{
     
-    private String huellaDactilar;
+    private String tipoDatoBiometrico;
     
     
     public Biometrico(String id, String tipo, String descripcion, String huellaDactilar) {
         super(id, tipo, descripcion);
-        this.huellaDactilar = huellaDactilar;
+        this.tipoDatoBiometrico = huellaDactilar;
     }
 
-    public String getHuellaDactilar() {
-        return huellaDactilar;
+    public String getTipoDatoBiometrico() {
+        return tipoDatoBiometrico;
     }
 
-    public void setHuellaDactilar(String huellaDactilar) {
-        this.huellaDactilar = huellaDactilar;
+    public void setTipoDatoBiometrico(String tipoDatoBiometrico) {
+        this.tipoDatoBiometrico = tipoDatoBiometrico;
     }
     
 }

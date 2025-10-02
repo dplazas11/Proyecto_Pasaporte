@@ -4,10 +4,6 @@
  */
 package co.edu.poli.aplicacion.modelo;
 
-/**
- *
- * @author User
- */
 public class Chip extends ElementoSeguridad{
     
     private String numeroChip;
