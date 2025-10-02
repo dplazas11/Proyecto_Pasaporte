@@ -11,6 +11,6 @@ package co.edu.poli.aplicacion.services;
 public interface InterfaceTitular {
     
     String getDescripcion();
-    String historialViajes();
+    
     
 }

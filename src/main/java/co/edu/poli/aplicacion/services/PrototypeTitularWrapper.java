@@ -25,10 +25,7 @@ public class PrototypeTitularWrapper implements Cloneable, InterfaceTitular {
         return copia;
     }
     
-    @Override
-    public String historialViajes(){
-        return "1) Bogota - Medellin, 2)Medellin - Panama";
-    }
+    
 
     @Override
     public String getDescripcion() {

@@ -31,9 +31,5 @@ public class DTitularAsistencia extends DecoratorAbstractTitular{
         return titular.getDescripcion() + ", tipo asistencia: "+tipoAsistencia;
     }
 
-    @Override
-    public String historialViajes() {
-        return "1) Bogota - Medellin, 2)Medellin - Panama";
-    }
-    
+        
 }
