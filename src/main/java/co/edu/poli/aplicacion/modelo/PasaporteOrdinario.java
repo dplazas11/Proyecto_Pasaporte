@@ -4,10 +4,10 @@ public class PasaporteOrdinario extends Pasaporte {
 
     private String motivoViaje;
 
-    public PasaporteOrdinario() {
+    
+    public PasaporteOrdinario(){
         super();
     }
-
     public PasaporteOrdinario(String id, String fechaExp, Titular titular, Pais pais, ElementoSeguridad elemseguridad, String motivoViaje) {
         super(id, fechaExp, titular, pais, elemseguridad);
         this.motivoViaje = motivoViaje;

@@ -4,7 +4,7 @@ public class PasaporteDiplomatico extends Pasaporte {
 
     private String mision;
 
-    public PasaporteDiplomatico() {
+    public PasaporteDiplomatico(){
         super();
     }
 

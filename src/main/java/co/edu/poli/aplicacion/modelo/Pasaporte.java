@@ -10,8 +10,9 @@ public abstract class Pasaporte {
     private ElementoSeguridad elemSeguridad;
     
     
-    public Pasaporte() {}
-
+   public Pasaporte (){
+       
+   }
     public Pasaporte(String id, String fechaExp, Titular titular, Pais pais, ElementoSeguridad elemSeguridad) {
         this.id = id;
         this.fechaExp = fechaExp;

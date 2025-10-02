@@ -33,5 +33,10 @@ public class DTitularSeguro extends DecoratorAbstractTitular{
     public String getDescripcion() {
         return titular.getDescripcion() + ", NumSeguro: " + idSeguro;
     }
+
+    @Override
+    public String historialViajes() {
+        return "1) Bogota - Medellin, 2)Medellin - Panama";
+    }
     
 }
