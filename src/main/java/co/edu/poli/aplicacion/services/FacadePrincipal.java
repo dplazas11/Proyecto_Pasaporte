@@ -20,16 +20,16 @@ public class FacadePrincipal {
         generacionPasaporte = new FacadeGeneracionPasaporte();
     }
 
-    public void generarPasaporte(int codigo) {
+    public String generarPasaporte(int codigo) {
 
         if (!verificacionId.verificacionId(codigo)) {
-            System.out.println("No se pudo verificar el id");
+            return ("No se pudo verificar el id");
         } else if (!verificacionAntecedentes.verificacionAntecedentes(codigo)) {
-            System.out.println("Se verifico el id pero no se pudo verificar antecedentes");
+            return ("Se verifico el id pero no se pudo verificar antecedentes");
         } else if (!generacionPasaporte.generacionPasaporte(codigo)) {
-            System.out.println("No se pudo generar el pasaporte");
+            return("No se pudo generar el pasaporte");
         } else {
-            System.out.println("Pasaporte generado correctamente");
+            return("Pasaporte generado correctamente");
         }
 
     }

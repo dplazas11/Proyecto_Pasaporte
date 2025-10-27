@@ -36,6 +36,11 @@ public class Launcher {
         
         AdaptadorPasaporte PastColombiaAdap = new AdaptadorPasaporte(PasaporteColombia);
         
+        FlyWeightPasaporteTipo tipoColombia = new FlyWeightPasaporteTipo("Colombia", "Rojo", "Español");
+        FlyWeightFactoria.registrarPasaporteTipo(tipoColombia);
+        FlyWeightFactoria.mostrarInformacion(PastColombiaAdap);
+      
+                
         ProxyGeneradorPasaporte proxy = new ProxyGeneradorPasaporte(PastColombiaAdap);
         System.out.println(proxy.mostrarInformacion("generico"));
         
