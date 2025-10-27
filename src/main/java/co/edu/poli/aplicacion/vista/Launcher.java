@@ -49,6 +49,10 @@ public class Launcher {
         String respuesta2 = generadorPasaporte.mostrarInformacion("admin");
         System.out.println(respuesta2);
         
+        //IMPLEMENTACION FACHADA
+        FacadePrincipal fachada = new FacadePrincipal();
+        String respuesta3= fachada.generarPasaporte(0);
+        System.out.println(respuesta3);
         
                 
         
