@@ -34,14 +34,14 @@ public class Launcher {
         PasaporteDiplomatico PasaporteColombia = new PasaporteDiplomatico("A0012" ,"11-08-2015" ,Carla, Colombia, blockchain, "trabajo");     
         Pasaporte PasaporteItalia = new PasaporteDiplomatico("02", "06-01-84", Carla, Italia, blockchain, "Humanitaria");
         
-        ProxyAdaptadorPasaporte PastColombiaAdap = new ProxyAdaptadorPasaporte(PasaporteColombia);
+        AdaptadorPasaporte PastColombiaAdap = new AdaptadorPasaporte(PasaporteColombia);
         
         ProxyGeneradorPasaporte proxy = new ProxyGeneradorPasaporte(PastColombiaAdap);
         System.out.println(proxy.mostrarInformacion("generico"));
         
         FacadePrincipal fachada = new FacadePrincipal();
-        String respuesta = fachada.generarPasaporte(0);
-        System.out.println(respuesta);
+        fachada.generarPasaporte(0);
+        
         
         
         

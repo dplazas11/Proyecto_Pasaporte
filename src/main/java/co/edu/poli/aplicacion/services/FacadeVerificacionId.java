@@ -11,8 +11,7 @@ package co.edu.poli.aplicacion.services;
 public class FacadeVerificacionId {
     
     public boolean verificacionId(int codigo){
-        if (codigo == 1 || codigo == 2) return true;
-        else return false;
+        return codigo == 1 || codigo == 2;
     }
     
 }

@@ -12,8 +12,7 @@ public class FacadeVerificacionAntecedentes {
     
     
     public boolean verificacionAntecedentes(int codigo){
-        if (codigo == 2) return true;
-        else return false;
+        return codigo == 2;
     }
     
 }

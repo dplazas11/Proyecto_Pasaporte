@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package co.edu.poli.aplicacion.services;
 
 import co.edu.poli.aplicacion.modelo.Pasaporte;
@@ -27,17 +24,16 @@ public class FlyWeightFactoria {
     // Registra o reutiliza un tipo de pasaporte según el país
     public static void registrarPasaporteTipo(FlyWeightPasaporteTipo pasaporteTipo) {
         String pais = pasaporteTipo.getPaisEmisor();
-
         if (!tipos.containsKey(pais)) {
             tipos.put(pais, pasaporteTipo);
         }
 
     }
 
-    public static void mostrarInformacion(Pasaporte pasaporte) {
+    public static void mostrarInformacion(AdaptadorPasaporte pasaporte) {
         StringBuilder st = new StringBuilder();
 
-        String pais = pasaporte.getPais().getNombre();
+        String pais = pasaporte.getPais();
         FlyWeightPasaporteTipo pasaporteTipo = tipos.get(pais);
 
         System.out.println(st.append(pasaporte).append("\n").append(pasaporteTipo));

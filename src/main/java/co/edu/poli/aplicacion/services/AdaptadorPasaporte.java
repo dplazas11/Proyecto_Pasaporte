@@ -7,11 +7,11 @@ package co.edu.poli.aplicacion.services;
 import co.edu.poli.aplicacion.modelo.PasaporteDiplomatico;
 
 
-public class ProxyAdaptadorPasaporte implements ProxyInterface  {
+public class AdaptadorPasaporte implements ProxyInterface  {
     
     private final PasaporteDiplomatico pasaporteDiplomaticoAdap;
 
-    public ProxyAdaptadorPasaporte(PasaporteDiplomatico pasaporteDiplomatico) {
+    public AdaptadorPasaporte(PasaporteDiplomatico pasaporteDiplomatico) {
         
         this.pasaporteDiplomaticoAdap = pasaporteDiplomatico;
     }
@@ -27,6 +27,10 @@ public class ProxyAdaptadorPasaporte implements ProxyInterface  {
                 + "; mision=" + pasaporteDiplomaticoAdap.getMision();
                 
     }   
+    
+    String getPais (){
+        return pasaporteDiplomaticoAdap.getPais().getNombre();
+    }
         
     }
     

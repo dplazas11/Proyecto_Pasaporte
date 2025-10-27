@@ -4,14 +4,12 @@
  */
 package co.edu.poli.aplicacion.services;
 
-import co.edu.poli.aplicacion.modelo.PasaporteDiplomatico;
-import java.util.Arrays;
 
 public class ProxyGeneradorPasaporte implements ProxyInterface {
 
-    private final ProxyAdaptadorPasaporte pasaporte;
+    private final AdaptadorPasaporte pasaporte;
 
-    public ProxyGeneradorPasaporte(ProxyAdaptadorPasaporte pasaporteRecibido) {
+    public ProxyGeneradorPasaporte(AdaptadorPasaporte pasaporteRecibido) {
         this.pasaporte = pasaporteRecibido;
     }
 
