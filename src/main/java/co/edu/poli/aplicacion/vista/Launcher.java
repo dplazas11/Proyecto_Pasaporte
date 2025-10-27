@@ -4,10 +4,13 @@ import co.edu.poli.aplicacion.modelo.Ciudad;
 import co.edu.poli.aplicacion.modelo.ElementoSeguridad;
 import co.edu.poli.aplicacion.modelo.Pais;
 import co.edu.poli.aplicacion.modelo.PasaporteOrdinario;
+import co.edu.poli.aplicacion.modelo.*;
 import co.edu.poli.aplicacion.modelo.Titular;
+import co.edu.poli.aplicacion.services.*;
 import co.edu.poli.aplicacion.services.BuilderPOWrapper;
 import co.edu.poli.aplicacion.services.DTitularAsistencia;
 import co.edu.poli.aplicacion.services.DTitularSeguro;
+import co.edu.poli.aplicacion.services.FlyWeightPasaporteTipo;
 import co.edu.poli.aplicacion.services.PrototypeTitularWrapper;
 import co.edu.poli.aplicacion.services.InterfaceTitular;
 
@@ -16,21 +19,35 @@ import java.util.ArrayList;
 public class Launcher {
 
     public static void main(String[] args) throws CloneNotSupportedException {
-        //App.main(args); // Llama al main de tu clase App   
-
-        Titular titularCarlos = new Titular("123", "Carlos Perez", "25-03-2005");
-        Titular titularSara = new Titular("456", "Sara Perez", "15-08-2009");
-
-        InterfaceTitular adaptTitularCarlos = new PrototypeTitularWrapper(titularCarlos);
-        InterfaceTitular adaptTitularSara = new PrototypeTitularWrapper(titularSara);
-
-        InterfaceTitular CarlosConAsis = new DTitularAsistencia(adaptTitularCarlos, "Medica");
-        InterfaceTitular CarlosConTodo = new DTitularSeguro(CarlosConAsis, "S9876");
-
-        InterfaceTitular SaraConSeg = new DTitularSeguro(adaptTitularSara, "S1234");
-
-        System.out.println("Carlos: " + CarlosConTodo.getDescripcion());
-        System.out.println("Sara: " + SaraConSeg.getDescripcion());
+        
+        //Creacion de pasaporte
+        ArrayList<Ciudad> ciudades= new ArrayList<>();
+        Titular Carla = new Titular("1001", "Carla martinez", "11-08-99");
+        Ciudad Bogota = new Ciudad("1", "Bogota");
+        Ciudad Roma = new Ciudad("02", "Roma");
+        ciudades.add(Bogota);
+        ciudades.add(Roma);        
+        Pais Colombia = new Pais("01", "Colombia", ciudades);
+        Pais Italia = new Pais("02", "Italia", ciudades);
+        ElementoSeguridad blockchain = new blockchain(01, "blockchain", "blockchain", "blockchain");
+        
+        PasaporteDiplomatico PasaporteColombia = new PasaporteDiplomatico("A0012" ,"11-08-2015" ,Carla, Colombia, blockchain, "trabajo");     
+        Pasaporte PasaporteItalia = new PasaporteDiplomatico("02", "06-01-84", Carla, Italia, blockchain, "Humanitaria");
+        
+        ProxyAdaptadorPasaporte PastColombiaAdap = new ProxyAdaptadorPasaporte(PasaporteColombia);
+        
+        ProxyGeneradorPasaporte proxy = new ProxyGeneradorPasaporte(PastColombiaAdap);
+        System.out.println(proxy.mostrarInformacion("generico"));
+        
+        
+        
+        
+        
+        
+        
+        
+        
+                
         
 
     }

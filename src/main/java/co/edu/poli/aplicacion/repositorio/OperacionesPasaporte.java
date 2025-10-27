@@ -256,7 +256,7 @@ public class OperacionesPasaporte implements Filtro<Pasaporte> {
     public ArrayList<Pasaporte> filterId(String ident) {
 
         ArrayList<Pasaporte> pasaportes_filtrados = new ArrayList<>();
-        String sql = "SELECT * FROM bdpasaporte WHERE pasaporteid LIKE ?";
+        String sql = "SELECT * FROM notas WHERE pasaporteid LIKE ?";
 
         try (Connection conn = ConexionSupabase.getInstance().getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
