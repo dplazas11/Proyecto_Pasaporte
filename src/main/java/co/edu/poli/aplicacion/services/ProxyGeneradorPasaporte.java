@@ -4,7 +4,6 @@
  */
 package co.edu.poli.aplicacion.services;
 
-
 public class ProxyGeneradorPasaporte implements ProxyInterface {
 
     private final AdaptadorPasaporte pasaporte;
@@ -15,16 +14,13 @@ public class ProxyGeneradorPasaporte implements ProxyInterface {
 
     @Override
     public String mostrarInformacion(String rol) {
-        
+
         switch (rol) {
             case "admin":
                 return pasaporte.mostrarInformacion(rol);
             case "usuario":
-                String pasaporteCompleto = pasaporte.mostrarInformacion(rol);
-                String[] ArregloPasaporteCompleto = pasaporteCompleto.split(";");
-                
-                String PasaporteCortado = "Pasaporte Diplomatico= " + ArregloPasaporteCompleto[0] + ", " + ArregloPasaporteCompleto[1] + ", " + ArregloPasaporteCompleto[4] + ", " + ArregloPasaporteCompleto[5];
-                return PasaporteCortado;
+                return pasaporte.getPasaporteAdaptado().getId() + pasaporte.getPasaporteAdaptado().getFechaExp() + pasaporte.getPasaporteAdaptado().getMision();
+
             case "generico":
                 return "No tiene permisos para ver la informacion";
             default:

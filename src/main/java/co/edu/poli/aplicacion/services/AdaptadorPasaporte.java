@@ -9,27 +9,28 @@ import co.edu.poli.aplicacion.modelo.PasaporteDiplomatico;
 
 public class AdaptadorPasaporte implements ProxyInterface  {
     
-    private final PasaporteDiplomatico pasaporteDiplomaticoAdap;
+    private final PasaporteDiplomatico pasaporteAdaptado;
 
     public AdaptadorPasaporte(PasaporteDiplomatico pasaporteDiplomatico) {
         
-        this.pasaporteDiplomaticoAdap = pasaporteDiplomatico;
+        this.pasaporteAdaptado = pasaporteDiplomatico;
     }
 
     @Override
     public String mostrarInformacion(String rol) {
      
-        return  "id=" + pasaporteDiplomaticoAdap.getId()
-                + "; fechaExp=" + pasaporteDiplomaticoAdap.getFechaExp()
-                + "; titular=" + (pasaporteDiplomaticoAdap.getTitular() != null ? pasaporteDiplomaticoAdap.getTitular() : "null")
-                + "; pais=" + (pasaporteDiplomaticoAdap.getPais() != null ? pasaporteDiplomaticoAdap.getPais() : "null")
-                + "; elemento seguridad=" + (pasaporteDiplomaticoAdap.getElemSeguridad()!= null ? pasaporteDiplomaticoAdap.getElemSeguridad(): "null")
-                + "; mision=" + pasaporteDiplomaticoAdap.getMision();
+        return  "id=" + pasaporteAdaptado.getId()
+                + "; fechaExp=" + pasaporteAdaptado.getFechaExp()
+                + "; titular=" + (pasaporteAdaptado.getTitular() != null ? pasaporteAdaptado.getTitular() : "null")
+                + "; pais=" + (pasaporteAdaptado.getPais() != null ? pasaporteAdaptado.getPais() : "null")
+                + "; elemento seguridad=" + (pasaporteAdaptado.getElemSeguridad()!= null ? pasaporteAdaptado.getElemSeguridad(): "null")
+                + "; mision=" + pasaporteAdaptado.getMision();
                 
     }   
     
-    String getPais (){
-        return pasaporteDiplomaticoAdap.getPais().getNombre();
+    
+    PasaporteDiplomatico getPasaporteAdaptado(){
+            return pasaporteAdaptado;
     }
         
     }
