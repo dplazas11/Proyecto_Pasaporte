@@ -10,9 +10,9 @@ package co.edu.poli.aplicacion.services;
  */
 public class FacadeVerificacionId {
     
-    boolean verificacionId(int codigo){
-        if (codigo == 0) return false;
-        else return true;
+    public boolean verificacionId(int codigo){
+        if (codigo == 1 || codigo == 2) return true;
+        else return false;
     }
     
 }

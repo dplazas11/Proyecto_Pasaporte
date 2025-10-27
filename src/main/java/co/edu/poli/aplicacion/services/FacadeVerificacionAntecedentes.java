@@ -10,9 +10,10 @@ package co.edu.poli.aplicacion.services;
  */
 public class FacadeVerificacionAntecedentes {
     
-    /*
-    boolean verificacionAntecedentes(int codigo){
-        if (codigo== 2)
-    }*/
+    
+    public boolean verificacionAntecedentes(int codigo){
+        if (codigo == 2) return true;
+        else return false;
+    }
     
 }

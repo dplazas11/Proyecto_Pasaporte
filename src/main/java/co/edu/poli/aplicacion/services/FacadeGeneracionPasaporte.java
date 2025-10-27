@@ -10,4 +10,9 @@ package co.edu.poli.aplicacion.services;
  */
 public class FacadeGeneracionPasaporte {
     
+    public boolean generacionPasaporte (int codigo){
+        if (codigo == 2) return true;
+        else return false;
+    }
+    
 }

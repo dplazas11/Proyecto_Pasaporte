@@ -39,6 +39,10 @@ public class Launcher {
         ProxyGeneradorPasaporte proxy = new ProxyGeneradorPasaporte(PastColombiaAdap);
         System.out.println(proxy.mostrarInformacion("generico"));
         
+        FacadePrincipal fachada = new FacadePrincipal();
+        String respuesta = fachada.generarPasaporte(0);
+        System.out.println(respuesta);
+        
         
         
         
