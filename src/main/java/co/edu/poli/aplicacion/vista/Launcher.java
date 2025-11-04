@@ -19,7 +19,10 @@ import java.util.ArrayList;
 public class Launcher {
 
     public static void main(String[] args) throws CloneNotSupportedException {
-        
+
+        App.main(args);
+
+        /*
         //Creacion de pasaporte
         ArrayList<Ciudad> ciudades= new ArrayList<>();
         Titular Carla = new Titular("1001", "Carla martinez", "11-08-99");
@@ -53,25 +56,7 @@ public class Launcher {
         FacadePrincipal fachada = new FacadePrincipal();
         String respuesta3= fachada.generarPasaporte(0);
         System.out.println(respuesta3);
-        
-                
-        
-        
-        
-      
-                
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-                
-        
 
+         */
     }
 }
