@@ -7,6 +7,10 @@ import co.edu.poli.aplicacion.repositorio.OperacionesPasaporte;
 import co.edu.poli.aplicacion.services.CreadorPasaporte;
 import co.edu.poli.aplicacion.services.FactoriaPDiplomatica;
 import co.edu.poli.aplicacion.services.FactoriaPOrdinaria;
+import co.edu.poli.aplicacion.services.ObserverPublisher;
+import co.edu.poli.aplicacion.services.Suscriber;
+import co.edu.poli.aplicacion.services.SuscriberCancilleria;
+import co.edu.poli.aplicacion.services.SuscriberPolicia;
 import java.io.IOException;
 import java.util.ArrayList;
 import javafx.beans.property.SimpleStringProperty;
@@ -21,6 +25,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -87,6 +92,21 @@ public class controladorFormulario {
 
     @FXML
     private Button barbolespgeo;
+    
+    @FXML
+    private Button btneliminarsusc;
+
+    @FXML
+    private Button btnsuscribir;
+    
+    @FXML
+    private CheckBox selectCansilleria;
+
+    @FXML
+    private CheckBox selectmigra;
+
+    @FXML
+    private CheckBox selectpolicia;
 
     @FXML
     public void initialize() {
@@ -306,6 +326,71 @@ public class controladorFormulario {
         actual.close();
 
     }
+    
+    @FXML
+    void clickSuscribir(ActionEvent event) {
+        
+        ObserverPublisher  publisher = new ObserverPublisher();
+        String mensaje="";
+        boolean seleccionados = false;
+        
+        if (selectCansilleria.isSelected()){
+            Suscriber cancilleria = new SuscriberCancilleria();
+            String respuesta1 = publisher.suscribir(cancilleria); 
+            mensaje = respuesta1 + "\n";
+            seleccionados = true;
+        }
+        if (selectpolicia.isSelected()){
+            Suscriber policia = new SuscriberPolicia();
+            String respuesta2 = publisher.suscribir(policia); 
+            mensaje = mensaje + respuesta2 + "\n";
+            seleccionados = true;
+        }
+        if (selectmigra.isSelected()){
+            Suscriber migracion = new SuscriberCancilleria();
+            String respuesta3 = publisher.suscribir(migracion); 
+            mensaje = mensaje + respuesta3;
+            seleccionados = true;
+        }
+        
+        if (!seleccionados) crearAlerta("No se ha selecionado niguna opción.");        
+        else crearAlerta(mensaje);
+
+    }
+    
+    @FXML
+    void clickEliminarSuscripcion(ActionEvent event) {
+        
+        ObserverPublisher  publisher = new ObserverPublisher();
+        String mensaje="";
+        boolean seleccionados = false;
+        
+        if (selectCansilleria.isSelected()){
+            Suscriber cancilleria = new SuscriberCancilleria();
+            String respuesta1 = publisher.desuscribir(cancilleria); 
+            mensaje = respuesta1 + "\n";
+            seleccionados = true;
+        }
+        if (selectpolicia.isSelected()){
+            Suscriber policia = new SuscriberPolicia();
+            String respuesta2 = publisher.desuscribir(policia); 
+            mensaje = mensaje + respuesta2 + "\n";
+            seleccionados = true;
+        }
+        if (selectmigra.isSelected()){
+            Suscriber migracion = new SuscriberCancilleria();
+            String respuesta3 = publisher.desuscribir(migracion); 
+            mensaje = mensaje + respuesta3;
+            seleccionados = true;
+        }
+        
+        if (!seleccionados) crearAlerta("No se ha selecionado niguna opción.");        
+        else crearAlerta(mensaje);        
+
+    }
+    
+    
+    
 
     //METODOS EXTRA 
     void limpiarDatos(int tipo) {
