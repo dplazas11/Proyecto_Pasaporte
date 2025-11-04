@@ -19,7 +19,7 @@ public class ProxyGeneradorPasaporte implements ProxyInterface {
             case "admin":
                 return pasaporte.mostrarInformacion(rol);
             case "usuario":
-                return pasaporte.getPasaporteAdaptado().getId() + pasaporte.getPasaporteAdaptado().getFechaExp() + pasaporte.getPasaporteAdaptado().getMision();
+                return pasaporte.getPasaporteAdaptado().getId() + pasaporte.getPasaporteAdaptado().getFechaExp();
 
             case "generico":
                 return "No tiene permisos para ver la informacion";

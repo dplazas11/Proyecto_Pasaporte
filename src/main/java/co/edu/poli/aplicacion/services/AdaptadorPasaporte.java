@@ -4,34 +4,88 @@
  */
 package co.edu.poli.aplicacion.services;
 
+import co.edu.poli.aplicacion.modelo.Pasaporte;
 import co.edu.poli.aplicacion.modelo.PasaporteDiplomatico;
+import co.edu.poli.aplicacion.modelo.PasaporteOrdinario;
 
+public class AdaptadorPasaporte implements ProxyInterface {
 
-public class AdaptadorPasaporte implements ProxyInterface  {
-    
-    private final PasaporteDiplomatico pasaporteAdaptado;
+    private Pasaporte pasaporteAdaptado;
 
-    public AdaptadorPasaporte(PasaporteDiplomatico pasaporteDiplomatico) {
-        
-        this.pasaporteAdaptado = pasaporteDiplomatico;
+    public AdaptadorPasaporte(Pasaporte pasaporte) {
+
+        this.pasaporteAdaptado = pasaporte;
     }
 
     @Override
     public String mostrarInformacion(String rol) {
-     
-        return  "id=" + pasaporteAdaptado.getId()
-                + "; fechaExp=" + pasaporteAdaptado.getFechaExp()
-                + "; titular=" + (pasaporteAdaptado.getTitular() != null ? pasaporteAdaptado.getTitular() : "null")
-                + "; pais=" + (pasaporteAdaptado.getPais() != null ? pasaporteAdaptado.getPais() : "null")
-                + "; elemento seguridad=" + (pasaporteAdaptado.getElemSeguridad()!= null ? pasaporteAdaptado.getElemSeguridad(): "null")
-                + "; mision=" + pasaporteAdaptado.getMision();
-                
-    }   
-    
-    
-    PasaporteDiplomatico getPasaporteAdaptado(){
-            return pasaporteAdaptado;
+        if (pasaporteAdaptado instanceof PasaporteOrdinario) {
+            PasaporteOrdinario p = (PasaporteOrdinario) pasaporteAdaptado;
+            return "id=" + p.getId() + "\n"
+                    + "Titular= " + (p.getTitular().getNombre() != null ? p.getTitular() : "null") + "\n"
+                    + "FechaExp= " + p.getFechaExp() + "\n"
+                    + "Pais= " + (p.getPais().getNombre() != null ? p.getPais() : "null") + "\n"
+                    + "Elemento seguridad= " + (p.getElemSeguridad() != null ? p.getElemSeguridad() : "null") + "\n"
+                    + "Motivo viaje= " + p.getMotivoViaje();
+        } else {
+            PasaporteDiplomatico p = (PasaporteDiplomatico) pasaporteAdaptado;
+            return "id=" + p.getId() + "\n"
+                    + "Titular= " + (p.getTitular().getNombre() != null ? p.getTitular() : "null") + "\n"
+                    + "FechaExp= " + p.getFechaExp() + "\n"
+                    + "Pais= " + (p.getPais().getNombre() != null ? p.getPais() : "null") + "\n"
+                    + "Elemento seguridad= " + (p.getElemSeguridad() != null ? p.getElemSeguridad() : "null") + "\n"
+                    + "Mision= " + p.getMision();
+        }
+
     }
-        
+
+    Pasaporte getPasaporteAdaptado() {
+        return pasaporteAdaptado;
     }
-    
+
+    public MementoPasaporte guardar() {
+        String mision = null;
+        String motivoViaje = null;
+        if (pasaporteAdaptado instanceof PasaporteOrdinario) {
+            motivoViaje = ((PasaporteOrdinario) pasaporteAdaptado).getMotivoViaje();
+        } else if (pasaporteAdaptado instanceof PasaporteDiplomatico) {
+            mision = ((PasaporteDiplomatico) pasaporteAdaptado).getMision();
+        }
+
+        return new MementoPasaporte(
+                pasaporteAdaptado.getId(),
+                pasaporteAdaptado.getFechaExp(),
+                pasaporteAdaptado.getTitular(),
+                pasaporteAdaptado.getPais(),
+                pasaporteAdaptado.getElemSeguridad(),
+                motivoViaje,
+                mision
+        );
+
+    }
+
+    // Restaura el estado desde un MementoPasaporte
+    public void restaurar(MementoPasaporte memento) {
+        if (memento.getMision() != null) {
+            pasaporteAdaptado = new PasaporteDiplomatico(
+                    memento.getId(),
+                    memento.getFechaExp(),
+                    memento.getTitular(),
+                    memento.getPais(),
+                    memento.getElemSeguridad(),
+                    memento.getMotivoViaje()
+            );
+            
+        } else if (memento.getMotivoViaje() != null) {
+            pasaporteAdaptado = new PasaporteOrdinario(
+                    memento.getId(),
+                    memento.getFechaExp(),
+                    memento.getTitular(),
+                    memento.getPais(),
+                    memento.getElemSeguridad(),
+                    memento.getMision()
+                    
+            );
+        }
+    }
+}

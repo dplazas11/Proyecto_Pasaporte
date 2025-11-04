@@ -7,5 +7,6 @@ package co.edu.poli.aplicacion.services;
 public interface Suscriber {
     
     String enviarNotificacion ();
+    String getNombre();
     
 }

@@ -8,4 +8,9 @@ public class SuscriberMigracion implements Suscriber {
         return "Migracion Colombia ha sido notificada del cambio.";
     }
 
+    @Override
+    public String getNombre() {
+        return "Migración Colombia";
+       }
+
 }

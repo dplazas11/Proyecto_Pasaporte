@@ -4,12 +4,15 @@ import co.edu.poli.aplicacion.modelo.Pasaporte;
 import co.edu.poli.aplicacion.modelo.PasaporteDiplomatico;
 import co.edu.poli.aplicacion.modelo.PasaporteOrdinario;
 import co.edu.poli.aplicacion.repositorio.OperacionesPasaporte;
+import co.edu.poli.aplicacion.services.AdaptadorPasaporte;
 import co.edu.poli.aplicacion.services.CreadorPasaporte;
 import co.edu.poli.aplicacion.services.FactoriaPDiplomatica;
 import co.edu.poli.aplicacion.services.FactoriaPOrdinaria;
+import co.edu.poli.aplicacion.services.MementoCaretaker;
 import co.edu.poli.aplicacion.services.ObserverPublisher;
 import co.edu.poli.aplicacion.services.Suscriber;
 import co.edu.poli.aplicacion.services.SuscriberCancilleria;
+import co.edu.poli.aplicacion.services.SuscriberMigracion;
 import co.edu.poli.aplicacion.services.SuscriberPolicia;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -92,13 +95,13 @@ public class controladorFormulario {
 
     @FXML
     private Button barbolespgeo;
-    
+
     @FXML
     private Button btneliminarsusc;
 
     @FXML
     private Button btnsuscribir;
-    
+
     @FXML
     private CheckBox selectCansilleria;
 
@@ -107,6 +110,12 @@ public class controladorFormulario {
 
     @FXML
     private CheckBox selectpolicia;
+
+    @FXML
+    private Button btnverlista;
+
+    public static final ObserverPublisher publisher = new ObserverPublisher();
+    public static final MementoCaretaker gestor = new MementoCaretaker();
 
     @FXML
     public void initialize() {
@@ -206,6 +215,9 @@ public class controladorFormulario {
 
     @FXML
     void clickActualizar(ActionEvent event) {
+
+        String notificacion = publisher.notificarSuscribers();
+
         // Obtener datos del formulario
         String id = idPasaporte.getText();
         String titularTxt = titular.getText();
@@ -245,7 +257,7 @@ public class controladorFormulario {
                 }
 
                 String respuesta = repo.actualizar(pasaporteExistente);
-                crearAlerta(respuesta);
+                crearAlerta(respuesta + "\n" + notificacion);
                 limpiarDatos(1);
                 return;
             } else {
@@ -284,7 +296,8 @@ public class controladorFormulario {
             respuestaInsert = repo.insertar((PasaporteOrdinario) nuevoPasaporte);
         }
 
-        crearAlerta(respuestaInsert);
+        crearAlerta(respuestaInsert + "\n" + notificacion);
+
         limpiarDatos(1);
     }
 
@@ -295,7 +308,6 @@ public class controladorFormulario {
 
     @FXML
     void clickMostrarTodo(ActionEvent event) {
-
         OperacionesPasaporte repo = new OperacionesPasaporte();
         ArrayList<Pasaporte> totalPasaportes = repo.selectAll();
         ObservableList<Pasaporte> datosTabla = FXCollections.observableArrayList(totalPasaportes);
@@ -326,71 +338,77 @@ public class controladorFormulario {
         actual.close();
 
     }
-    
+
     @FXML
     void clickSuscribir(ActionEvent event) {
-        
-        ObserverPublisher  publisher = new ObserverPublisher();
-        String mensaje="";
+
+        String mensaje = "";
         boolean seleccionados = false;
-        
-        if (selectCansilleria.isSelected()){
+
+        if (selectCansilleria.isSelected()) {
             Suscriber cancilleria = new SuscriberCancilleria();
-            String respuesta1 = publisher.suscribir(cancilleria); 
+            String respuesta1 = publisher.suscribir(cancilleria);
             mensaje = respuesta1 + "\n";
             seleccionados = true;
         }
-        if (selectpolicia.isSelected()){
+        if (selectpolicia.isSelected()) {
             Suscriber policia = new SuscriberPolicia();
-            String respuesta2 = publisher.suscribir(policia); 
+            String respuesta2 = publisher.suscribir(policia);
             mensaje = mensaje + respuesta2 + "\n";
             seleccionados = true;
         }
-        if (selectmigra.isSelected()){
-            Suscriber migracion = new SuscriberCancilleria();
-            String respuesta3 = publisher.suscribir(migracion); 
+        if (selectmigra.isSelected()) {
+            Suscriber migracion = new SuscriberMigracion();
+            String respuesta3 = publisher.suscribir(migracion);
             mensaje = mensaje + respuesta3;
             seleccionados = true;
         }
-        
-        if (!seleccionados) crearAlerta("No se ha selecionado niguna opción.");        
-        else crearAlerta(mensaje);
+
+        if (!seleccionados) {
+            crearAlerta("No se ha selecionado niguna opción.");
+        } else {
+            crearAlerta(mensaje);
+        }
 
     }
-    
+
     @FXML
     void clickEliminarSuscripcion(ActionEvent event) {
-        
-        ObserverPublisher  publisher = new ObserverPublisher();
-        String mensaje="";
+
+        String mensaje = "";
         boolean seleccionados = false;
-        
-        if (selectCansilleria.isSelected()){
+
+        if (selectCansilleria.isSelected()) {
             Suscriber cancilleria = new SuscriberCancilleria();
-            String respuesta1 = publisher.desuscribir(cancilleria); 
+            String respuesta1 = publisher.desuscribir(cancilleria);
             mensaje = respuesta1 + "\n";
             seleccionados = true;
         }
-        if (selectpolicia.isSelected()){
+        if (selectpolicia.isSelected()) {
             Suscriber policia = new SuscriberPolicia();
-            String respuesta2 = publisher.desuscribir(policia); 
+            String respuesta2 = publisher.desuscribir(policia);
             mensaje = mensaje + respuesta2 + "\n";
             seleccionados = true;
         }
-        if (selectmigra.isSelected()){
-            Suscriber migracion = new SuscriberCancilleria();
-            String respuesta3 = publisher.desuscribir(migracion); 
+        if (selectmigra.isSelected()) {
+            Suscriber migracion = new SuscriberMigracion();
+            String respuesta3 = publisher.desuscribir(migracion);
             mensaje = mensaje + respuesta3;
             seleccionados = true;
         }
-        
-        if (!seleccionados) crearAlerta("No se ha selecionado niguna opción");        
-        else crearAlerta(mensaje);        
+
+        if (!seleccionados) {
+            crearAlerta("No se ha selecionado niguna opción");
+        } else {
+            crearAlerta(mensaje);
+        }
 
     }
-    
-    
-    
+
+    @FXML
+    void clickverlistasuscriptores(ActionEvent event) {
+        crearAlerta(publisher.verLista());
+    }
 
     //METODOS EXTRA 
     void limpiarDatos(int tipo) {
@@ -418,18 +436,9 @@ public class controladorFormulario {
     void crearAlerta(String respuesta) {
         Alert alerta = new Alert(AlertType.INFORMATION);
         alerta.setHeaderText("Estado");
-        // Área de texto expandible
-        TextArea textArea = new TextArea(respuesta);
-        textArea.setWrapText(true);
-        textArea.setEditable(false);
-
-        // Expandir automáticamente
-        alerta.getDialogPane().setExpandableContent(textArea);
-        alerta.getDialogPane().setExpanded(true);
-
-        // Ajustar ancho de la ventana
+        alerta.setContentText(respuesta); // directamente en el cuerpo
         alerta.getDialogPane().setMinWidth(500);
-        alerta.show();
+        alerta.showAndWait();
 
     }
 

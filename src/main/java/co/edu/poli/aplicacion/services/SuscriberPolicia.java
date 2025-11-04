@@ -8,4 +8,9 @@ public class SuscriberPolicia implements Suscriber {
         return "La policia ha sio notificada del cambio.";
     }
 
+    @Override
+    public String getNombre() {
+        return "Policia";
+        }
+
 }

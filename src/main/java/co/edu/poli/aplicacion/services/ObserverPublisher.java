@@ -1,42 +1,64 @@
 package co.edu.poli.aplicacion.services;
 
-
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
-
-
 
 public class ObserverPublisher {
 
     private Set<Suscriber> suscriptores = new HashSet<>();
 
     public String suscribir(Suscriber sus) {
-        if (!suscriptores.contains(sus)){
-        suscriptores.add(sus);        
-        return " Se a suscrito " + sus.toString() +  " correctamente";
+
+        for (Suscriber s : suscriptores) {
+            if (s.getClass() == sus.getClass()) {
+
+                return "Ya esta suscrito " + sus.getNombre();
+
+            }
         }
-        else {
-            return "Ya se suscribió " + sus.toString();
-        }
+        suscriptores.add(sus);
+
+        return "Se suscribió " + sus.getNombre() + " correctamente";
+
     }
 
     public String desuscribir(Suscriber sus) {
-        
-        if(suscriptores.contains(sus)){
-        suscriptores.remove(sus);
-        return "Se ha eliminado "  + sus.toString() + " correctament.";
+        Iterator<Suscriber> iterator = suscriptores.iterator();
+
+        while (iterator.hasNext()) {
+            Suscriber s = iterator.next();
+            if (s.getClass() == sus.getClass()) {
+                iterator.remove();
+                return "Se ha eliminado " + sus.getNombre() + " correctamente.";
+            }
         }
-        else return sus.toString() + " no esta suscrito.";
+
+        return sus.getNombre() + " no está suscrito.";
     }
 
     public String notificarSuscribers() {
-        String confirmacion = "";
-        for (Suscriber sus : suscriptores) {
-            confirmacion = sus.enviarNotificacion() + "\n";
+        if (suscriptores.isEmpty()) {
+            return "No hay suscriptores registrados.";
         }
-        
-        return confirmacion;
+
+        StringBuilder confirmacion = new StringBuilder();
+        for (Suscriber sus : suscriptores) {
+            confirmacion.append(sus.enviarNotificacion()).append("\n");
+        }
+        return confirmacion.toString();
+    }
+
+    public String verLista() {
+        String mensaje = "";
+        for (Suscriber sus : suscriptores) {
+            String susString = sus.getNombre();
+            mensaje = mensaje + susString + " ";
+
+        }
+        return mensaje;
     }
 }
-
-

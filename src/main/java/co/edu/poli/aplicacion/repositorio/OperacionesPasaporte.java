@@ -188,7 +188,7 @@ public class OperacionesPasaporte implements Filtro<Pasaporte> {
                 } else if (pasaporte instanceof PasaporteDiplomatico) {
                     PasaporteDiplomatico diplom = (PasaporteDiplomatico) pasaporte;
                     pstmt2.setString(1, diplom.getMision());
-                    pstmt2.setString(1, pasaporte.getId());
+                    pstmt2.setString(2, pasaporte.getId());
                 }
 
                 pstmt2.executeUpdate();

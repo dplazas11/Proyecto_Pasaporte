@@ -30,10 +30,10 @@ public class FlyWeightFactoria {
 
     }
 
-    public static StringBuilder mostrarInformacion(AdaptadorPasaporte pasaporte) {
+    public static StringBuilder mostrarInformacion(Pasaporte pasaporte) {
         StringBuilder st = new StringBuilder();
 
-        String pais = pasaporte.getPasaporteAdaptado().getPais().getNombre();
+        String pais = pasaporte.getPais().getNombre();
         FlyWeightPasaporteTipo pasaporteTipo = tipos.get(pais);
 
         return (st.append(pasaporte).append("\n").append(pasaporteTipo));

@@ -12,6 +12,12 @@ public class SuscriberCancilleria implements Suscriber {
         
         return "La cancilleria ha sido notificada del cambio.";
         }
+
+    @Override
+    public String getNombre() {
+        return "Cancilleria";
+        }
+    
     
     
 }
