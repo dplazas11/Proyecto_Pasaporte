@@ -384,7 +384,7 @@ public class controladorFormulario {
             seleccionados = true;
         }
         
-        if (!seleccionados) crearAlerta("No se ha selecionado niguna opción.");        
+        if (!seleccionados) crearAlerta("No se ha selecionado niguna opción");        
         else crearAlerta(mensaje);        
 
     }
