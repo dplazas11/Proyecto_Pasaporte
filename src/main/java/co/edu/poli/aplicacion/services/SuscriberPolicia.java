@@ -5,7 +5,7 @@ public class SuscriberPolicia implements Suscriber {
     @Override
     public String enviarNotificacion() {
 
-        return "La policia ha sio notificada del cambio.";
+        return "La policia ha sido notificada del cambio.";
     }
 
     @Override

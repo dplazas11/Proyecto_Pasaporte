@@ -163,7 +163,7 @@ public class OperacionesPasaporte implements Filtro<Pasaporte> {
         String sqlPasaporte = "UPDATE bdpasaporte SET fechaexp=?, titular=?, pais=? WHERE pasaporteid=?";
 
         // Sentencias específicas según tipo
-        String sqlOrdinario = "UPDATE pasaporteordinario SET motivoviajae=? WHERE idpasaporte=?";
+        String sqlOrdinario = "UPDATE pasaporteordinario SET motivoviaje=? WHERE idpasaporte=?";
         String sqlDiplomatico = "UPDATE pasaportediplomatico SET mision=? WHERE idpasaporte=?";
 
         try (Connection conn = ConexionSupabase.getInstance().getConnection()) {

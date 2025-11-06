@@ -1,8 +1,10 @@
 package co.edu.poli.aplicacion.controlador;
 
+import co.edu.poli.aplicacion.modelo.Pais;
 import co.edu.poli.aplicacion.modelo.Pasaporte;
 import co.edu.poli.aplicacion.modelo.PasaporteDiplomatico;
 import co.edu.poli.aplicacion.modelo.PasaporteOrdinario;
+import co.edu.poli.aplicacion.modelo.Titular;
 import co.edu.poli.aplicacion.repositorio.OperacionesPasaporte;
 import co.edu.poli.aplicacion.services.AdaptadorPasaporte;
 import co.edu.poli.aplicacion.services.CreadorPasaporte;
@@ -114,25 +116,38 @@ public class controladorFormulario {
     @FXML
     private Button btnverlista;
 
+    @FXML
+    private ComboBox<Integer> estados;
+
+    @FXML
+    private TextArea textAreaMementos;
+
+    @FXML
+    private Button btnRestaurar1;
+
     public static final ObserverPublisher publisher = new ObserverPublisher();
     public static final MementoCaretaker gestor = new MementoCaretaker();
 
     @FXML
     public void initialize() {
         tipoPas.getItems().addAll("(Seleccione una opción)", "Ordinario", "Diplomatico");
+
+        diseñoBoton(bactualizar);
+        diseñoBoton(bbuscar);
+        diseñoBoton(beliminar);
+        diseñoBoton(bguardar);
+        diseñoBoton(btnRestaurar1);
+        diseñoBoton(btnsuscribir);
+        diseñoBoton(btneliminarsusc);
+        diseñoBoton(btnverlista);
+
         idPasaporte.focusedProperty().addListener((obs, oldVal, newVal) -> {
             if (!newVal) {
                 filtrarId(null);
             }
-            diseñoBoton(bactualizar);
-            diseñoBoton(bbuscar);
-            diseñoBoton(beliminar);
-            diseñoBoton(bguardar);
-            diseñoBoton(bmostrartodo);
-
-            llenarTabla();
-
         });
+
+        //llenarTabla();
     }
 
     //metodos de la ventana 
@@ -143,22 +158,32 @@ public class controladorFormulario {
         String fechaExp = fechExp.getText();
         String pais = this.pais.getText();
         String descripcion = descr.getText();
+        String seleccionado = tipoPas.getValue();
 
         CreadorPasaporte creador;
         Pasaporte pasaporte;
         OperacionesPasaporte repo = new OperacionesPasaporte();
-        String seleccionado = tipoPas.getValue();
 
         if ("Ordinario".equalsIgnoreCase(seleccionado)) {
             creador = new FactoriaPOrdinaria();
             pasaporte = creador.CrearPasaporte();
+
             // llenar atributos desde el controlador
             pasaporte.setId(id);
-            pasaporte.setTitular(null);
+            Titular t = new Titular(null, nom, null);
+            pasaporte.setTitular(t);
             pasaporte.setFechaExp(fechaExp);
-            pasaporte.setPais(null);
+            Pais p = new Pais(null, pais, null);
+            pasaporte.setPais(p);
             ((PasaporteOrdinario) pasaporte).setMotivoViaje(descripcion);
 
+            //Crear AdaptadorPasaporte y Memento
+            AdaptadorPasaporte AdapPasaporte = new AdaptadorPasaporte(pasaporte);
+            int indice = gestor.agregarMemento(AdapPasaporte.guardar());
+            estados.getItems().add(indice);
+            textAreaMementos.setText(gestor.verElementos());
+
+            //Enviar pasaporte al repositorio 
             String respuesta = repo.insertar(pasaporte);
             crearAlerta(respuesta);
 
@@ -167,11 +192,20 @@ public class controladorFormulario {
             pasaporte = creador.CrearPasaporte();
             // llenar atributos desde el controlador
             pasaporte.setId(id);
-            pasaporte.setTitular(null);
+            Titular t = new Titular(null, nom, null);
+            pasaporte.setTitular(t);
             pasaporte.setFechaExp(fechaExp);
-            pasaporte.setPais(null);
+            Pais p = new Pais(null, pais, null);
+            pasaporte.setPais(p);
             ((PasaporteDiplomatico) pasaporte).setMision(descripcion);
 
+            //Crear AdaptadorPasaporte y Memento
+            AdaptadorPasaporte AdapPasaporte = new AdaptadorPasaporte(pasaporte);
+            int indice = gestor.agregarMemento(AdapPasaporte.guardar());
+            estados.getItems().add(indice);
+            textAreaMementos.setText(gestor.verElementos());
+
+            //Enviar pasaporte al repositorio
             String respuesta = repo.insertar(pasaporte);
             crearAlerta(respuesta);
 
@@ -246,8 +280,10 @@ public class controladorFormulario {
 
             if (!tipoCambia) {
                 // Tipo igual → solo actualizar
-                pasaporteExistente.setTitular(null);
-                pasaporteExistente.setPais(null);
+                Titular t = new Titular(null, titularTxt, null);
+                Pais p = new Pais(null, paisTxt, null);
+                pasaporteExistente.setTitular(t);
+                pasaporteExistente.setPais(p);
                 pasaporteExistente.setFechaExp(fechaExpTxt);
 
                 if (pasaporteExistente instanceof PasaporteDiplomatico) {
@@ -256,6 +292,13 @@ public class controladorFormulario {
                     ((PasaporteOrdinario) pasaporteExistente).setMotivoViaje(descripcionTxt);
                 }
 
+                //CREAR ADAPTADOR Y MEMENTO
+                AdaptadorPasaporte AdapPasaporte = new AdaptadorPasaporte(pasaporteExistente);
+                int indice = gestor.agregarMemento(AdapPasaporte.guardar());
+                estados.getItems().add(indice);
+                textAreaMementos.setText(gestor.verElementos());
+
+                //ENVIAR PASAPORTE AL REPOSITORIO
                 String respuesta = repo.actualizar(pasaporteExistente);
                 crearAlerta(respuesta + "\n" + notificacion);
                 limpiarDatos(1);
@@ -283,9 +326,11 @@ public class controladorFormulario {
         }
 
         // Asignar datos comunes
+        Titular ti = new Titular(null, titularTxt, null);
+        Pais pa = new Pais(null, paisTxt, null);
         nuevoPasaporte.setId(id);
-        nuevoPasaporte.setTitular(null);
-        nuevoPasaporte.setPais(null);
+        nuevoPasaporte.setTitular(ti);
+        nuevoPasaporte.setPais(pa);
         nuevoPasaporte.setFechaExp(fechaExpTxt);
 
         // Insertar nuevo registro
@@ -296,9 +341,42 @@ public class controladorFormulario {
             respuestaInsert = repo.insertar((PasaporteOrdinario) nuevoPasaporte);
         }
 
+        //CREAR ADAPTADOR Y MEMENTO 
+        AdaptadorPasaporte AdapPasaporte = new AdaptadorPasaporte(nuevoPasaporte);
+        int indice = gestor.agregarMemento(AdapPasaporte.guardar());
+        estados.getItems().add(indice);        
+        textAreaMementos.setText(gestor.verElementos());
+
         crearAlerta(respuestaInsert + "\n" + notificacion);
 
         limpiarDatos(1);
+    }
+
+    @FXML
+    void clickRestaurar(ActionEvent event) {
+        Integer index = estados.getValue();
+        int indice = index;
+        AdaptadorPasaporte pasapRestaurado = new AdaptadorPasaporte();
+        Pasaporte p = pasapRestaurado.restaurar(gestor.obtenerMemento(indice));
+
+        if (p instanceof PasaporteDiplomatico) {
+            idPasaporte.setText(p.getId());
+            titular.setText(p.getTitular().getNombre());
+            fechExp.setText(p.getFechaExp());
+            pais.setText(p.getPais().getNombre());
+            tipoPas.setValue("Diplomatico");
+            descr.setText(((PasaporteDiplomatico) p).getMision());
+
+        } else if (p instanceof PasaporteOrdinario) {
+            idPasaporte.setText(p.getId());
+            titular.setText(p.getTitular().getNombre());
+            fechExp.setText(p.getFechaExp());
+            pais.setText(p.getPais().getNombre());
+            tipoPas.setValue("Ordinario");
+            descr.setText(((PasaporteOrdinario) p).getMotivoViaje()
+            );
+
+        }
     }
 
     @FXML

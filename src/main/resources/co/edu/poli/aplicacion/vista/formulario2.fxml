@@ -4,8 +4,7 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -16,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="679.0" prefWidth="989.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.poli.aplicacion.controlador.controladorFormulario">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="679.0" prefWidth="989.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.poli.aplicacion.controlador.controladorFormulario">
    <left>
       <VBox prefHeight="679.0" prefWidth="251.0" style="-fx-background-color: #E0E0E0;" BorderPane.alignment="CENTER">
          <children>
@@ -76,9 +75,9 @@
             <AnchorPane prefHeight="574.0" prefWidth="738.0" style="-fx-background-color: #DDE7F0;">
                <children>
                   <TextField fx:id="idPasaporte" layoutX="14.0" layoutY="53.0" onAction="#filtrarId" prefHeight="36.0" prefWidth="119.0" />
-                  <TextField fx:id="pais" layoutX="143.0" layoutY="53.0" prefHeight="36.0" prefWidth="179.0" />
+                  <TextField fx:id="titular" layoutX="143.0" layoutY="53.0" prefHeight="36.0" prefWidth="179.0" />
                   <TextField fx:id="fechExp" layoutX="332.0" layoutY="53.0" prefHeight="36.0" prefWidth="204.0" />
-                  <TextField fx:id="titular" layoutX="547.0" layoutY="53.0" prefHeight="36.0" prefWidth="171.0" />
+                  <TextField fx:id="pais" layoutX="547.0" layoutY="53.0" prefHeight="36.0" prefWidth="171.0" />
                   <Label layoutX="22.0" layoutY="21.0" text="ID Pasaporte" textFill="#0f385a">
                      <font>
                         <Font name="System Bold" size="15.0" />
@@ -111,21 +110,6 @@
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
-                  <TableView fx:id="tablaDatos" layoutX="22.0" layoutY="332.0" prefHeight="224.0" prefWidth="688.0">
-                    <columns>
-                      <TableColumn fx:id="tablaId" prefWidth="75.19995498657227" text="ID" />
-                        <TableColumn fx:id="tablaFechExp" prefWidth="99.46664428710938" text="FECH EXP" />
-                      <TableColumn fx:id="tablaTitular" minWidth="3.0" prefWidth="109.06672668457031" text="TITULAR " />
-                        <TableColumn fx:id="tablaPais" prefWidth="88.7999267578125" text="PAIS " />
-                        <TableColumn fx:id="tablatipopasp" prefWidth="111.46673583984375" text="TIPO PASAPORTE" />
-                        <TableColumn fx:id="tablaDescr" prefWidth="208.53326416015625" text="DESCRIPCION" />
-                    </columns>
-                  </TableView>
-                  <Button fx:id="bmostrartodo" layoutX="509.0" layoutY="235.0" mnemonicParsing="false" onAction="#clickMostrarTodo" prefHeight="39.0" prefWidth="142.0" style="-fx-background-color: #0F385A; -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.6), 15, 0, -2, 2); -fx-background-radius: 15;" text="MOSTRAR TODO" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </Button>
                   <Pane layoutX="31.0" layoutY="189.0" prefHeight="132.0" prefWidth="278.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 15;">
                      <children>
                         <Button fx:id="btnsuscribir" layoutX="169.0" layoutY="15.0" mnemonicParsing="false" onAction="#clickSuscribir" prefHeight="13.0" prefWidth="92.0" style="-fx-background-color: #0F385A; -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.6), 15, 0, -2, 2); -fx-background-radius: 15;" text="Suscribir" textFill="WHITE">
@@ -153,6 +137,18 @@
                         </Button>
                      </children>
                   </Pane>
+                  <ComboBox fx:id="estados" layoutX="370.0" layoutY="223.0" prefHeight="26.0" prefWidth="210.0" />
+                  <Label layoutX="369.0" layoutY="192.0" text="Estados" textFill="#0f385a">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <TextArea fx:id="textAreaMementos" editable="false" layoutX="31.0" layoutY="328.0" prefHeight="234.0" prefWidth="670.0" />
+                  <Button fx:id="btnRestaurar1" layoutX="536.0" layoutY="268.0" mnemonicParsing="false" onAction="#clickRestaurar" prefHeight="41.0" prefWidth="142.0" style="-fx-background-color: #0F385A; -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.6), 15, 0, -2, 2); -fx-background-radius: 15;" text="Restaurar" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="19.0" />
+                     </font>
+                  </Button>
                </children>
             </AnchorPane>
          </children>

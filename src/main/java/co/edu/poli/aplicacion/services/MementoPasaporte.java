@@ -1,13 +1,14 @@
-
 package co.edu.poli.aplicacion.services;
 
 import co.edu.poli.aplicacion.modelo.ElementoSeguridad;
 import co.edu.poli.aplicacion.modelo.Pais;
 import co.edu.poli.aplicacion.modelo.Pasaporte;
+import co.edu.poli.aplicacion.modelo.PasaporteDiplomatico;
+import co.edu.poli.aplicacion.modelo.PasaporteOrdinario;
 import co.edu.poli.aplicacion.modelo.Titular;
 
-
 public class MementoPasaporte {
+
     private String id;
     private String fechaExp;
     private Titular titular;
@@ -16,14 +17,18 @@ public class MementoPasaporte {
     private String mision;
     private String motivoViaje;
 
-    public MementoPasaporte(String id, String fechaExp, Titular titular, Pais pais, ElementoSeguridad elemSeguridad, String mision, String motivoViaje) {
-        this.id = id;
-        this.fechaExp = fechaExp;
-        this.titular = titular;
-        this.pais = pais;
-        this.elemSeguridad = elemSeguridad;
-        this.mision = mision;
-        this.motivoViaje = motivoViaje;
+    public MementoPasaporte(Pasaporte pasport) {
+        this.id = pasport.getId();
+        this.fechaExp = pasport.getFechaExp();
+        this.titular = pasport.getTitular();
+        this.pais = pasport.getPais();
+        this.elemSeguridad = pasport.getElemSeguridad();
+        if (pasport instanceof PasaporteDiplomatico) {
+            this.mision = ((PasaporteDiplomatico) pasport).getMision();
+        } else if (pasport instanceof PasaporteOrdinario) {
+
+            this.motivoViaje = ((PasaporteOrdinario) pasport).getMotivoViaje();
+        }
     }
 
     public String getId() {
@@ -54,9 +59,11 @@ public class MementoPasaporte {
         return motivoViaje;
     }
 
-    
+    @Override
+    public String toString() {
+        return  "id=" + id + ", fechaExp=" + fechaExp + ", titular=" + titular + ", pais=" + pais + ", elemSeguridad=" + elemSeguridad + ", mision=" + mision + ", motivoViaje=" + motivoViaje + '}';
+    }
     
    
-    
-    
+
 }
