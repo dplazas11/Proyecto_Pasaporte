@@ -9,7 +9,7 @@ public class MementoCaretaker {
 
     public int agregarMemento(MementoPasaporte m) {
         historial.add(m);
-        return historial.size();
+        return historial.indexOf(m);
     }
 
     public MementoPasaporte obtenerMemento(int indice) {
