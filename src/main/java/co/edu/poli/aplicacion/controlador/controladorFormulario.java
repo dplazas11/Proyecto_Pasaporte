@@ -7,6 +7,7 @@ import co.edu.poli.aplicacion.modelo.PasaporteOrdinario;
 import co.edu.poli.aplicacion.modelo.Titular;
 import co.edu.poli.aplicacion.repositorio.OperacionesPasaporte;
 import co.edu.poli.aplicacion.services.AdaptadorPasaporte;
+import co.edu.poli.aplicacion.services.CorAprobador;
 import co.edu.poli.aplicacion.services.CreadorPasaporte;
 import co.edu.poli.aplicacion.services.FactoriaPDiplomatica;
 import co.edu.poli.aplicacion.services.FactoriaPOrdinaria;
@@ -18,6 +19,7 @@ import co.edu.poli.aplicacion.services.SuscriberMigracion;
 import co.edu.poli.aplicacion.services.SuscriberPolicia;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Map;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -41,6 +43,26 @@ import javafx.stage.Stage;
 
 public class controladorFormulario {
 
+    //ATRIBUTOS DEL PASAPORTE
+    @FXML
+    private TextField DocTitular;
+
+    @FXML
+    private TextField descr;
+
+    @FXML
+    private TextField fechExp;
+
+    @FXML
+    private TextField idPasaporte;
+
+    @FXML
+    private TextField pais;
+
+    @FXML
+    private TextField titular;
+
+    //BOTONES
     @FXML
     private Button bactualizar;
 
@@ -57,17 +79,18 @@ public class controladorFormulario {
     private Button bmostrartodo;
 
     @FXML
-    private TextField descr;
+    private Button barbolespgeo;
 
     @FXML
-    private TextField fechExp;
+    private Button btneliminarsusc;
 
     @FXML
-    private TextField idPasaporte;
+    private Button btnsuscribir;
 
     @FXML
-    private TextField pais;
+    private Button btnRestaurar1;
 
+    //CAMPOS DE LA TABLA 
     @FXML
     private TableView<Pasaporte> tablaDatos;
 
@@ -89,23 +112,13 @@ public class controladorFormulario {
     @FXML
     private TableColumn<Pasaporte, String> tablatipopasp;
 
+    //COMBO BOX TIPO DE PASAPORTE
     @FXML
     private ComboBox<String> tipoPas;
 
+    //SUSCRIPTORES
     @FXML
-    private TextField titular;
-
-    @FXML
-    private Button barbolespgeo;
-
-    @FXML
-    private Button btneliminarsusc;
-
-    @FXML
-    private Button btnsuscribir;
-
-    @FXML
-    private CheckBox selectCansilleria;
+    private CheckBox selectCancilleria;
 
     @FXML
     private CheckBox selectmigra;
@@ -116,17 +129,19 @@ public class controladorFormulario {
     @FXML
     private Button btnverlista;
 
+    //INFORMACION ESTADOS
     @FXML
     private ComboBox<Integer> estados;
 
     @FXML
     private TextArea textAreaMementos;
 
-    @FXML
-    private Button btnRestaurar1;
-
+    //OBJETOS GLOBALES 
     public static final ObserverPublisher publisher = new ObserverPublisher();
     public static final MementoCaretaker gestor = new MementoCaretaker();
+    CorAprobador AprobadorCancilleria = new SuscriberCancilleria();
+    CorAprobador AprobadorPolicia = new SuscriberPolicia();
+    CorAprobador AprobadorMigracion = new SuscriberMigracion();
 
     @FXML
     public void initialize() {
@@ -153,69 +168,88 @@ public class controladorFormulario {
     //metodos de la ventana 
     @FXML
     void clickGuardar(ActionEvent event) {
+
+        if (AprobadorCancilleria == null) {
+            crearAlerta("Debe suscribir las entidades antes de guardar el pasaporte.");
+            return;
+        }
+
         String id = idPasaporte.getText();
         String nom = titular.getText();
+        String docTitular = DocTitular.getText();
         String fechaExp = fechExp.getText();
         String pais = this.pais.getText();
         String descripcion = descr.getText();
         String seleccionado = tipoPas.getValue();
 
-        CreadorPasaporte creador;
-        Pasaporte pasaporte;
-        OperacionesPasaporte repo = new OperacionesPasaporte();
+        Map<String, Object> estadoAprobacion = AprobadorCancilleria.aprobar(docTitular);
+        boolean estado = (boolean) estadoAprobacion.get("estado");
 
-        if ("Ordinario".equalsIgnoreCase(seleccionado)) {
-            creador = new FactoriaPOrdinaria();
-            pasaporte = creador.CrearPasaporte();
+        if (estado) {
 
-            // llenar atributos desde el controlador
-            pasaporte.setId(id);
-            Titular t = new Titular(null, nom, null);
-            pasaporte.setTitular(t);
-            pasaporte.setFechaExp(fechaExp);
-            Pais p = new Pais(null, pais, null);
-            pasaporte.setPais(p);
-            ((PasaporteOrdinario) pasaporte).setMotivoViaje(descripcion);
+            CreadorPasaporte creador;
+            Pasaporte pasaporte;
+            OperacionesPasaporte repo = new OperacionesPasaporte();
 
-            //Crear AdaptadorPasaporte y Memento
-            AdaptadorPasaporte AdapPasaporte = new AdaptadorPasaporte(pasaporte);
-            int indice = gestor.agregarMemento(AdapPasaporte.guardar());
-            estados.getItems().add(indice);
-            textAreaMementos.setText(gestor.verElementos());
+            if ("Ordinario".equalsIgnoreCase(seleccionado)) {
+                creador = new FactoriaPOrdinaria();
+                pasaporte = creador.CrearPasaporte();
 
-            //Enviar pasaporte al repositorio 
-            String respuesta = repo.insertar(pasaporte);
-            crearAlerta(respuesta);
+                // llenar atributos desde el controlador
+                pasaporte.setId(id);
+                Titular t = new Titular(null, nom, null);
+                pasaporte.setTitular(t);
+                pasaporte.setFechaExp(fechaExp);
+                Pais p = new Pais(null, pais, null);
+                pasaporte.setPais(p);
+                ((PasaporteOrdinario) pasaporte).setMotivoViaje(descripcion);
 
-        } else if ("Diplomatico".equalsIgnoreCase(seleccionado)) {
-            creador = new FactoriaPDiplomatica();
-            pasaporte = creador.CrearPasaporte();
-            // llenar atributos desde el controlador
-            pasaporte.setId(id);
-            Titular t = new Titular(null, nom, null);
-            pasaporte.setTitular(t);
-            pasaporte.setFechaExp(fechaExp);
-            Pais p = new Pais(null, pais, null);
-            pasaporte.setPais(p);
-            ((PasaporteDiplomatico) pasaporte).setMision(descripcion);
+                //Crear AdaptadorPasaporte y Memento
+                AdaptadorPasaporte AdapPasaporte = new AdaptadorPasaporte(pasaporte);
+                int indice = gestor.agregarMemento(AdapPasaporte.guardar());
+                estados.getItems().add(indice);
+                textAreaMementos.setText(gestor.verElementos());
 
-            //Crear AdaptadorPasaporte y Memento
-            AdaptadorPasaporte AdapPasaporte = new AdaptadorPasaporte(pasaporte);
-            int indice = gestor.agregarMemento(AdapPasaporte.guardar());
-            estados.getItems().add(indice);
-            textAreaMementos.setText(gestor.verElementos());
+                //Enviar pasaporte al repositorio 
+                String respuesta = repo.insertar(pasaporte);
+                Object respAprobacion = estadoAprobacion.get("mensaje");
+                crearAlerta(respuesta + "\n" + (String) respAprobacion);
 
-            //Enviar pasaporte al repositorio
-            String respuesta = repo.insertar(pasaporte);
-            crearAlerta(respuesta);
+            } else if ("Diplomatico".equalsIgnoreCase(seleccionado)) {
+                creador = new FactoriaPDiplomatica();
+                pasaporte = creador.CrearPasaporte();
+                // llenar atributos desde el controlador
+                pasaporte.setId(id);
+                Titular t = new Titular(null, nom, null);
+                pasaporte.setTitular(t);
+                pasaporte.setFechaExp(fechaExp);
+                Pais p = new Pais(null, pais, null);
+                pasaporte.setPais(p);
+                ((PasaporteDiplomatico) pasaporte).setMision(descripcion);
 
-            //JOptionPane.showMessageDialog(vista, respuesta);
+                //Crear AdaptadorPasaporte y Memento
+                AdaptadorPasaporte AdapPasaporte = new AdaptadorPasaporte(pasaporte);
+                int indice = gestor.agregarMemento(AdapPasaporte.guardar());
+                estados.getItems().add(indice);
+                textAreaMementos.setText(gestor.verElementos());
+
+                //Enviar pasaporte al repositorio
+                String respuesta = repo.insertar(pasaporte);
+                Object respAprobacion = estadoAprobacion.get("mensaje");
+                crearAlerta(respuesta + "\n" + (String) respAprobacion);
+
+                //JOptionPane.showMessageDialog(vista, respuesta);
+            } else {
+                crearAlerta("Seleccione un tipo de pasaporte válido");
+
+            }
+
+            limpiarDatos(1);
+
         } else {
-            crearAlerta("Seleccione un tipo de pasaporte válido");
-
+            Object resp = estadoAprobacion.get("mensaje");
+            crearAlerta((String) resp);
         }
-
-        limpiarDatos(1);
 
     }
 
@@ -344,7 +378,7 @@ public class controladorFormulario {
         //CREAR ADAPTADOR Y MEMENTO 
         AdaptadorPasaporte AdapPasaporte = new AdaptadorPasaporte(nuevoPasaporte);
         int indice = gestor.agregarMemento(AdapPasaporte.guardar());
-        estados.getItems().add(indice);        
+        estados.getItems().add(indice);
         textAreaMementos.setText(gestor.verElementos());
 
         crearAlerta(respuestaInsert + "\n" + notificacion);
@@ -423,20 +457,27 @@ public class controladorFormulario {
         String mensaje = "";
         boolean seleccionados = false;
 
-        if (selectCansilleria.isSelected()) {
+        AprobadorCancilleria = null;
+        AprobadorPolicia = null;
+        AprobadorMigracion = null;
+
+        if (selectCancilleria.isSelected()) {
             Suscriber cancilleria = new SuscriberCancilleria();
+            AprobadorCancilleria = new SuscriberCancilleria();
             String respuesta1 = publisher.suscribir(cancilleria);
             mensaje = respuesta1 + "\n";
             seleccionados = true;
         }
         if (selectpolicia.isSelected()) {
             Suscriber policia = new SuscriberPolicia();
+            AprobadorPolicia = new SuscriberPolicia();
             String respuesta2 = publisher.suscribir(policia);
             mensaje = mensaje + respuesta2 + "\n";
             seleccionados = true;
         }
         if (selectmigra.isSelected()) {
             Suscriber migracion = new SuscriberMigracion();
+            AprobadorMigracion = new SuscriberMigracion();
             String respuesta3 = publisher.suscribir(migracion);
             mensaje = mensaje + respuesta3;
             seleccionados = true;
@@ -444,9 +485,16 @@ public class controladorFormulario {
 
         if (!seleccionados) {
             crearAlerta("No se ha selecionado niguna opción.");
-        } else {
-            crearAlerta(mensaje);
+            return;
         }
+
+        if (AprobadorCancilleria != null && AprobadorPolicia != null) {
+            AprobadorCancilleria.setSiguiente(AprobadorPolicia);
+        }
+        if (AprobadorPolicia != null && AprobadorMigracion != null) {
+            AprobadorPolicia.setSiguiente(AprobadorMigracion);
+        }
+        crearAlerta(mensaje);
 
     }
 
@@ -456,7 +504,7 @@ public class controladorFormulario {
         String mensaje = "";
         boolean seleccionados = false;
 
-        if (selectCansilleria.isSelected()) {
+        if (selectCancilleria.isSelected()) {
             Suscriber cancilleria = new SuscriberCancilleria();
             String respuesta1 = publisher.desuscribir(cancilleria);
             mensaje = respuesta1 + "\n";
@@ -498,6 +546,7 @@ public class controladorFormulario {
                 pais.setText("");
                 tipoPas.setValue(tipoPas.getItems().get(0));
                 descr.setText("");
+                DocTitular.setText("");
             case 2:
                 titular.setText("");
                 fechExp.setText("");
@@ -555,5 +604,5 @@ public class controladorFormulario {
 
         });
     }
-    
+
 }

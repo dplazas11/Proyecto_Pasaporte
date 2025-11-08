@@ -10,18 +10,18 @@ package co.edu.poli.aplicacion.modelo;
  */
 public class blockchain extends ElementoSeguridad{
     
-    private long hash;
+    private String hash;
 
-    public blockchain(long hash, String id, String tipo, String descripcion) {
+    public blockchain(String hash, String id, String tipo, String descripcion) {
         super(id, tipo, descripcion);
         this.hash = hash;
     }
 
-    public long getHash() {
+    public String getHash() {
         return hash;
     }
 
-    public void setHash(long hash) {
+    public void setHash(String hash) {
         this.hash = hash;
     }
     

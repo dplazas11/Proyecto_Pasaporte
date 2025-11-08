@@ -72,7 +72,7 @@ public class AdaptadorPasaporte implements ProxyInterface {
                     memento.getTitular(),
                     memento.getPais(),
                     memento.getElemSeguridad(),
-                    memento.getMotivoViaje()
+                    memento.getMotivoViaje() 
             );
         }
         return pasaporteAdaptado;
