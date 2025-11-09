@@ -44,7 +44,7 @@
                <children>
                   <Label text="TRAMITADOR DE VISAS" textFill="#0f385a">
                      <font>
-                        <Font name="System Bold" size="46.0" />
+                        <Font name="System Bold" size="38.0" />
                      </font>
                   </Label>
                </children>

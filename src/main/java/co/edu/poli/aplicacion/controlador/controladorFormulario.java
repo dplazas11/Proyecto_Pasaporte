@@ -168,6 +168,8 @@ public class controladorFormulario {
     //metodos de la ventana 
     @FXML
     void clickGuardar(ActionEvent event) {
+        
+        String notificacion = publisher.notificarSuscribers();
 
         if (AprobadorCancilleria == null) {
             crearAlerta("Debe suscribir las entidades antes de guardar el pasaporte.");
@@ -213,7 +215,7 @@ public class controladorFormulario {
                 //Enviar pasaporte al repositorio 
                 String respuesta = repo.insertar(pasaporte);
                 Object respAprobacion = estadoAprobacion.get("mensaje");
-                crearAlerta(respuesta + "\n" + (String) respAprobacion);
+                crearAlerta("Respuesta repositorio:" + respuesta + "\n" + (String) respAprobacion + "\n" +  notificacion);
 
             } else if ("Diplomatico".equalsIgnoreCase(seleccionado)) {
                 creador = new FactoriaPDiplomatica();
@@ -236,7 +238,7 @@ public class controladorFormulario {
                 //Enviar pasaporte al repositorio
                 String respuesta = repo.insertar(pasaporte);
                 Object respAprobacion = estadoAprobacion.get("mensaje");
-                crearAlerta(respuesta + "\n" + (String) respAprobacion);
+                crearAlerta(respuesta + "\n" + (String) respAprobacion + "\n" + notificacion);
 
                 //JOptionPane.showMessageDialog(vista, respuesta);
             } else {
