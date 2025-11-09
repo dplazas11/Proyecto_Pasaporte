@@ -2,11 +2,15 @@ package co.edu.poli.aplicacion.controlador;
 
 import co.edu.poli.aplicacion.modelo.Pais;
 import co.edu.poli.aplicacion.modelo.Visa;
+import co.edu.poli.aplicacion.services.AdaptadorElemSeguridad;
 import co.edu.poli.aplicacion.services.AdaptadorVisa;
 import co.edu.poli.aplicacion.services.Comando;
 import co.edu.poli.aplicacion.services.ComandoEmitirVisa;
 import co.edu.poli.aplicacion.services.ComandoInvocador;
 import co.edu.poli.aplicacion.services.ComandoSuspenderVisa;
+import co.edu.poli.aplicacion.services.StrategyBiometrico;
+import co.edu.poli.aplicacion.services.StrategyBlockChain;
+import co.edu.poli.aplicacion.services.StrategyChip;
 import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -58,6 +62,7 @@ public class controladorVisaElemSeguridad {
     //Variables globales
     AdaptadorVisa adapVisa;
     private static final ComandoInvocador gestor = new ComandoInvocador();
+    private AdaptadorElemSeguridad adapElemSeg = new AdaptadorElemSeguridad();
     Comando emitir;
     Comando Cancelar;
 
@@ -126,6 +131,29 @@ public class controladorVisaElemSeguridad {
 
     @FXML
     void clickCrearElemSeg(ActionEvent event) {
+        
+        String id_ElemSeg = idElemSeg.getText();
+        String tipo = tipoElem.getValue();
+        String descrp = descrElem.getText();
+        String detlle = detalleElem.getText();
+        
+        if ("Biometrico".equalsIgnoreCase(tipo)){
+            adapElemSeg.setEstrategia(new StrategyBiometrico());
+            String mensaje = adapElemSeg.crearElemSeg(id_ElemSeg, tipo, descrp, detlle);
+            crearAlerta(mensaje);
+        }else if ("Chip".equalsIgnoreCase(tipo)){
+            adapElemSeg.setEstrategia(new StrategyChip());
+            String mensaje = adapElemSeg.crearElemSeg(id_ElemSeg, tipo, descrp, detlle);
+            crearAlerta(mensaje);
+            
+        }else if ("Blockchain".equalsIgnoreCase(tipo)){
+            adapElemSeg.setEstrategia(new StrategyBlockChain());
+            String mensaje = adapElemSeg.crearElemSeg(id_ElemSeg, tipo, descrp, detlle);
+            crearAlerta(mensaje);
+        }
+        else {
+            crearAlerta("Debe escoger un tipo de Elemento de Seguridad");
+        }
 
     }
 
