@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -97,30 +98,35 @@
             </HBox>
             <AnchorPane prefHeight="312.0" prefWidth="779.0" style="-fx-background-color: #DDE7F0;">
                <children>
-                  <TextField fx:id="idElemSeg" layoutX="14.0" layoutY="53.0" onAction="#filtrarIdElemSeg" prefHeight="36.0" prefWidth="163.0" />
-                  <TextField fx:id="tipoElem" layoutX="186.0" layoutY="53.0" prefHeight="36.0" prefWidth="179.0" />
-                  <Label layoutX="20.0" layoutY="24.0" text="ID Elem. Seguridad" textFill="#0f385a">
+                  <TextField fx:id="idElemSeg" layoutX="42.0" layoutY="55.0" prefHeight="36.0" prefWidth="199.0" />
+                  <Label layoutX="72.0" layoutY="26.0" text="ID Elem. Seguridad" textFill="#0f385a">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
-                  <Label layoutX="253.0" layoutY="25.0" text="Tipo " textFill="#0f385a">
+                  <Label layoutX="350.0" layoutY="26.0" text="Tipo " textFill="#0f385a">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="descrElem" layoutX="375.0" layoutY="53.0" prefHeight="36.0" prefWidth="201.0" />
-                  <Label layoutX="425.0" layoutY="25.0" text="Descripcion " textFill="#0f385a">
+                  <TextField fx:id="descrElem" layoutX="38.0" layoutY="151.0" prefHeight="36.0" prefWidth="201.0" />
+                  <Label layoutX="88.0" layoutY="123.0" text="Descripcion " textFill="#0f385a">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="detalleElem" layoutX="583.0" layoutY="52.0" prefHeight="36.0" prefWidth="196.0" />
-                  <Label layoutX="660.0" layoutY="25.0" text="Detalle" textFill="#0f385a">
+                  <TextField fx:id="detalleElem" layoutX="273.0" layoutY="150.0" prefHeight="36.0" prefWidth="202.0" />
+                  <Label layoutX="350.0" layoutY="123.0" text="Detalle" textFill="#0f385a">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
+                  <ChoiceBox fx:id="tipoElem" layoutX="275.0" layoutY="57.0" prefHeight="31.0" prefWidth="196.0" />
+                  <Button fx:id="btnCrearElemSeg" layoutX="514.0" layoutY="91.0" maxHeight="-Infinity" mnemonicParsing="false" onAction="#clickCrearElemSeg" prefHeight="46.0" prefWidth="208.0" style="-fx-background-color: #0F385A; -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.6), 15, 0, -2, 2); -fx-background-radius: 15;" text="Crear Elem. Seguridad" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Button>
                </children>
             </AnchorPane>
          </children>

@@ -16,6 +16,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -26,7 +27,7 @@ public class controladorVisaElemSeguridad {
 
     @FXML
     private Button btnSuspenderVisa;
-    
+
     @FXML
     private Button btnvolver;
 
@@ -52,7 +53,7 @@ public class controladorVisaElemSeguridad {
     private TextField paisOrigen;
 
     @FXML
-    private TextField tipoElem;
+    private ChoiceBox<String> tipoElem;
 
     //Variables globales
     AdaptadorVisa adapVisa;
@@ -60,7 +61,17 @@ public class controladorVisaElemSeguridad {
     Comando emitir;
     Comando Cancelar;
 
-    
+    @FXML
+    public void initialize() {
+        tipoElem.getItems().addAll("(Seleccione una opción)", "Biometrico", "Chip", "Blockchain");
+
+        idVisa.focusedProperty().addListener((obs, oldVal, newVal) -> {
+            if (!newVal) {
+                filtrarIdVisa(null);
+            }
+        });
+    }
+
     @FXML
     void clickEmitirVisa(ActionEvent event) {
 
@@ -93,12 +104,12 @@ public class controladorVisaElemSeguridad {
         adapVisa = new AdaptadorVisa(visa);
         Cancelar = new ComandoSuspenderVisa(adapVisa);
 
-        String mensaje = gestor.ejecutarComando(emitir, adapVisa);
+        String mensaje = gestor.ejecutarComando(Cancelar, adapVisa);
         crearAlerta(mensaje);
         limpiarDatos(1);
 
     }
-    
+
     @FXML
     void clickVolver(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/co/edu/poli/aplicacion/vista/formulario2.fxml"));
@@ -114,23 +125,21 @@ public class controladorVisaElemSeguridad {
     }
 
     @FXML
+    void clickCrearElemSeg(ActionEvent event) {
+
+    }
+
+    @FXML
     void filtrarIdVisa(ActionEvent event) {
 
         String id = idVisa.getText();
         AdaptadorVisa adapVisa1 = gestor.getVisa(id);
-        
-        if (adapVisa1 == null) {
-        crearAlerta("No se encontró ninguna visa con el ID: " + id);
-        return;
-    }
-        paisOrigen.setText(adapVisa1.getPais());
-        multEntry.setText(String.valueOf(adapVisa1.getMultEntry()));
-        hora.setText(adapVisa1.getHora());
 
-    }
-    
-    @FXML
-    void filtrarIdElemSeg(ActionEvent event) {
+        if (adapVisa1 != null) {
+            paisOrigen.setText(adapVisa1.getPais());
+            multEntry.setText(String.valueOf(adapVisa1.getMultEntry()));
+            hora.setText(adapVisa1.getHora());
+        }
 
     }
 
@@ -143,7 +152,7 @@ public class controladorVisaElemSeguridad {
                 hora.setText("");
             case 2:
                 idElemSeg.setText("");
-                tipoElem.setText("");
+                tipoElem.setValue(tipoElem.getItems().get(0));
                 descrElem.setText("");
                 detalleElem.setText("");
                 break;
