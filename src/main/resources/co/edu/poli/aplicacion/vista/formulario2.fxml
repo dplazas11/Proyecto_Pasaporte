@@ -50,7 +50,12 @@
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Button>
-                  <Button fx:id="barbolespgeo" layoutX="40.0" layoutY="363.0" mnemonicParsing="false" onAction="#clickcambiarventana" prefHeight="44.0" prefWidth="178.0" style="-fx-background-color: #2589DA; -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.6), 15, 0, -2, 2); -fx-background-radius: 15;" text="ESPACIO GEOGRAFICO " textFill="WHITE">
+                  <Button fx:id="barbolespgeo" layoutX="40.0" layoutY="363.0" mnemonicParsing="false" onAction="#clickcambiarventana1" prefHeight="44.0" prefWidth="178.0" style="-fx-background-color: #2589DA; -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.6), 15, 0, -2, 2); -fx-background-radius: 15;" text="ESPACIO GEOGRAFICO " textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btnVisaElemSeg" layoutX="40.0" layoutY="433.0" mnemonicParsing="false" onAction="#clickcambiarventana2" prefHeight="44.0" prefWidth="178.0" style="-fx-background-color: #2589DA; -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.6), 15, 0, -2, 2); -fx-background-radius: 15;" text="VISA Y ELEM. SEGURIDAD" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>

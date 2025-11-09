@@ -438,8 +438,21 @@ public class controladorFormulario {
     }
 
     @FXML
-    void clickcambiarventana(ActionEvent event) throws IOException {
+    void clickcambiarventana1(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/co/edu/poli/aplicacion/vista/formulario Arbol.fxml"));
+
+        Stage nuevaVentana = new Stage();
+        nuevaVentana.setScene(new Scene(root));
+        nuevaVentana.show();
+
+        // Cerrar la ventana actual
+        Stage actual = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        actual.close();
+
+    }
+    @FXML
+    void clickcambiarventana2(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/co/edu/poli/aplicacion/vista/formularioVisayBiometrico.fxml"));
 
         Stage nuevaVentana = new Stage();
         nuevaVentana.setScene(new Scene(root));

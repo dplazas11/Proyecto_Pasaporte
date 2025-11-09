@@ -31,7 +31,7 @@ public class SuscriberPolicia extends CorAprobador implements Suscriber {
             return siguiente.aprobar(idTitular);
         } else {
             estadoAprobacion.put("estado", true);
-            estadoAprobacion.put("mensaje", "El pasaporte ha sido aprobado por la Cancilleria y la Policia.");
+            estadoAprobacion.put("mensaje", "El pasaporte ha sido aprobado por la Cancilleria y la Policia");
         }
         return estadoAprobacion;
     }

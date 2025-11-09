@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -10,13 +8,12 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="779.0" prefWidth="1056.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.poli.aplicacion.controlador.controladorFormulario">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="682.0" prefWidth="966.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.poli.aplicacion.controlador.controladorVisaElemSeguridad">
    <left>
-      <VBox prefHeight="679.0" prefWidth="251.0" style="-fx-background-color: #E0E0E0;" BorderPane.alignment="CENTER">
+      <VBox prefHeight="682.0" prefWidth="184.0" style="-fx-background-color: #E0E0E0;" BorderPane.alignment="CENTER">
          <children>
             <VBox alignment="CENTER" prefHeight="220.0" prefWidth="251.0" style="-fx-background-color: #0F385A;">
                <children>
@@ -27,31 +24,11 @@
                   </ImageView>
                </children>
             </VBox>
-            <AnchorPane prefHeight="563.0" prefWidth="251.0" style="-fx-background-color: #0F385A;">
+            <AnchorPane prefHeight="513.0" prefWidth="176.0" style="-fx-background-color: #0F385A;">
                <children>
-                  <Button fx:id="bguardar" layoutX="38.0" layoutY="39.0" mnemonicParsing="false" onAction="#clickGuardar" prefHeight="44.0" prefWidth="178.0" style="-fx-background-color: #FFFFFF; -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.6), 15, 0, -2, 2); -fx-background-radius: 15;" text="GUARDAR" textFill="#0f385a">
+                  <Button fx:id="btnvolver" layoutX="25.0" layoutY="425.0" mnemonicParsing="false" onAction="#clickVolver" prefHeight="34.0" prefWidth="134.0" style="-fx-background-color: #FFFFFF; -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.6), 15, 0, -2, 2); -fx-background-radius: 15;" text="VOLVER" textFill="#0f385a">
                      <font>
                         <Font name="System Bold" size="15.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="bactualizar" layoutX="38.0" layoutY="121.0" mnemonicParsing="false" onAction="#clickActualizar" prefHeight="44.0" prefWidth="178.0" style="-fx-background-color: #FFFFFF; -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.6), 15, 0, -2, 2); -fx-background-radius: 15;" text="ACTUALIZAR" textFill="#0f385a">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="bbuscar" layoutX="38.0" layoutY="202.0" mnemonicParsing="false" onAction="#clickBuscar" prefHeight="44.0" prefWidth="178.0" style="-fx-background-color: #FFFFFF; -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.6), 15, 0, -2, 2); -fx-background-radius: 15;" text="BUSCAR" textFill="#0f385a">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="beliminar" layoutX="39.0" layoutY="282.0" mnemonicParsing="false" onAction="#clickEliminar" prefHeight="44.0" prefWidth="178.0" style="-fx-background-color: #FFFFFF; -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.6), 15, 0, -2, 2); -fx-background-radius: 15;" text="ELIMINAR" textFill="#0f385a">
-                     <font>
-                        <Font name="System Bold" size="15.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="barbolespgeo" layoutX="40.0" layoutY="363.0" mnemonicParsing="false" onAction="#clickcambiarventana" prefHeight="44.0" prefWidth="178.0" style="-fx-background-color: #2589DA; -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.6), 15, 0, -2, 2); -fx-background-radius: 15;" text="ESPACIO GEOGRAFICO " textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="13.0" />
                      </font>
                   </Button>
                </children>
@@ -60,7 +37,7 @@
       </VBox>
    </left>
    <center>
-      <VBox prefHeight="755.0" prefWidth="844.0" BorderPane.alignment="CENTER">
+      <VBox prefHeight="779.0" prefWidth="857.0" BorderPane.alignment="CENTER">
          <children>
             <HBox alignment="CENTER" prefHeight="106.0" prefWidth="805.0" style="-fx-background-color: #FFFFFF;">
                <children>
@@ -71,141 +48,75 @@
                   </Label>
                </children>
             </HBox>
-            <AnchorPane prefHeight="280.0" prefWidth="805.0" style="-fx-background-color: #DDE7F0;">
+            <AnchorPane prefHeight="290.0" prefWidth="805.0" style="-fx-background-color: #DDE7F0;">
                <children>
-                  <TextField fx:id="idPasaporte" layoutX="14.0" layoutY="53.0" onAction="#filtrarId" prefHeight="36.0" prefWidth="119.0" />
-                  <TextField fx:id="titular" layoutX="143.0" layoutY="53.0" prefHeight="36.0" prefWidth="179.0" />
-                  <TextField fx:id="fechExp" layoutX="572.0" layoutY="54.0" prefHeight="36.0" prefWidth="204.0" />
-                  <Label layoutX="44.0" layoutY="24.0" text="ID Visa" textFill="#0f385a">
+                  <TextField fx:id="idVisa" layoutX="14.0" layoutY="74.0" onAction="#filtrarIdVisa" prefHeight="36.0" prefWidth="119.0" />
+                  <TextField fx:id="paisOrigen" layoutX="147.0" layoutY="74.0" prefHeight="36.0" prefWidth="179.0" />
+                  <TextField fx:id="multEntry" layoutX="339.0" layoutY="74.0" prefHeight="36.0" prefWidth="214.0" />
+                  <TextField fx:id="hora" layoutX="572.0" layoutY="75.0" prefHeight="36.0" prefWidth="204.0" />
+                  <Label layoutX="45.0" layoutY="45.0" text="ID Visa" textFill="#0f385a">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
-                  <Label layoutX="180.0" layoutY="25.0" text="Pais de Origen" textFill="#0f385a">
+                  <Label layoutX="181.0" layoutY="46.0" text="Pais de Origen" textFill="#0f385a">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
-                  <Label layoutX="651.0" layoutY="25.0" text="Hora" textFill="#0f385a">
+                  <Label layoutX="651.0" layoutY="46.0" text="Hora" textFill="#0f385a">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
-                  <Pane layoutX="41.0" layoutY="112.0" prefHeight="132.0" prefWidth="278.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 15;">
-                     <children>
-                        <Button fx:id="btnsuscribir" layoutX="169.0" layoutY="15.0" mnemonicParsing="false" onAction="#clickSuscribir" prefHeight="13.0" prefWidth="92.0" style="-fx-background-color: #0F385A; -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.6), 15, 0, -2, 2); -fx-background-radius: 15;" text="Suscribir" textFill="WHITE">
-                           <font>
-                              <Font name="System Bold" size="13.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="btneliminarsusc" layoutX="169.0" layoutY="53.0" mnemonicParsing="false" onAction="#clickEliminarSuscripcion" prefHeight="13.0" prefWidth="92.0" style="-fx-background-color: #0F385A; -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.6), 15, 0, -2, 2); -fx-background-radius: 15;" text="Eliminar" textFill="WHITE">
-                           <font>
-                              <Font name="System Bold" size="13.0" />
-                           </font>
-                        </Button>
-                        <CheckBox fx:id="selectCansilleria" layoutX="18.0" layoutY="36.0" mnemonicParsing="false" text="Cancilleria " />
-                        <CheckBox fx:id="selectpolicia" layoutX="18.0" layoutY="66.0" mnemonicParsing="false" text="Policia" />
-                        <CheckBox fx:id="selectmigra" layoutX="18.0" layoutY="93.0" mnemonicParsing="false" text="Migración Colombia" />
-                        <Label layoutX="18.0" layoutY="7.0" prefHeight="22.0" prefWidth="116.0" text="Notificación" textFill="#0f385a">
-                           <font>
-                              <Font name="System Bold" size="15.0" />
-                           </font>
-                        </Label>
-                        <Button fx:id="btnverlista" layoutX="169.0" layoutY="88.0" mnemonicParsing="false" onAction="#clickverlistasuscriptores" prefHeight="13.0" prefWidth="92.0" style="-fx-background-color: #0F385A; -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.6), 15, 0, -2, 2); -fx-background-radius: 15;" text="Lista" textFill="WHITE">
-                           <font>
-                              <Font name="System Bold" size="13.0" />
-                           </font>
-                        </Button>
-                     </children>
-                  </Pane>
-                  <ComboBox fx:id="estados" layoutX="367.0" layoutY="180.0" prefHeight="33.0" prefWidth="146.0" />
-                  <Label layoutX="367.0" layoutY="142.0" text="Estados" textFill="#0f385a">
-                     <font>
-                        <Font name="System Bold" size="18.0" />
-                     </font>
-                  </Label>
-                  <Button fx:id="btnRestaurar1" layoutX="558.0" layoutY="175.0" maxHeight="-Infinity" mnemonicParsing="false" onAction="#clickRestaurar" prefHeight="37.0" prefWidth="127.0" style="-fx-background-color: #0F385A; -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.6), 15, 0, -2, 2); -fx-background-radius: 15;" text="Restaurar" textFill="WHITE">
+                  <Button fx:id="btnEmitirVisa" layoutX="136.0" layoutY="151.0" maxHeight="-Infinity" mnemonicParsing="false" onAction="#clickEmitirVisa" prefHeight="46.0" prefWidth="182.0" style="-fx-background-color: #0F385A; -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.6), 15, 0, -2, 2); -fx-background-radius: 15;" text="EMITIR VISA" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Button>
-                  <TextField fx:id="titular1" layoutX="339.0" layoutY="53.0" prefHeight="36.0" prefWidth="214.0" />
-                  <Label layoutX="385.0" layoutY="25.0" text="Multiple Entrada" textFill="#0f385a">
+                  <Button fx:id="btnSuspenderVisa" layoutX="422.0" layoutY="152.0" maxHeight="-Infinity" mnemonicParsing="false" onAction="#clickSuspenderVisa" prefHeight="46.0" prefWidth="182.0" style="-fx-background-color: #0F385A; -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.6), 15, 0, -2, 2); -fx-background-radius: 15;" text="CANCELAR VISA" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Button>
+                  <Label layoutX="385.0" layoutY="46.0" text="Multiple Entrada" textFill="#0f385a">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
                </children>
             </AnchorPane>
-            <HBox alignment="CENTER" prefHeight="80.0" prefWidth="806.0" style="-fx-background-color: #FFFFFF;">
+            <HBox alignment="CENTER" prefHeight="111.0" prefWidth="779.0" style="-fx-background-color: #FFFFFF;">
                <children>
-                  <Label text="GESTOR DE ELEMENTOS DE SEGURIDAD" textFill="#0f385a">
+                  <Label prefHeight="78.0" prefWidth="718.0" text="GESTOR DE ELEMENTOS DE SEGURIDAD" textFill="#0f385a">
                      <font>
                         <Font name="System Bold" size="38.0" />
                      </font>
                   </Label>
                </children>
             </HBox>
-            <AnchorPane prefHeight="310.0" prefWidth="805.0" style="-fx-background-color: #DDE7F0;">
+            <AnchorPane prefHeight="312.0" prefWidth="779.0" style="-fx-background-color: #DDE7F0;">
                <children>
-                  <TextField fx:id="idPasaporte1" layoutX="14.0" layoutY="53.0" onAction="#filtrarId" prefHeight="36.0" prefWidth="119.0" />
-                  <TextField fx:id="titular1" layoutX="143.0" layoutY="53.0" prefHeight="36.0" prefWidth="179.0" />
-                  <Label layoutX="44.0" layoutY="24.0" text="ID Visa" textFill="#0f385a">
+                  <TextField fx:id="idElemSeg" layoutX="14.0" layoutY="53.0" onAction="#filtrarIdElemSeg" prefHeight="36.0" prefWidth="163.0" />
+                  <TextField fx:id="tipoElem" layoutX="186.0" layoutY="53.0" prefHeight="36.0" prefWidth="179.0" />
+                  <Label layoutX="20.0" layoutY="24.0" text="ID Elem. Seguridad" textFill="#0f385a">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
-                  <Label layoutX="202.0" layoutY="25.0" text="Tipo " textFill="#0f385a">
+                  <Label layoutX="253.0" layoutY="25.0" text="Tipo " textFill="#0f385a">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
-                  <Pane layoutX="41.0" layoutY="112.0" prefHeight="132.0" prefWidth="278.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 15;">
-                     <children>
-                        <Button fx:id="btnsuscribir1" layoutX="169.0" layoutY="15.0" mnemonicParsing="false" onAction="#clickSuscribir" prefHeight="13.0" prefWidth="92.0" style="-fx-background-color: #0F385A; -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.6), 15, 0, -2, 2); -fx-background-radius: 15;" text="Suscribir" textFill="WHITE">
-                           <font>
-                              <Font name="System Bold" size="13.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="btneliminarsusc1" layoutX="169.0" layoutY="53.0" mnemonicParsing="false" onAction="#clickEliminarSuscripcion" prefHeight="13.0" prefWidth="92.0" style="-fx-background-color: #0F385A; -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.6), 15, 0, -2, 2); -fx-background-radius: 15;" text="Eliminar" textFill="WHITE">
-                           <font>
-                              <Font name="System Bold" size="13.0" />
-                           </font>
-                        </Button>
-                        <CheckBox fx:id="selectCansilleria1" layoutX="18.0" layoutY="36.0" mnemonicParsing="false" text="Cancilleria " />
-                        <CheckBox fx:id="selectpolicia1" layoutX="18.0" layoutY="66.0" mnemonicParsing="false" text="Policia" />
-                        <CheckBox fx:id="selectmigra1" layoutX="18.0" layoutY="93.0" mnemonicParsing="false" text="Migración Colombia" />
-                        <Label layoutX="18.0" layoutY="7.0" prefHeight="22.0" prefWidth="116.0" text="Notificación" textFill="#0f385a">
-                           <font>
-                              <Font name="System Bold" size="15.0" />
-                           </font>
-                        </Label>
-                        <Button fx:id="btnverlista1" layoutX="169.0" layoutY="88.0" mnemonicParsing="false" onAction="#clickverlistasuscriptores" prefHeight="13.0" prefWidth="92.0" style="-fx-background-color: #0F385A; -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.6), 15, 0, -2, 2); -fx-background-radius: 15;" text="Lista" textFill="WHITE">
-                           <font>
-                              <Font name="System Bold" size="13.0" />
-                           </font>
-                        </Button>
-                     </children>
-                  </Pane>
-                  <ComboBox fx:id="estados1" layoutX="367.0" layoutY="180.0" prefHeight="33.0" prefWidth="146.0" />
-                  <Label layoutX="367.0" layoutY="142.0" text="Estados" textFill="#0f385a">
-                     <font>
-                        <Font name="System Bold" size="18.0" />
-                     </font>
-                  </Label>
-                  <Button fx:id="btnRestaurar11" layoutX="558.0" layoutY="175.0" maxHeight="-Infinity" mnemonicParsing="false" onAction="#clickRestaurar" prefHeight="37.0" prefWidth="127.0" style="-fx-background-color: #0F385A; -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.6), 15, 0, -2, 2); -fx-background-radius: 15;" text="Restaurar" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="16.0" />
-                     </font>
-                  </Button>
-                  <TextField fx:id="titular11" layoutX="339.0" layoutY="53.0" prefHeight="36.0" prefWidth="201.0" />
-                  <Label layoutX="398.0" layoutY="25.0" text="Descripcion " textFill="#0f385a">
+                  <TextField fx:id="descrElem" layoutX="375.0" layoutY="53.0" prefHeight="36.0" prefWidth="201.0" />
+                  <Label layoutX="425.0" layoutY="25.0" text="Descripcion " textFill="#0f385a">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="titular111" layoutX="565.0" layoutY="52.0" prefHeight="36.0" prefWidth="214.0" />
-                  <Label layoutX="631.0" layoutY="26.0" text="Detalle" textFill="#0f385a">
+                  <TextField fx:id="detalleElem" layoutX="583.0" layoutY="52.0" prefHeight="36.0" prefWidth="196.0" />
+                  <Label layoutX="660.0" layoutY="25.0" text="Detalle" textFill="#0f385a">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>

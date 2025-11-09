@@ -103,7 +103,7 @@ public class controladorFormularioEspGeo {
 
     @FXML
     void clickvolver(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/co/edu/poli/aplicacion/vista/formulario.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/co/edu/poli/aplicacion/vista/formulario2.fxml"));
 
         Stage nuevaVentana = new Stage();
         nuevaVentana.setScene(new Scene(root));

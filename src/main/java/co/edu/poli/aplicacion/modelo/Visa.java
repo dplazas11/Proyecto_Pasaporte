@@ -13,13 +13,14 @@ public class Visa {
     private Pais pais;
     private int mulEntry;
     private Pasaporte pasaporte;
-    private int hora;
+    private String hora;
 
-    public Visa(String num, Pais pais, int mulEntry, Pasaporte pasaporte) {
+    public Visa(String num, Pais pais, int mulEntry, Pasaporte pasaporte, String hora) {
         this.num = num;
         this.pais = pais;
         this.mulEntry = mulEntry;
         this.pasaporte = pasaporte;
+        this.hora = hora;
     }
 
     public String getNum() {
@@ -53,6 +54,15 @@ public class Visa {
     public void setPasaporte(Pasaporte pasaporte) {
         this.pasaporte = pasaporte;
     }
+
+    public String getHora() {
+        return hora;
+    }
+
+    public void setHora(String hora) {
+        this.hora = hora;
+    }
+    
 
     @Override
     public String toString() {
