@@ -15,7 +15,7 @@ public class EstadoSolicitudVisa implements Estado{
 
     @Override
     public String nombre() {
-        return "estado solicitud visa";
+        return "solicitud visa";
     }
     
 }

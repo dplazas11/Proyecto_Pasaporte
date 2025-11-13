@@ -28,19 +28,19 @@ public class AdaptadorPais {
     }
 
     public void agregarTransiciones(String origen, List<String> destinos) {
-        transiciones.put(origen.toUpperCase(), destinos);
+        transiciones.put(origen, destinos);
     }
 
     public List<String> posiblesTransiciones(String origen) {
-        return transiciones.getOrDefault(origen.toUpperCase(), new ArrayList<>());
+        return transiciones.getOrDefault(origen, new ArrayList<>());
     }
 
     public void setDireccion(String origen, String destino) {
-        direccionElegida.put(origen.toUpperCase(), destino.toUpperCase());
+        direccionElegida.put(origen, destino);
     }
 
     public String getDireccion(String origen) {
-        return direccionElegida.getOrDefault(origen.toUpperCase(), "");
+        return direccionElegida.getOrDefault(origen, "");
     }
 
     public void realizarTransicion(Estado estado) {
@@ -52,17 +52,17 @@ public class AdaptadorPais {
             return;
         }
 
-        switch (destino.toUpperCase()) {
-            case "A":
+        switch (destino) {
+            case "estado normal":
                 setEstadoActual(new EstadoNormal());
                 break;
-            case "B":
+            case "estado revision":
                 setEstadoActual(new EstadoRevision());
                 break;
-            case "C":
+            case "solicitud visa":
                 setEstadoActual(new EstadoSolicitudVisa());
                 break;
-            case "D":
+            case "frontera cerrada":
                 setEstadoActual(new EstadoFronteraCerrada());
                 break;
             default:

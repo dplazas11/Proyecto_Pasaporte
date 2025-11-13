@@ -13,7 +13,7 @@ public class EstadoFronteraCerrada implements Estado {
 
     @Override
     public String nombre() {
-        return "estado frontera cerrada";
+        return "frontera cerrada";
     }
 
 }

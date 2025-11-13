@@ -68,11 +68,30 @@ public class controladorAutomata {
 
     @FXML
     void clicKEstadoNormal(ActionEvent event) {
+        
+        String actual = adaptpais.getEstadoActualNombre();
+        String elecccion = "estado normal";
+        List<String> posibles = adaptpais.posiblesTransiciones(actual);
+        adaptpais.setDireccion(actual, elecccion);
+        adaptpais.avanzar();
+
+        TAContenedor.setText("El estado es " + adaptpais.getEstadoActualNombre() + "\n" + 
+                "Te puedes mover a los siguientes estados: " + "\n" +adaptpais.posiblesTransiciones(adaptpais.getEstadoActualNombre()));
 
     }
 
     @FXML
     void clickCambiarEstados(ActionEvent event) {
+        for (String estado : Arrays.asList("estado normal", "estado revision", "solicitud visa", "frontera cerrada")) {
+            String entrada = pedirEstados(estado).trim();
+            List<String> destinos = entrada.isEmpty() ? new ArrayList<>()
+                    : Arrays.asList(entrada.toUpperCase().split(","));
+
+            adaptpais.agregarTransiciones(estado, destinos);
+        }
+
+        TAContenedor.setText("El estado inicial es " + adaptpais.getEstadoActualNombre() + "\n" + 
+                "Te puedes mover a los siguientes estados: " + "\n" + adaptpais.posiblesTransiciones(adaptpais.getEstadoActualNombre()));
 
     }
 
@@ -85,12 +104,21 @@ public class controladorAutomata {
         adaptpais.setDireccion(actual, elecccion);
         adaptpais.avanzar();
 
-        TAContenedor.setText("El estado inicial es " + adaptpais.getEstadoActualNombre() + "\n" + "Te puedes mover a los siguientes estados: " + adaptpais.posiblesTransiciones(adaptpais.getEstadoActualNombre()));
+        TAContenedor.setText("El estado es " + adaptpais.getEstadoActualNombre() + "\n" + 
+                "Te puedes mover a los siguientes estados: " + "\n" +adaptpais.posiblesTransiciones(adaptpais.getEstadoActualNombre()));
 
     }
 
     @FXML
     void clickFronteraCerrada(ActionEvent event) {
+        String actual = adaptpais.getEstadoActualNombre();
+        String elecccion = "frontera cerrada";
+        List<String> posibles = adaptpais.posiblesTransiciones(actual);
+        adaptpais.setDireccion(actual, elecccion);
+        adaptpais.avanzar();
+
+        TAContenedor.setText("El estado es " + adaptpais.getEstadoActualNombre() + "\n" + 
+                "Te puedes mover a los siguientes estados: " + "\n" +adaptpais.posiblesTransiciones(adaptpais.getEstadoActualNombre()));
 
     }
 
@@ -108,17 +136,23 @@ public class controladorAutomata {
             adaptpais.agregarTransiciones(estado, destinos);
         }
 
-        TAContenedor.setText("El estado inicial es " + adaptpais.getEstadoActualNombre() + "\n" + "Te puedes mover a los siguientes estados: " + adaptpais.posiblesTransiciones(adaptpais.getEstadoActualNombre()));
+        TAContenedor.setText("El estado inicial es " + adaptpais.getEstadoActualNombre() + "\n" + 
+                "Te puedes mover a los siguientes estados: " + "\n" +adaptpais.posiblesTransiciones(adaptpais.getEstadoActualNombre()));
 
     }
 
-    @FXML
-    void clickMostrarTodo(ActionEvent event) {
-
-    }
+   
 
     @FXML
     void clickSolicitudVisa(ActionEvent event) {
+        String actual = adaptpais.getEstadoActualNombre();
+        String elecccion = "solicitud visa";
+        List<String> posibles = adaptpais.posiblesTransiciones(actual);
+        adaptpais.setDireccion(actual, elecccion);
+        adaptpais.avanzar();
+
+        TAContenedor.setText("El estado es " + adaptpais.getEstadoActualNombre() + "\n" + 
+                "Te puedes mover a los siguientes estados: " + "\n" +adaptpais.posiblesTransiciones(adaptpais.getEstadoActualNombre()));
 
     }
 
@@ -147,7 +181,7 @@ public class controladorAutomata {
         TextInputDialog dialogo = new TextInputDialog();
         dialogo.setTitle("Entrada de texto");
         dialogo.setHeaderText("Por favor ingresa a donde se dirige el estado: " + estado + "\n"
-                + "Puede escoger entre estado normal, estado revision, solicitud visa, frontera cerrada pero no puede escoger el estado " + estado + " y deben ir separados por comas");
+                + "Puede escoger entre estado normal, estado revision, solicitud visa, frontera cerrada" + "\n" +"No puede escoger el estado " + estado + " y deben ir separados por comas");
         //dialogo.setContentText("Nombre:");
 
         // Mostrar el diálogo y esperar la respuesta
