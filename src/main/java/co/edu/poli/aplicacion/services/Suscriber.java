@@ -6,7 +6,12 @@ package co.edu.poli.aplicacion.services;
 
 public interface Suscriber {
     
+    //METODOS OBSERVER 
     String enviarNotificacion ();
     String getNombre();
+    
+    //METODOS MEDIATOR
+    void setMediator(ConcreteMediator mediator);
+    String notificar(String evento);
     
 }

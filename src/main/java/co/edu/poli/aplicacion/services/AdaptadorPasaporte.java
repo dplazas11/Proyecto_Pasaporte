@@ -7,8 +7,9 @@ package co.edu.poli.aplicacion.services;
 import co.edu.poli.aplicacion.modelo.Pasaporte;
 import co.edu.poli.aplicacion.modelo.PasaporteDiplomatico;
 import co.edu.poli.aplicacion.modelo.PasaporteOrdinario;
+import java.util.Map;
 
-public class AdaptadorPasaporte implements ProxyInterface {
+public class AdaptadorPasaporte extends CorAprobador implements ProxyInterface {
 
     private Pasaporte pasaporteAdaptado;
 
@@ -72,12 +73,35 @@ public class AdaptadorPasaporte implements ProxyInterface {
                     memento.getTitular(),
                     memento.getPais(),
                     memento.getElemSeguridad(),
-                    memento.getMotivoViaje() 
+                    memento.getMotivoViaje()
             );
         }
         return pasaporteAdaptado;
     }
-    
-   
-    
+
+    @Override
+    public String procesar(String mensaje) {
+       return mediator.notify(this, mensaje);
+    }
+
+    @Override
+    public String notificar(String evento) {
+        return "";
+    }
+
+    @Override
+    public Map<String, Object> aprobar(String idTitular) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public String enviarNotificacion() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public String getNombre() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
 }

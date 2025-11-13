@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SuscriberPolicia extends CorAprobador implements Suscriber {
+public class SuscriberPolicia extends CorAprobador {
 
     @Override
     public String enviarNotificacion() {
@@ -34,6 +34,16 @@ public class SuscriberPolicia extends CorAprobador implements Suscriber {
             estadoAprobacion.put("mensaje", "El pasaporte ha sido aprobado por la Cancilleria y la Policia");
         }
         return estadoAprobacion;
+    }
+
+    @Override
+    public String procesar(String mensaje) {
+        return mediator.notify(this, mensaje);
+    }
+
+    @Override
+    public String notificar(String evento) {
+        return "La policia ha sido notificada de: " + evento;
     }
 
 }

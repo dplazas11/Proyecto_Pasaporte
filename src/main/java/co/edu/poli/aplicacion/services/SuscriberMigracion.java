@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SuscriberMigracion extends CorAprobador implements Suscriber {
+public class SuscriberMigracion extends CorAprobador {
 
     @Override
     public String enviarNotificacion() {
@@ -34,4 +34,13 @@ public class SuscriberMigracion extends CorAprobador implements Suscriber {
         return estadoAprobacion;
     }
 
+    @Override
+    public String procesar(String mensaje) {
+       return mediator.notify(this, mensaje);
+    }
+
+    @Override
+    public String notificar(String evento) {
+        return "Migración colombia ha sido notificada de: " + evento;
+    }
 }

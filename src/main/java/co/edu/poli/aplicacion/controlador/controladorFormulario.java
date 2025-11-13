@@ -7,6 +7,7 @@ import co.edu.poli.aplicacion.modelo.PasaporteOrdinario;
 import co.edu.poli.aplicacion.modelo.Titular;
 import co.edu.poli.aplicacion.repositorio.OperacionesPasaporte;
 import co.edu.poli.aplicacion.services.AdaptadorPasaporte;
+import co.edu.poli.aplicacion.services.ConcreteMediator;
 import co.edu.poli.aplicacion.services.CorAprobador;
 import co.edu.poli.aplicacion.services.CreadorPasaporte;
 import co.edu.poli.aplicacion.services.FactoriaPDiplomatica;
@@ -45,50 +46,65 @@ public class controladorFormulario {
 
     //ATRIBUTOS DEL PASAPORTE
     @FXML
-    private TextField DocTitular;
+    private TextField DocTitular;//OK
 
     @FXML
-    private TextField descr;
+    private TextField descr;//OK 
 
     @FXML
-    private TextField fechExp;
+    private TextField fechExp;//OK 
 
     @FXML
-    private TextField idPasaporte;
+    private TextField idPasaporte;//OK 
 
     @FXML
-    private TextField pais;
+    private TextField pais;//ok 
 
     @FXML
-    private TextField titular;
+    private TextField titular;//ok 
 
     //BOTONES
     @FXML
-    private Button bactualizar;
+    private Button bactualizar;//OK 
 
     @FXML
-    private Button bbuscar;
+    private Button bbuscar;//OK 
 
     @FXML
-    private Button beliminar;
+    private Button beliminar;//OK 
 
     @FXML
-    private Button bguardar;
+    private Button bguardar;//OK 
 
     @FXML
     private Button bmostrartodo;
 
     @FXML
-    private Button barbolespgeo;
+    private Button barbolespgeo;//OK
 
     @FXML
-    private Button btneliminarsusc;
+    private Button btnAutomata;//OK 
 
     @FXML
-    private Button btnsuscribir;
+    private Button btneliminarsusc;//OK 
 
     @FXML
-    private Button btnRestaurar1;
+    private Button btnsuscribir;//OK 
+
+    @FXML
+    private Button btnRestaurar1;//ok 
+
+    @FXML
+    private Button btnVisaElemSeg;//OK
+
+    @FXML
+    private Button btnenviarcancilleria;//OK
+
+    @FXML
+    private Button btnenviarmigracion;//OK
+
+    @FXML
+    private Button btnenviarpolicia;//OK
 
     //CAMPOS DE LA TABLA 
     @FXML
@@ -114,27 +130,30 @@ public class controladorFormulario {
 
     //COMBO BOX TIPO DE PASAPORTE
     @FXML
-    private ComboBox<String> tipoPas;
+    private ComboBox<String> tipoPas;//ok 
 
     //SUSCRIPTORES
     @FXML
-    private CheckBox selectCancilleria;
+    private CheckBox selectCancilleria;//ok 
 
     @FXML
-    private CheckBox selectmigra;
+    private CheckBox selectmigra;//ok 
 
     @FXML
-    private CheckBox selectpolicia;
+    private CheckBox selectpolicia;//ok 
 
     @FXML
-    private Button btnverlista;
+    private Button btnverlista;//OK 
+
+    @FXML
+    private TextArea mensajeMediator;//OK 
 
     //INFORMACION ESTADOS
     @FXML
-    private ComboBox<Integer> estados;
+    private ComboBox<Integer> estados;//OK 
 
     @FXML
-    private TextArea textAreaMementos;
+    private TextArea textAreaMementos;//ok 
 
     //OBJETOS GLOBALES 
     public static final ObserverPublisher publisher = new ObserverPublisher();
@@ -142,6 +161,7 @@ public class controladorFormulario {
     CorAprobador AprobadorCancilleria = new SuscriberCancilleria();
     CorAprobador AprobadorPolicia = new SuscriberPolicia();
     CorAprobador AprobadorMigracion = new SuscriberMigracion();
+    ConcreteMediator mediator = new ConcreteMediator();
 
     @FXML
     public void initialize() {
@@ -168,7 +188,7 @@ public class controladorFormulario {
     //metodos de la ventana 
     @FXML
     void clickGuardar(ActionEvent event) {
-        
+
         String notificacion = publisher.notificarSuscribers();
 
         if (AprobadorCancilleria == null) {
@@ -215,7 +235,7 @@ public class controladorFormulario {
                 //Enviar pasaporte al repositorio 
                 String respuesta = repo.insertar(pasaporte);
                 Object respAprobacion = estadoAprobacion.get("mensaje");
-                crearAlerta("Respuesta repositorio:" + respuesta + "\n" + (String) respAprobacion + "\n" +  notificacion);
+                crearAlerta("Respuesta repositorio:" + respuesta + "\n" + (String) respAprobacion + "\n" + notificacion);
 
             } else if ("Diplomatico".equalsIgnoreCase(seleccionado)) {
                 creador = new FactoriaPDiplomatica();
@@ -335,8 +355,11 @@ public class controladorFormulario {
                 textAreaMementos.setText(gestor.verElementos());
 
                 //ENVIAR PASAPORTE AL REPOSITORIO
-                String respuesta = repo.actualizar(pasaporteExistente);
-                crearAlerta(respuesta + "\n" + notificacion);
+                String respuesta = repo.actualizar(pasaporteExistente);                
+                mediator.agregarComponente(AdapPasaporte);
+                String mediatorRespuesta = AdapPasaporte.procesar(mensajeMediator.getText());
+                crearAlerta(respuesta + "\n" + notificacion + "\n" + mediatorRespuesta);
+                
                 limpiarDatos(1);
                 return;
             } else {
@@ -383,7 +406,9 @@ public class controladorFormulario {
         estados.getItems().add(indice);
         textAreaMementos.setText(gestor.verElementos());
 
-        crearAlerta(respuestaInsert + "\n" + notificacion);
+        mediator.agregarComponente(AdapPasaporte);
+        String mediatorRespuesta = AdapPasaporte.procesar(mensajeMediator.getText());
+        crearAlerta(respuestaInsert + "\n" + notificacion + "\n" + mediatorRespuesta);
 
         limpiarDatos(1);
     }
@@ -452,6 +477,7 @@ public class controladorFormulario {
         actual.close();
 
     }
+
     @FXML
     void clickcambiarventana2(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/co/edu/poli/aplicacion/vista/formularioVisayBiometrico.fxml"));
@@ -479,6 +505,7 @@ public class controladorFormulario {
         if (selectCancilleria.isSelected()) {
             Suscriber cancilleria = new SuscriberCancilleria();
             AprobadorCancilleria = new SuscriberCancilleria();
+            mediator.agregarComponente(AprobadorCancilleria);
             String respuesta1 = publisher.suscribir(cancilleria);
             mensaje = respuesta1 + "\n";
             seleccionados = true;
@@ -486,6 +513,7 @@ public class controladorFormulario {
         if (selectpolicia.isSelected()) {
             Suscriber policia = new SuscriberPolicia();
             AprobadorPolicia = new SuscriberPolicia();
+            mediator.agregarComponente(AprobadorPolicia);
             String respuesta2 = publisher.suscribir(policia);
             mensaje = mensaje + respuesta2 + "\n";
             seleccionados = true;
@@ -493,6 +521,7 @@ public class controladorFormulario {
         if (selectmigra.isSelected()) {
             Suscriber migracion = new SuscriberMigracion();
             AprobadorMigracion = new SuscriberMigracion();
+            mediator.agregarComponente(AprobadorMigracion);
             String respuesta3 = publisher.suscribir(migracion);
             mensaje = mensaje + respuesta3;
             seleccionados = true;
@@ -549,6 +578,28 @@ public class controladorFormulario {
     @FXML
     void clickverlistasuscriptores(ActionEvent event) {
         crearAlerta(publisher.verLista());
+    }
+
+    @FXML
+    void clickEnviarCancilleria(ActionEvent event) {
+
+        String mensaje = AprobadorCancilleria.procesar(mensajeMediator.getText());
+        crearAlerta(mensaje);
+
+    }
+
+    @FXML
+    void clickEnviarMigracion(ActionEvent event) {
+        String mensaje = AprobadorMigracion.procesar(mensajeMediator.getText());
+        crearAlerta(mensaje);
+
+    }
+
+    @FXML
+    void clickEnviarPolicia(ActionEvent event) {
+        String mensaje = AprobadorPolicia.procesar(mensajeMediator.getText());
+        crearAlerta(mensaje);
+
     }
 
     //METODOS EXTRA 
