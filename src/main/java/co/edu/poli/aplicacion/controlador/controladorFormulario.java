@@ -355,11 +355,11 @@ public class controladorFormulario {
                 textAreaMementos.setText(gestor.verElementos());
 
                 //ENVIAR PASAPORTE AL REPOSITORIO
-                String respuesta = repo.actualizar(pasaporteExistente);                
+                String respuesta = repo.actualizar(pasaporteExistente);
                 mediator.agregarComponente(AdapPasaporte);
                 String mediatorRespuesta = AdapPasaporte.procesar(mensajeMediator.getText());
                 crearAlerta(respuesta + "\n" + notificacion + "\n" + mediatorRespuesta);
-                
+
                 limpiarDatos(1);
                 return;
             } else {
@@ -490,6 +490,19 @@ public class controladorFormulario {
         Stage actual = (Stage) ((Node) event.getSource()).getScene().getWindow();
         actual.close();
 
+    }
+
+    @FXML
+    void clickcambiarventana3(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/co/edu/poli/aplicacion/vista/formularioAutomata.fxml"));
+
+        Stage nuevaVentana = new Stage();
+        nuevaVentana.setScene(new Scene(root));
+        nuevaVentana.show();
+
+        // Cerrar la ventana actual
+        Stage actual = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        actual.close();
     }
 
     @FXML
